@@ -1,0 +1,12 @@
+@use "../../styles/variables" as *;
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	margin-top: auto;
+	background-color: $color-bg-secondary;
+	font-size: 0.75rem;
+
+}

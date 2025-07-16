@@ -1,0 +1,60 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.button{
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	width: auto;
+	align-self: center;
+	border-radius: 8px;
+	font-size: 0.8rem;
+	padding: .8rem 1.5rem;
+	background-color: $color-secondary;
+	color: $color-bg;
+	text-align: center;
+	transition: all 0.2s ease-in-out;
+	user-select: none;
+	&:hover{
+		opacity: 0.9;
+	}
+}
+
+.button.storeItem{
+	margin-right: auto;
+	width: 60%;
+	font-size: 1rem;
+	padding: .8rem 1rem;
+
+	@include full_desktop{
+		width: 100%;
+	}
+
+}
+
+.button.contactPage{
+	padding: 1em 3em;
+}
+
+.button.addDesc{
+	width: 100%;
+	font-size: .8rem;
+	padding: .9em 1em;
+}
+
+.button.order{
+	padding: 0.4rem 0.7rem;
+	border-radius: 5px;
+	font-size: 0.7rem;
+	height: 1.8rem;
+}
+
+.button.cart{
+	width: 100%;
+	min-height: 3rem;
+}
+
+.button:disabled{
+	opacity: 0.5;
+	cursor: not-allowed;
+}

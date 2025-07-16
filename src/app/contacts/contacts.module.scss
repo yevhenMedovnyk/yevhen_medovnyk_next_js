@@ -1,0 +1,81 @@
+@use "../../styles/variables" as *;
+
+.container{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	padding: 0.3rem;
+}
+
+.title{
+	text-align: center;
+	font-size: 1rem;
+	margin: 2.3rem 0 0.5rem 0;	
+}
+
+.form{
+	display: flex;
+	flex-direction: column;
+	gap: 1.3rem;
+	max-width: 30rem;
+	width: 100%;
+	margin-bottom: 4rem;
+	font-size: 0.9rem;
+}
+
+.input{
+	width: 100%;
+	padding: 0.6rem;
+	border: 1px solid $color-border-secondary;
+	border-radius: 5px;
+}
+
+.input:focus{
+	outline: none;
+	border: 1px solid $color-secondary;
+}
+
+.textareaContainer{
+}
+.textarea{
+	display: block;
+	width: 100%;
+	padding: 0.6rem;
+	border: 1px solid $color-border-secondary;
+	border-radius: 5px;
+	height: 8rem;
+	resize: none;
+	white-space: pre-wrap;
+  overflow-y: auto; 
+}
+
+.textarea:focus{
+	outline: none;
+	border: 1px solid $color-secondary;
+}
+
+.button{
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	width: auto;
+	align-self: center;
+	border-radius: 8px;
+	font-size: 0.8rem;
+	padding: 1em 3em;
+	background-color: $color-secondary;
+	color: $color-bg;
+	text-align: center;
+	transition: all 0.2s ease-in-out;
+	&:hover{
+		opacity: 0.9;
+	}
+}
+
+.error{
+	color: red;
+	font-size: 0.8em;
+	margin-top: 0.5em;
+	padding-left: 0.5em;
+}

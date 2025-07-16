@@ -1,0 +1,16 @@
+@use "../styles/variables" as *;
+@use "../styles/reset";
+
+body {
+	position: relative;
+	font-family: var(--font-mulish);
+	font-weight: 400;
+	color: $color-primary;
+	background-color: $color-bg;
+}
+
+html,
+body,
+#root {
+	min-height: 100%;
+}

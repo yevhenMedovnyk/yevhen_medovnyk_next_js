@@ -1,0 +1,71 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 0 3rem;
+}
+
+.container.burgerMenu {
+	flex-direction: column;
+	justify-content: start;
+	gap: 0.8rem 0;
+	background-color: $color-secondary;
+}
+
+.link {
+	position: relative;
+	font-size: 1rem;
+	line-height: 1.3;
+	font-weight: 500;
+	color: $color-primary;
+	cursor: pointer;
+	transition: 0.2s ease-in-out;
+	&:hover {
+		color: $color-secondary;
+	}
+	&:before {
+		position: absolute;
+		content: "";
+		top: 1.4rem;
+		left: 0;
+		right: 0;
+		height: 0.0875rem;
+		background-color: $color-secondary;
+		border-radius: 2px;
+		transition: 0.2s;
+		transform: scale(0);
+	}
+
+
+	@include large_desktop {
+		display: none;
+	}
+}
+
+.link.burgerMenu {
+	color: $color-bg;
+	@include large_desktop {
+		display: flex;
+	}
+}
+
+.active {
+	position: relative;
+	color: $color-secondary;
+
+	&:before {
+		position: absolute;
+		content: "";
+		top: 1.4rem;
+		left: 0;
+		right: 0;
+		height: 0.0875rem;
+		background-color: $color-secondary;
+		border-radius: 2px;
+		transition: 0.3s;
+		transform: scale(1);
+	}
+}

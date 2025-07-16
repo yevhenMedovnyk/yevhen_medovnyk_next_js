@@ -1,0 +1,41 @@
+@use "../../../styles/variables" as *;
+
+.container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	text-align: center;
+	padding: 1.25rem 0.5rem;
+	border-top: $color-border solid 1px;
+	min-width: 80vw;
+	text-align: center;
+}
+
+.link {
+	line-height: 1.3;
+	font-weight: 500;
+	color: $color-primary;
+	margin-bottom: 0.4em;
+	cursor: pointer;
+	transition: 0.2s ease-in-out;
+	&:hover {
+		color: $color-secondary;
+	}
+}
+
+.active {
+	color: $color-secondary;
+}
+
+.logoMini{
+	width: 1.85rem;
+	height: 1.85rem;
+	border-radius: 3px;
+	overflow: hidden;
+	margin-top: .7rem;
+}
+
+.logoMini img{
+	width: 100%;
+}

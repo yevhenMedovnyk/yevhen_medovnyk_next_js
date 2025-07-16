@@ -1,0 +1,26 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 2.6rem;
+	font-weight: 700;
+	color: $color-bg;
+	height: 6rem;
+	background: url("/bg.webp") no-repeat center center;
+	background-size: cover;
+	margin-top: 5.72rem;
+
+	@include full_desktop {
+		font-size: 2rem;
+		height: 5rem;
+		font-weight: 600;
+		margin-top: 5.19rem;
+	}
+
+	@include small_tablet {
+		margin-top: 4.787rem;
+	}
+}

@@ -1,0 +1,47 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+.BurgerMenuContainer {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	right: 0;
+	z-index: 100;
+	width: 80%;
+	height: 100vh;
+	background-color: $color-secondary;
+	padding: 1.8rem 6rem;
+	opacity: .7;
+	visibility: hidden;
+	transition: all 0.2s ease-in-out;
+	transform: translateX(100%);
+
+	&.open {
+		opacity: 1;
+		visibility: visible;
+		transform: translateX(0);
+	}
+
+	@include full_desktop {
+		padding: 1.5rem 3rem;
+	}
+	@include small_tablet {
+		padding: 1.3rem 2rem;
+		width: 100%;
+	}
+}
+
+.logoMini{
+	display: block;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 3px;
+	overflow: hidden;
+	margin: 1.7rem auto 1.5rem auto;
+
+}
+
+.logoMini img{
+	width: 100%;
+}

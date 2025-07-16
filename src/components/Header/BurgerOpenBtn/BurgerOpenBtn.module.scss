@@ -1,0 +1,24 @@
+@use "../../../styles/variables" as *;
+@use "../../../styles/mixins" as *;
+
+
+
+.burgerOpenBtn{
+	display: flex;
+	align-items: end;
+	justify-content: end;
+	display: none;
+
+	@include large_desktop{
+		display: flex;
+	}
+}
+
+
+.burgerOpenBtn, .burgerCloseBtn{
+	cursor: pointer;
+	font-size: 1.7rem;
+	transition: all 0.2s ease-in-out;
+	color: $color-secondary;
+	z-index: 1001;
+}
