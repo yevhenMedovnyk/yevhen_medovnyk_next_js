@@ -1,9 +1,12 @@
-import styles from './page.module.scss';
+import React from 'react';
+import AlbumGallery from '@/components/AlbumGallery/AlbumGallery';
 
-export default function Home() {
-  return (
-		<div className={styles.page}>
-      <main className={styles.main}></main>
-    </div>
-  );
-}
+const GalleryPage: React.FC = () => {
+	return (
+		<>
+			<AlbumGallery category="gallery" />
+		</>
+	);
+};
+
+export default GalleryPage;

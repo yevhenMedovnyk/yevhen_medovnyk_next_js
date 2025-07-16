@@ -7,7 +7,6 @@ import NavLinks from './NavLinks/NavLinks';
 import BurgerOpenBtn from './BurgerOpenBtn/BurgerOpenBtn';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
 import CartIcon from './CartIcon/CartIcon';
-import { useAppSelector } from '@/hooks/redux';
 
 const Header: React.FC = () => {
 	const [isBurgerMenuOpen, setIsBurgerMenuOpen] = React.useState(false);
@@ -15,7 +14,6 @@ const Header: React.FC = () => {
 	const handleBurgerMenuClick = () => {
 		setIsBurgerMenuOpen((prev) => !prev);
 	};
-
 
 	const handleBurgerLinkClick = () => {
 		setIsBurgerMenuOpen(false);

@@ -1,0 +1,101 @@
+@use "../../styles/variables" as *;
+@use "../../styles/mixins" as *;
+
+.imageContainer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	position: relative;
+	overflow: hidden;
+	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+	background-color: $color-bg-secondary;
+	min-height: 20rem;
+	max-height: 80rem;
+	height: 100%;
+	padding: 0.9rem;
+	animation: fadeIn 500ms forwards;
+	margin-bottom: 0.6rem;
+
+	@include tablet{
+		padding: 0.5rem;
+		min-height: 15rem;
+		justify-content: center;
+	}
+}
+
+.placeholder {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+}
+
+@keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+.image {
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	transition: opacity 0.5s ease;
+	object-fit: contain;
+	max-height: 100%;
+}
+
+.fadeInImage {
+	opacity: 1;
+}
+
+.image.editMode{
+	height:fit-content;
+	margin-bottom: .6rem;
+}
+
+.descriptionInput{
+		width: 100%;
+	padding: 0.4rem;
+	border: 1px solid $color-border-secondary;
+	border-radius: 4px;
+	margin-bottom: 0.5rem;
+	resize: none;
+
+}
+
+.descriptionInput:not(:last-of-type){
+	margin-top:auto;
+}
+
+.descriptionInput::placeholder{
+	color: $color-tertiary;
+	font-size: 0.6em;
+	padding: 0.4em;
+}
+
+.description{
+	display: block;
+	margin-top: .3rem;
+	font-size: 0.8rem;
+	color: $color-tertiary;
+	font-weight: 300;
+	padding-left: 0.3rem;
+}
+
+.deleteIcon{
+	z-index: 10;
+	position: absolute;
+	top: 1.3rem;
+	left: 1.3rem;
+	font-size: 1.7rem;
+	color: $color-accent;
+	cursor: pointer;
+	transition: all 0.1s ease-in-out;
+	&:hover{
+		opacity: 0.85;
+	}
+}
