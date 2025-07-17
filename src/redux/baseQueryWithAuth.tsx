@@ -1,6 +1,6 @@
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { getAuth } from 'firebase/auth';
-import { baseUrl } from '../constants';
+import { baseUrl } from '@/constants';
 
 export const baseQueryWithAuth = fetchBaseQuery({
 	baseUrl,

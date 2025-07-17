@@ -34,7 +34,7 @@ const AlbumGallery: React.FC<IAlbumGalleryProps> = ({ category }) => {
 	return (
 		<>
 			{isAdmin && (
-				<Link href="/create-album" className={s.createAlbumBtn}>
+				<Link href="/create-edit-album" className={s.createAlbumBtn}>
 					Створити альбом
 				</Link>
 			)}

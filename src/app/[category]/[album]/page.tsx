@@ -1,18 +1,37 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import s from './album.module.scss';
 import Gallery from '@/components/Gallery/Gallery';
+import { useSearchParams } from 'next/navigation';
 import { useGetImageIdsQuery } from '../../../redux/imagesApi';
-import {useParams, useSearchParams } from 'next/navigation';
+import { baseUrl } from '@/constants';
 
-const Album: React.FC = () => {
+const Album = () => {
 	const searchParams = useSearchParams();
-	const albumId = searchParams.get('id') as string;
+	const albumId = searchParams.get('id');
+	const [imagesIdObject, setImagesIdObject] = useState([]);
 
-	const { data: imageIdsObject = [] } = useGetImageIdsQuery(albumId);
+	useEffect(() => {
+		if (!albumId) return;
 
-	const imageIds = imageIdsObject.map(({ _id, width, height }) => ({
+		const fetchImages = async () => {
+			try {
+				const res = await fetch(baseUrl + `images/image-id-in-album?albumId=${albumId}`);
+				const data = await res.json();
+				setImagesIdObject(data);
+			} catch (err) {
+				console.error('Помилка завантаження зображень:', err);
+			}
+		};
+
+		fetchImages();
+	}, [albumId]);
+
+	console.log(imagesIdObject);
+
+
+	const imageIds = imagesIdObject.map(({ _id, width, height }) => ({
 		_id,
 		width: width,
 		height: height,

@@ -6,7 +6,8 @@ import styles from './page.module.scss';
 import Footer from '@/components/Footer/Footer';
 import MainTitle from '@/components/MainTitle/MainTitle';
 import ReduxProvider from '@/utils/ReduxProvider';
-import { AuthContextProvider} from '@/hooks/useAuth';
+import { AuthContextProvider } from '@/hooks/useAuth';
+import ScrollToTopOnRouteChange from '@/components/ScrollToTopOnRouteChange';
 
 const mulish = Mulish({
 	variable: '--font-mulish',
@@ -36,7 +37,6 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	
 	return (
 		<html lang="en">
 			<body
@@ -52,6 +52,7 @@ export default function RootLayout({
 						</AuthContextProvider>
 					</ReduxProvider>
 				</div>
+				<ScrollToTopOnRouteChange />
 			</body>
 		</html>
 	);
