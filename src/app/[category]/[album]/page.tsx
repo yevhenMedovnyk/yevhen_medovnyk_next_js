@@ -1,24 +1,25 @@
-"use client";
+'use client';
 
 import React, { useEffect, useState } from 'react';
 import s from './album.module.scss';
 import Gallery from '@/components/Gallery/Gallery';
-import { useSearchParams } from 'next/navigation';
-import { useGetImageIdsQuery } from '../../../redux/imagesApi';
+import { useParams } from 'next/navigation';
 import { baseUrl } from '@/constants';
+import { useFetchClient } from '@/hooks/useFetchClient';
 
 const Album = () => {
-	const searchParams = useSearchParams();
-	const albumId = searchParams.get('id');
+	const params = useParams();
+	const slug = params.album as string;
 	const [imagesIdObject, setImagesIdObject] = useState([]);
 
+	const fetchClient = useFetchClient();
+
 	useEffect(() => {
-		if (!albumId) return;
+		if (!slug) return;
 
 		const fetchImages = async () => {
 			try {
-				const res = await fetch(baseUrl + `images/image-id-in-album?albumId=${albumId}`);
-				const data = await res.json();
+				const data = await fetchClient(baseUrl + `images/image-id-in-album/${slug}`);
 				setImagesIdObject(data);
 			} catch (err) {
 				console.error('Помилка завантаження зображень:', err);
@@ -26,10 +27,7 @@ const Album = () => {
 		};
 
 		fetchImages();
-	}, [albumId]);
-
-	console.log(imagesIdObject);
-
+	}, [slug]);
 
 	const imageIds = imagesIdObject.map(({ _id, width, height }) => ({
 		_id,

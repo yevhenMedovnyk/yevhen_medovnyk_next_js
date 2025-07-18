@@ -7,7 +7,8 @@ import Footer from '@/components/Footer/Footer';
 import MainTitle from '@/components/MainTitle/MainTitle';
 import ReduxProvider from '@/utils/ReduxProvider';
 import { AuthContextProvider } from '@/hooks/useAuth';
-import ScrollToTopOnRouteChange from '@/components/ScrollToTopOnRouteChange';
+import ScrollToTopOnRouteChange from '@/utils/ScrollToTopOnRouteChange';
+import { Toaster } from 'sonner';
 
 const mulish = Mulish({
 	variable: '--font-mulish',
@@ -53,6 +54,7 @@ export default function RootLayout({
 					</ReduxProvider>
 				</div>
 				<ScrollToTopOnRouteChange />
+				<Toaster duration={2500} />
 			</body>
 		</html>
 	);

@@ -13,7 +13,7 @@ type IFolderProps = IAlbum & {
 	deleteFolder: (id: number) => void;
 };
 
-const Folder: React.FC<IFolderProps> = ({ cover_img, name, category, _id, deleteFolder }) => {
+const Folder: React.FC<IFolderProps> = ({ cover_img, name, category, _id, slug, deleteFolder }) => {
 	const { isAdmin } = useAppSelector((state) => state.auth.user);
 
 	return (
@@ -41,10 +41,10 @@ const Folder: React.FC<IFolderProps> = ({ cover_img, name, category, _id, delete
 				</div>
 			)}
 			<div className={s.container}>
-				<Link href={`/${category}/${name.en}?id=${_id}`} className={s.imgLink}>
+				<Link href={`/${category}/${slug}`} className={s.imgLink}>
 					<img src={cover_img} alt="album_cover" />
 				</Link>
-				<Link href={`${category}/${name.en}?id=${_id}`} className={s.title}>
+				<Link href={`${category}/${slug}`} className={s.title}>
 					<span className={s.albumName}>{name.ua}</span>
 				</Link>
 			</div>

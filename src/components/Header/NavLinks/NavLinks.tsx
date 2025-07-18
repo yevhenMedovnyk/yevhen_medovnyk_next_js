@@ -11,7 +11,7 @@ interface INavLinks {
 
 interface INavLinksProps {
 	class_name?: string;
-	onClick?: () => void;
+	onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
 const navLinksList: INavLinks[] = [
@@ -40,7 +40,10 @@ const navLinksList: INavLinks[] = [
 const NavLinks: React.FC<INavLinksProps> = ({ class_name, onClick }) => {
 	const pathname = usePathname();
 
-	const isActive = (link: string) => (pathname === link ? s.active : '');
+	const isActive = (link: string) => {
+		if (link === '/') return pathname === '/' ? s.active : '';
+		return pathname.startsWith(link) ? s.active : '';
+	};
 
 	return (
 		<nav>

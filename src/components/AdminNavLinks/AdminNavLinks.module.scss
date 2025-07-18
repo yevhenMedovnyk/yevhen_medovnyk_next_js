@@ -1,0 +1,28 @@
+@use "../../styles/variables" as *;
+
+.container {
+	display: flex;
+	flex-direction: column;
+	gap: 0.7rem;
+}
+
+.link {
+	width: 100%;
+	align-self: center;
+	border-radius: 8px;
+	font-size: 0.8rem;
+	padding: 0.8rem 1.5rem;
+	border: 1px solid $color-border-secondary;
+	text-align: center;
+	transition: all 0.2s ease-in-out;
+	&:hover {
+		opacity: 0.95;
+	}
+}
+
+.active {
+	background-color: $color-secondary;
+	color: $color-bg;
+	pointer-events: none;
+  cursor: default;
+}

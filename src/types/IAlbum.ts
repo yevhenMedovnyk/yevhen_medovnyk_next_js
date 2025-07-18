@@ -6,4 +6,5 @@ export interface IAlbum {
 		en: string;
 	};
 	category: string;
+	slug: string;
 }

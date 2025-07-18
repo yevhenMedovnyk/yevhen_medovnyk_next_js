@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
 import s from './createEditAlbum.module.scss';
@@ -15,12 +15,13 @@ import {
 import { ErrorMessage, Form, Formik, FormikHelpers } from 'formik';
 import Gallery from '../../components/Gallery/Gallery';
 import { IImage } from '../../types/IImage';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams, useRouter, useParams } from 'next/navigation';
 
 const CreateOrEditAlbum = () => {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 	const albumId = searchParams.get('albumId') as string;
+	//const slug = useParams().album as string;
 	const [addAlbum, { isLoading: isCreatingAlbum, isSuccess: isAlbumCreated }] =
 		useCreateAlbumMutation();
 	const [uploadImages, { isLoading: isUploadingImages }] = useUploadImagesMutation();
@@ -64,7 +65,6 @@ const CreateOrEditAlbum = () => {
 		}
 	}, [albumData]);
 
-
 	const onSubmit = async (
 		values: typeof initialValues,
 		{ resetForm }: { resetForm: () => void }
@@ -89,9 +89,10 @@ const CreateOrEditAlbum = () => {
 				: albumData?.cover_img;
 
 			let finalAlbumId = albumId;
+			let album_slug;
 
 			if (albumData) {
-				await updateAlbum({
+				const album = await updateAlbum({
 					albumId: albumId,
 					name: values.name,
 					category: values.category,
@@ -103,6 +104,7 @@ const CreateOrEditAlbum = () => {
 					name: values.name ?? '',
 					category: values.category ?? '',
 					cover_img: coverBase64 ?? '',
+					slug: '',
 				}).unwrap();
 
 				if (!album || !album._id) {
@@ -111,6 +113,7 @@ const CreateOrEditAlbum = () => {
 
 				console.log('✅ Альбом створено');
 				finalAlbumId = String(album._id);
+				album_slug = album.slug;
 			}
 
 			if (albumFiles.length > 0 && finalAlbumId) {
@@ -121,6 +124,11 @@ const CreateOrEditAlbum = () => {
 				});
 
 				formData.append('album_id', finalAlbumId);
+
+				if (album_slug) {
+					formData.append('album_slug', album_slug);
+				}
+
 
 				await uploadImages(formData).unwrap();
 				console.log('✅ Зображення завантажені');

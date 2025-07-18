@@ -12,10 +12,10 @@ export const imagesApi = createApi({
 			query: (albumId) => `/images/all-images-in-album?albumId=${albumId}`,
 			providesTags: (result) => (result ? [{ type: 'Images' as const, id: 'LIST' }] : []),
 		}),
-		getImageIds: builder.query<{ _id: string; width: number; height: number }[], string>({
-			query: (albumId) => `/images/image-id-in-album?albumId=${albumId}`,
-			providesTags: (result) => (result ? [{ type: 'Images' as const, id: 'LIST' }] : []),
-		}),
+		//getImageIds: builder.query<{ _id: string; width: number; height: number }[], string>({
+		//	query: (slug) => `/images/image-id-in-album:${slug}`,
+		//	providesTags: (result) => (result ? [{ type: 'Images' as const, id: 'LIST' }] : []),
+		//}),
 
 		// ❗ Отримати конкретне зображення
 		getImage: builder.query<IImage, string>({
@@ -53,6 +53,6 @@ export const {
 	useUploadImagesMutation,
 	useDeleteImageMutation,
 	useGetImageQuery,
-	useGetImageIdsQuery,
+	//useGetImageIdsQuery,
 	useAddImageDescriptionMutation,
 } = imagesApi;
