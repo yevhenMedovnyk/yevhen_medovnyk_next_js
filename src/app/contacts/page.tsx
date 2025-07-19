@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { use } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { contactFormSchema } from '@/schemas/contactForm.schema';
 import SocialNetLinksList from '@/components/SocialNetLinks/SocialNetLinks';
@@ -8,7 +8,7 @@ import s from './contacts.module.scss';
 import Button from '@/components/UI/Button/Button';
 import { showErrorToast } from '@/components/UI/showErrorToast';
 import { showSuccessToast } from '@/components/UI/showSuccessToast';
-import { fetchClient } from '@/utils/fetchClient';
+import { useFetchClient } from '@/hooks/useFetchClient';
 
 const Contacts: React.FC = () => {
 	const initialValues = {
@@ -16,6 +16,8 @@ const Contacts: React.FC = () => {
 		email: '',
 		message: '',
 	};
+
+	const fetchClient = useFetchClient();
 	const onSubmit = async (
 		values: typeof initialValues,
 		{ resetForm }: { resetForm: () => void }

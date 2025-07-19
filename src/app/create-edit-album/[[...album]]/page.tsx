@@ -6,8 +6,8 @@ import { ErrorMessage, Form, Formik, FormikHelpers } from 'formik';
 import Gallery from '../../../components/Gallery/Gallery';
 import { IImage } from '../../../types/IImage';
 import { useRouter, useParams } from 'next/navigation';
-import { fetchClient } from '@/utils/fetchClient';
 import { IAlbum } from '@/types/IAlbum';
+import { useFetchClient } from '@/hooks/useFetchClient';
 
 const CreateOrEditAlbum = () => {
 	const router = useRouter();
@@ -25,6 +25,8 @@ const CreateOrEditAlbum = () => {
 		en: '',
 	});
 	const [albumFiles, setAlbumFiles] = useState<File[]>([]);
+
+	const fetchClient = useFetchClient();
 
 	//Тимчасово
 	const lang = 'ua';

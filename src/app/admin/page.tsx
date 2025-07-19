@@ -4,17 +4,18 @@ import React from 'react';
 import s from './clientOrders.module.scss';
 import ClientOrder from '@/components/ClientOrder/ClientOrder';
 import { IOrder } from '@/types/IOrder';
-import { fetchClient } from '@/utils/fetchClient';
+import { useFetchClient } from '@/hooks/useFetchClient';
 
 const ClientOrders = () => {
 	const [orders, setOrders] = React.useState<IOrder[]>([]);
+	const fetchClient = useFetchClient();
 	console.log('clientOrders', orders);
 
 	React.useEffect(() => {
 		const clientOrders = async () => {
 			try {
 				const data = await fetchClient(
-					'/api/checkout/orders',
+					'/api/orders/get-orders',
 					{
 						method: 'GET',
 					},

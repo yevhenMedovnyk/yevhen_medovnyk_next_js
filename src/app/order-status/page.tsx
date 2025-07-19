@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
 import s from './orderStatus.module.scss';
-import { fetchClient } from '@/utils/fetchClient';
+import { useFetchClient } from '@/hooks/useFetchClient';
 
 
 interface OrderData {
@@ -18,6 +18,7 @@ interface OrderData {
 const OrderStatus = () => {
 	const [orderRef, setOrderRef] = React.useState('');
 	const [orderData, setOrderData] = React.useState<OrderData | null>(null);
+	const fetchClient = useFetchClient();
 
 	useEffect(() => {
 		const orderRef = Cookies.get('last_order_ref');

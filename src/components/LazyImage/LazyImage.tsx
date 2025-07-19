@@ -30,7 +30,7 @@ const LazyImage: React.FC<LazyImageProps> = React.memo(
 			triggerOnce: true,
 		});
 
-		 const fetchClient = useFetchClient();
+		const fetchClient = useFetchClient();
 
 		const [loadImage, setLoadImage] = useState(false);
 		const [image, setImage] = useState<any>(null);

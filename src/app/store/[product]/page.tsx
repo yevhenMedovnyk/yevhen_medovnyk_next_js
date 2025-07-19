@@ -10,7 +10,7 @@ import { showSuccessToast } from '@/components/UI/showSuccessToast';
 import { ClipLoader } from 'react-spinners';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
-import { fetchClient } from '@/utils/fetchClient';
+import { useFetchClient } from '@/hooks/useFetchClient';
 
 const StoreItemPage: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -20,6 +20,8 @@ const StoreItemPage: React.FC = () => {
 	const [isLoading, setIsLoading] = React.useState(true);
 	const [product, setProduct] = React.useState<IProduct | null>(null);
 	const [isError, setIsError] = React.useState(false);
+
+	const fetchClient = useFetchClient();
 
 	useEffect(() => {
 		const fetchProduct = async() => {

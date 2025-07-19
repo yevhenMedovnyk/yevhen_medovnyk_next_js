@@ -5,16 +5,18 @@ import s from './store.module.scss';
 import StoreItem from '@/components/StoreItem/StoreItem';
 import { ClipLoader } from 'react-spinners';
 import { IProduct } from '@/types/IProduct';
+import { useFetchClient } from '@/hooks/useFetchClient';
 
 const Store: React.FC = () => {
 	const [isLoading, setIsLoading] = React.useState(true);
 	const [products, setProducts] = React.useState<IProduct[] | null>(null);
+	const fetchClient = useFetchClient();
 
 	useEffect(() => {
 		const fetchProducts = async () => {
 			setIsLoading(true);
 			try {
-				const response = await fetch('/api/store/products');
+				const response = await fetchClient('/api/store/products');
 				const data = await response.json();
 				setProducts(data);
 				setIsLoading(false);
