@@ -2,34 +2,54 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import s from './createEditAlbum.module.scss';
-import {
-	useCreateAlbumMutation,
-	useGetAlbumByIdQuery,
-	useUpdateAlbumMutation,
-} from '../../redux/albumsApi';
-import {
-	useDeleteImageMutation,
-	useGetImagesQuery,
-	useUploadImagesMutation,
-} from '../../redux/imagesApi';
+import { useUploadImagesMutation } from '../../../redux/imagesApi';
 import { ErrorMessage, Form, Formik, FormikHelpers } from 'formik';
-import Gallery from '../../components/Gallery/Gallery';
-import { IImage } from '../../types/IImage';
-import { useSearchParams, useRouter, useParams } from 'next/navigation';
+import Gallery from '../../../components/Gallery/Gallery';
+import { IImage } from '../../../types/IImage';
+import { useRouter, useParams } from 'next/navigation';
+import { fetchClient } from '@/utils/fetchClient';
+import { IAlbum } from '@/types/IAlbum';
 
 const CreateOrEditAlbum = () => {
 	const router = useRouter();
-	const searchParams = useSearchParams();
-	const albumId = searchParams.get('albumId') as string;
-	//const slug = useParams().album as string;
-	const [addAlbum, { isLoading: isCreatingAlbum, isSuccess: isAlbumCreated }] =
-		useCreateAlbumMutation();
+	const slug = useParams().album as string;
 	const [uploadImages, { isLoading: isUploadingImages }] = useUploadImagesMutation();
-	const { data: images = [] } = useGetImagesQuery(albumId, { skip: !albumId });
-	const { data: albumData } = useGetAlbumByIdQuery(albumId, { skip: !albumId });
-	const [updateAlbum, { isLoading: isUpdatingAlbum }] = useUpdateAlbumMutation();
+	const [images, setImages] = useState<IImage[]>([]);
+	const [albumData, setAlbumData] = useState<IAlbum | null>(null);
+	const [isCreatingAlbum, setIsCreatingAlbum] = useState(false);
+	const [isAlbumCreated, setIsAlbumCreated] = useState(false);
+	const [isUpdatingAlbum, setIsUpdatingAlbum] = useState(false);
 
-	const [deleteImageById] = useDeleteImageMutation();
+	useEffect(() => {
+		const getImages = async () => {
+			try {
+				const data = await fetchClient(
+					`/api/albums/album/images/${slug}`,
+					{
+						method: 'GET',
+					},
+					true
+				);
+				setImages(data);
+			} catch (err) {
+				console.error('Помилка завантаження зображень:', err);
+			}
+		};
+
+		const getAlbum = async () => {
+			try {
+				const data = await fetchClient(`/api/albums/${slug}`, {
+					method: 'GET',
+				});
+				setAlbumData(data);
+			} catch (err) {
+				console.error('Помилка завантаження зображень:', err);
+			}
+		};
+
+		getAlbum();
+		getImages();
+	}, [slug]);
 
 	const [coverPreview, setCoverPreview] = useState<string | null>(null);
 	const [imagePreviews, setImagePreviews] = useState<IImage[]>([]);
@@ -88,35 +108,55 @@ const CreateOrEditAlbum = () => {
 				? await convertToBase64(values.cover_img)
 				: albumData?.cover_img;
 
-			let finalAlbumId = albumId;
+			let finalAlbumId = albumData?._id;
 			let album_slug;
 
 			if (albumData) {
-				const album = await updateAlbum({
-					albumId: albumId,
-					name: values.name,
-					category: values.category,
-					cover_img: coverBase64 || albumData.cover_img,
-				}).unwrap();
-				console.log('✅ Альбом оновлено');
-			} else {
-				const album = await addAlbum({
-					name: values.name ?? '',
-					category: values.category ?? '',
-					cover_img: coverBase64 ?? '',
-					slug: '',
-				}).unwrap();
+				const album = await fetchClient(
+					`/api/albums/update`,
+					{
+						method: 'PUT',
+						body: JSON.stringify({
+							albumId: albumData._id,
+							name: values.name,
+							category: values.category,
+							cover_img: coverBase64 || albumData.cover_img,
+						}),
+					},
+					true
+				);
+				setIsUpdatingAlbum(true);
 
+				console.log('✅ Альбом оновлено');
+				setIsUpdatingAlbum(false);
+				album_slug = album.slug;
+			} else {
+				const album = await fetchClient(
+					`/api/albums/create`,
+					{
+						method: 'POST',
+						body: JSON.stringify({
+							name: values.name ?? '',
+							category: values.category ?? '',
+							cover_img: coverBase64 ?? '',
+							slug: '',
+						}),
+					},
+					true
+				);
+				setIsCreatingAlbum(true);
 				if (!album || !album._id) {
 					throw new Error('Не вдалося отримати ID альбому');
 				}
 
 				console.log('✅ Альбом створено');
+				setIsAlbumCreated(true);
+				setIsCreatingAlbum(false);
 				finalAlbumId = String(album._id);
 				album_slug = album.slug;
 			}
 
-			if (albumFiles.length > 0 && finalAlbumId) {
+			if (albumFiles.length > 0 && finalAlbumId && album_slug) {
 				const formData = new FormData();
 
 				albumFiles.forEach((file) => {
@@ -129,7 +169,6 @@ const CreateOrEditAlbum = () => {
 					formData.append('album_slug', album_slug);
 				}
 
-
 				await uploadImages(formData).unwrap();
 				console.log('✅ Зображення завантажені');
 			}
@@ -138,7 +177,7 @@ const CreateOrEditAlbum = () => {
 			setCoverPreview(null);
 			setImagePreviews([]);
 			setAlbumFiles([]);
-			router.push(`/category/${values.category}?id=${finalAlbumId}`);
+			router.push(`/${values.category}/${album_slug}`);
 		} catch (err) {
 			console.error('❌ Помилка при створенні/оновленні альбому:', err);
 			alert('Не вдалося створити або оновити альбом. Спробуйте ще раз.');
@@ -199,7 +238,14 @@ const CreateOrEditAlbum = () => {
 
 	const deleteImage = async (index: number, _id?: string) => {
 		if (_id) {
-			await deleteImageById(_id).unwrap();
+			await fetchClient(
+				`/api/images/image/${_id}`,
+				{
+					method: 'DELETE',
+				},
+				true
+			);
+			setImages((prev) => prev.filter((img) => img._id !== _id));
 		} else {
 			const newFiles = [...albumFiles];
 			const newPreviews = [...imagePreviews];
@@ -299,7 +345,7 @@ const CreateOrEditAlbum = () => {
 									? 'Завантажуються зображення...'
 									: isUpdatingAlbum
 										? 'Оновлюється альбом...'
-										: albumId
+										: slug
 											? 'Оновити альбом'
 											: 'Створити альбом'}
 						</button>

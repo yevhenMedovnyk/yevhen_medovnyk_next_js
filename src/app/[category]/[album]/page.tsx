@@ -4,13 +4,18 @@ import React, { useEffect, useState } from 'react';
 import s from './album.module.scss';
 import Gallery from '@/components/Gallery/Gallery';
 import { useParams } from 'next/navigation';
-import { baseUrl } from '@/constants';
 import { useFetchClient } from '@/hooks/useFetchClient';
+
+interface ImageId {
+	_id: string;
+	width: number;
+	height: number;
+}
 
 const Album = () => {
 	const params = useParams();
 	const slug = params.album as string;
-	const [imagesIdObject, setImagesIdObject] = useState([]);
+	const [imagesIdObject, setImagesIdObject] = useState<ImageId[]>([]);
 
 	const fetchClient = useFetchClient();
 
@@ -19,7 +24,7 @@ const Album = () => {
 
 		const fetchImages = async () => {
 			try {
-				const data = await fetchClient(baseUrl + `images/image-id-in-album/${slug}`);
+				const data = await fetchClient(`/api/images/images-id/${slug}`);
 				setImagesIdObject(data);
 			} catch (err) {
 				console.error('Помилка завантаження зображень:', err);

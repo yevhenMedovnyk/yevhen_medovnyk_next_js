@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import s from './LazyImage.module.scss';
 import { useInView } from 'react-intersection-observer';
 import { ClipLoader } from 'react-spinners';
 import { TiDelete } from 'react-icons/ti';
-import { useAddImageDescriptionMutation, useGetImageQuery } from '../../redux/imagesApi';
 import clsx from 'clsx';
 import Button from '../UI/Button/Button';
+import { useFetchClient } from '@/hooks/useFetchClient';
 
 interface LazyImageProps {
 	imageId?: string;
@@ -30,43 +30,69 @@ const LazyImage: React.FC<LazyImageProps> = React.memo(
 			triggerOnce: true,
 		});
 
+		 const fetchClient = useFetchClient();
+
 		const [loadImage, setLoadImage] = useState(false);
+		const [image, setImage] = useState<any>(null);
+		const [isLoading, setIsLoading] = useState(false);
+		const [isLoaded, setIsLoaded] = useState(false);
 		const [imageDesc, setImageDesc] = useState({
 			ua: description?.ua || '',
 			en: description?.en || '',
 		});
-		const [isLoaded, setIsLoaded] = useState(false);
+		const [isSaving, setIsSaving] = useState(false);
+		const [saveSuccess, setSaveSuccess] = useState(false);
 
 		const shouldFetch = !img && loadImage && !!imageId;
 
-		const { data: image, isLoading } = useGetImageQuery(imageId, {
-			skip: !shouldFetch,
-		});
+		useEffect(() => {
+			if (inView) setLoadImage(true);
+		}, [inView]);
 
 		useEffect(() => {
-			if (inView) {
-				setLoadImage(true);
+			if (shouldFetch) {
+				setIsLoading(true);
+				fetchClient(`/api/images/image/${imageId}`, { method: 'GET' })
+					.then((data) => setImage(data))
+					.catch(console.error)
+					.finally(() => setIsLoading(false));
 			}
-		}, [inView]);
+		}, [shouldFetch, imageId]);
 
 		const handleDescriptionChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
 			setImageDesc({
 				...imageDesc,
 				[e.target.name]: e.target.value,
 			});
+			setSaveSuccess(false);
 		};
 
-		const [saveDesc, { isLoading: isDescLoading, isSuccess }] = useAddImageDescriptionMutation();
+		const handleSaveDescription = async () => {
+			setIsSaving(true);
+			try {
+				await fetchClient(`/api/images/image/description/${imageId}`, {
+					method: 'PATCH',
+					body: JSON.stringify({ description: imageDesc }),
+				});
+				setSaveSuccess(true);
+			} catch (err) {
+				console.error(err);
+			} finally {
+				setIsSaving(false);
+			}
+		};
 
 		const stableImgSrc = image?.img || img;
+		const stableAlt = image?.name || alt;
 
 		return (
 			<div ref={ref} className={s.imageContainer}>
 				{onClickDelete && <TiDelete className={s.deleteIcon} onClick={onClickDelete} />}
+
 				{!isLoading && stableImgSrc ? (
 					<img
 						src={stableImgSrc}
-						alt={image?.name || alt}
+						alt={stableAlt}
 						onLoad={() => setIsLoaded(true)}
 						className={clsx(s.image, editMode && s.editMode, isLoaded && s.fadeInImage)}
 						width={width}
@@ -80,6 +106,7 @@ const LazyImage: React.FC<LazyImageProps> = React.memo(
 						<ClipLoader color="#b0bab8" size={50} />
 					</div>
 				)}
+
 				{editMode && imageId && (
 					<>
 						<textarea
@@ -87,7 +114,7 @@ const LazyImage: React.FC<LazyImageProps> = React.memo(
 							value={imageDesc.ua}
 							onChange={handleDescriptionChange}
 							name="ua"
-							placeholder="Опис українською"
+							placeholder="Опис українською"
 						/>
 						<textarea
 							className={s.descriptionInput}
@@ -97,14 +124,17 @@ const LazyImage: React.FC<LazyImageProps> = React.memo(
 							placeholder="Description in English"
 						/>
 						<Button
-							name={isSuccess ? 'Збережено' : 'Зберегти'}
+							name={saveSuccess ? 'Збережено' : 'Зберегти'}
 							class_name="addDesc"
-							onClick={() => saveDesc({ imageId, description: imageDesc }).unwrap()}
-							disabled={isDescLoading || !imageDesc || isSuccess}
+							onClick={handleSaveDescription}
+							disabled={isSaving || !imageDesc.ua || !imageDesc.en || saveSuccess}
 						/>
 					</>
 				)}
-				{image?.description && <span className={s.description}>{image?.description?.ua} </span>}
+
+				{image?.description?.ua && !editMode && (
+					<span className={s.description}>{image.description.ua}</span>
+				)}
 			</div>
 		);
 	}
