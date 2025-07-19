@@ -11,7 +11,6 @@ import cloudinary from '@/lib/cloudinary';
 export async function DELETE(request: NextRequest) {
 	try {
 		const slug = request.nextUrl.searchParams.get('slug');
-		console.log('slug', slug);
 
 		if (!slug) {
 			return NextResponse.json({ message: 'album slug is required' }, { status: 400 });

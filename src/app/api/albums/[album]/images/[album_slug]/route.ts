@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from 'next/server';
 // Отримати всі зображення в альбомі по назві альбому
 export async function GET(request: NextRequest, context: any) {
 	const params = await context.params;
-	const slug = params.slug;
+	const slug = params.album_slug;
 
 	try {
 		await dbConnect();

@@ -4,6 +4,7 @@ export interface IProduct {
 	_id: number;
 	code_product: number;
 	name: string;
+	slug: string;
 	captured_info: string;
 	paper_info: string;
 	note: string;

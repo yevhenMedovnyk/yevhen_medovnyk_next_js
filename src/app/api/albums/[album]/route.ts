@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from 'next/server';
 //Отримати конкретний альбом за назвою
 export async function GET(request: NextRequest, context: any) {
 	const params = await context.params;
-	const slug = params.album;
+	const slug = params.album;	
 
 	try {
 		await dbConnect();

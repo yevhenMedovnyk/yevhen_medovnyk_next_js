@@ -2,7 +2,6 @@
 
 import React, { useEffect, useMemo, useState } from 'react';
 import s from './createEditAlbum.module.scss';
-import { useUploadImagesMutation } from '../../../redux/imagesApi';
 import { ErrorMessage, Form, Formik, FormikHelpers } from 'formik';
 import Gallery from '../../../components/Gallery/Gallery';
 import { IImage } from '../../../types/IImage';
@@ -13,14 +12,38 @@ import { IAlbum } from '@/types/IAlbum';
 const CreateOrEditAlbum = () => {
 	const router = useRouter();
 	const slug = useParams().album as string;
-	const [uploadImages, { isLoading: isUploadingImages }] = useUploadImagesMutation();
 	const [images, setImages] = useState<IImage[]>([]);
 	const [albumData, setAlbumData] = useState<IAlbum | null>(null);
 	const [isCreatingAlbum, setIsCreatingAlbum] = useState(false);
 	const [isAlbumCreated, setIsAlbumCreated] = useState(false);
 	const [isUpdatingAlbum, setIsUpdatingAlbum] = useState(false);
+	const [isUploadingImages, setIsUploadingImages] = useState(false);
+	const [coverPreview, setCoverPreview] = useState<string | null>(null);
+	const [imagePreviews, setImagePreviews] = useState<IImage[]>([]);
+	const [albumName, setAlbumName] = useState({
+		ua: '',
+		en: '',
+	});
+	const [albumFiles, setAlbumFiles] = useState<File[]>([]);
+
+	//Тимчасово
+	const lang = 'ua';
+
+	const initialValues = useMemo(
+		() => ({
+			name: {
+				ua: albumData?.name?.ua ?? '',
+				en: albumData?.name?.en ?? '',
+			},
+			cover_img: null as File | null,
+			category: albumData?.category ?? 'gallery',
+			album_images: [] as File[],
+		}),
+		[albumData]
+	);
 
 	useEffect(() => {
+		// Завантажити зображення з альбому
 		const getImages = async () => {
 			try {
 				const data = await fetchClient(
@@ -50,30 +73,6 @@ const CreateOrEditAlbum = () => {
 		getAlbum();
 		getImages();
 	}, [slug]);
-
-	const [coverPreview, setCoverPreview] = useState<string | null>(null);
-	const [imagePreviews, setImagePreviews] = useState<IImage[]>([]);
-	const [albumName, setAlbumName] = useState({
-		ua: '',
-		en: '',
-	});
-	const [albumFiles, setAlbumFiles] = useState<File[]>([]);
-
-	//Тимчасово
-	const lang = 'ua';
-
-	const initialValues = useMemo(
-		() => ({
-			name: {
-				ua: albumData?.name?.ua ?? '',
-				en: albumData?.name?.en ?? '',
-			},
-			cover_img: null as File | null,
-			category: albumData?.category ?? 'gallery',
-			album_images: [] as File[],
-		}),
-		[albumData]
-	);
 
 	useEffect(() => {
 		if (albumData) {
@@ -112,6 +111,7 @@ const CreateOrEditAlbum = () => {
 			let album_slug;
 
 			if (albumData) {
+				// Оновити існуючий альбом
 				const album = await fetchClient(
 					`/api/albums/update`,
 					{
@@ -126,11 +126,11 @@ const CreateOrEditAlbum = () => {
 					true
 				);
 				setIsUpdatingAlbum(true);
-
 				console.log('✅ Альбом оновлено');
 				setIsUpdatingAlbum(false);
 				album_slug = album.slug;
 			} else {
+				// Створити новий альбом
 				const album = await fetchClient(
 					`/api/albums/create`,
 					{
@@ -152,7 +152,7 @@ const CreateOrEditAlbum = () => {
 				console.log('✅ Альбом створено');
 				setIsAlbumCreated(true);
 				setIsCreatingAlbum(false);
-				finalAlbumId = String(album._id);
+				finalAlbumId = album._id;
 				album_slug = album.slug;
 			}
 
@@ -163,22 +163,30 @@ const CreateOrEditAlbum = () => {
 					formData.append('images', file); // 'images' - це те, як названо поле у бекенді
 				});
 
-				formData.append('album_id', finalAlbumId);
+				formData.append('album_id', finalAlbumId.toString());
 
 				if (album_slug) {
 					formData.append('album_slug', album_slug);
 				}
 
-				//await uploadImages(formData).unwrap();
-				await fetchClient(
-					`/api/images/upload`,
-					{
-						method: 'POST',
-						body: formData,
-					},
-					true
-				);
-				console.log('✅ Зображення завантажені');
+				// Завантажити зображення
+				try {
+					setIsUploadingImages(true);
+
+					await fetchClient(
+						`/api/images/upload`,
+						{
+							method: 'POST',
+							body: formData,
+						},
+						true
+					);
+					console.log('✅ Зображення завантажені');
+				} catch (error) {
+					console.error('Помилка завантаження зображень:', error);
+				} finally {
+					setIsUploadingImages(false);
+				}
 			}
 
 			resetForm();

@@ -1,9 +1,8 @@
-"use client";
+'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import s from './product.module.scss';
 import StoreItem from '@/components/StoreItem/StoreItem';
-import { useGetProductByIdQuery } from '@/redux/storeApi';
 import { IProduct } from '@/types/IProduct';
 import { useAppDispatch } from '@/hooks/redux';
 import { addToCart } from '@/redux/slices/cartSlice';
@@ -11,22 +10,35 @@ import { showSuccessToast } from '@/components/UI/showSuccessToast';
 import { ClipLoader } from 'react-spinners';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
+import { fetchClient } from '@/utils/fetchClient';
 
 const StoreItemPage: React.FC = () => {
 	const dispatch = useAppDispatch();
 	const params = useParams();
-	const product_id = params.product as string;
+	const slug = params.product;
+
+	const [isLoading, setIsLoading] = React.useState(true);
+	const [product, setProduct] = React.useState<IProduct | null>(null);
+	const [isError, setIsError] = React.useState(false);
+
+	useEffect(() => {
+		const fetchProduct = async() => {
+			setIsLoading(true);
+			try {
+				const data = await fetchClient(`/api/store/${slug}`);
+				setProduct(data);
+				setIsLoading(false);
+			} catch (error) {
+				console.error('Error fetching product:', error);
+				setIsLoading(false);
+				setIsError(true);
+			}
+		}
+		fetchProduct();
+	}, [slug]);
 
 
-	const {
-		data: product,
-		isLoading,
-		isError,
-	} = useGetProductByIdQuery(product_id ?? '', {
-		skip: !product_id,
-	});
-
-	if (!product_id) return <div>Помилка: відсутній ID товару</div>;
+	if (!slug) return <div>Помилка: відсутній slug товару</div>;
 
 	if (isLoading)
 		return (

@@ -38,7 +38,7 @@ const StoreItem: React.FC<IStoreItemProps> = ({ product, full_page = false, hand
 				/>
 			</div>
 		) : (
-			<Link href={`/store/${product._id}`} className={s.imgContainer}>
+			<Link href={`/store/${product.slug}`} className={s.imgContainer}>
 				<img className={s.img} src={product.imgs[0]?.img} alt={product.name} />
 			</Link>
 		);
@@ -52,7 +52,7 @@ const StoreItem: React.FC<IStoreItemProps> = ({ product, full_page = false, hand
 					{full_page ? (
 						<h2 className={s.name}>{product?.name}</h2>
 					) : (
-						<Link href={`/store/${product?._id}`}>
+						<Link href={`/store/${product?.slug}`}>
 							<h2 className={s.name}>{product?.name}</h2>
 						</Link>
 					)}

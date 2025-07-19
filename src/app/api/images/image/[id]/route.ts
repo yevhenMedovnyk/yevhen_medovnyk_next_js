@@ -8,7 +8,8 @@ import mongoose from 'mongoose';
 
 
 export async function GET(request: NextRequest, context: { params: { id: string } }) {
-	const { id } = context.params;
+	const params = await context.params;
+	const id = params?.id;
 
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		return NextResponse.json({ message: 'Invalid ID' }, { status: 400 });
@@ -28,7 +29,8 @@ export async function GET(request: NextRequest, context: { params: { id: string 
 
 
 export async function DELETE(request: Request, context: { params: { id: string } }) {
-	const { id } = context.params;
+	const params = await context.params;
+	const id = params?.id;
 
 	try {
 		await dbConnect();
