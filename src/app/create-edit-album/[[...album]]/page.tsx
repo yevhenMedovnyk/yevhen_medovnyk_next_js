@@ -169,7 +169,15 @@ const CreateOrEditAlbum = () => {
 					formData.append('album_slug', album_slug);
 				}
 
-				await uploadImages(formData).unwrap();
+				//await uploadImages(formData).unwrap();
+				await fetchClient(
+					`/api/images/upload`,
+					{
+						method: 'POST',
+						body: formData,
+					},
+					true
+				);
 				console.log('✅ Зображення завантажені');
 			}
 
