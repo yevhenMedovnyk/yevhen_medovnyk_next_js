@@ -242,7 +242,7 @@ const CreateOrEditAlbum = () => {
 			});
 		});
 
-		Promise.all(previews).then(setImagePreviews);
+		Promise.all(previews).then(setImagePreviews as any);
 	};
 
 	const handleCategoryChange = (

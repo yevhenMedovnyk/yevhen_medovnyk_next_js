@@ -1,17 +1,16 @@
-"use client";
+'use client';
 
 import React from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { contactFormSchema } from '@/schemas/contactForm.schema';
 import SocialNetLinksList from '@/components/SocialNetLinks/SocialNetLinks';
 import s from './contacts.module.scss';
-import { useSendMailMutation } from '@/redux/mailApi';
 import Button from '@/components/UI/Button/Button';
-import { showErrorToast } from "@/components/UI/showErrorToast";
+import { showErrorToast } from '@/components/UI/showErrorToast';
 import { showSuccessToast } from '@/components/UI/showSuccessToast';
+import { fetchClient } from '@/utils/fetchClient';
 
 const Contacts: React.FC = () => {
-	const [sendMail] = useSendMailMutation();
 	const initialValues = {
 		name: '',
 		email: '',
@@ -22,7 +21,10 @@ const Contacts: React.FC = () => {
 		{ resetForm }: { resetForm: () => void }
 	) => {
 		try {
-			const response = await sendMail(values).unwrap();
+			const response = await fetchClient('/api/send-mail', {
+				method: 'POST',
+				body: JSON.stringify(values),
+			});
 			showSuccessToast('Повідомлення надіслано');
 			console.log('response', response);
 
