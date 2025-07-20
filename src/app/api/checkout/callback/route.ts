@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
-import axios from 'axios';
 import Order from '@/models/Order';
 import { updateOrderStatus } from '@/utils/updateOrderStatus';
 import dbConnect from '@/lib/dbConnect';
@@ -8,32 +7,49 @@ import dbConnect from '@/lib/dbConnect';
 const MONO_CHECKOUT_URL = process.env.MONO_CHECKOUT_URL;
 const MONO_SECRET = process.env.MONO_CHECKOUT_TOKEN;
 
+if (!MONO_CHECKOUT_URL || !MONO_SECRET) {
+	throw new Error('Mono credentials are not defined!');
+}
+
 await dbConnect();
 
 export async function POST(req: NextRequest) {
 	const signatureBase64 = req.headers.get('x-sign');
-	if (!signatureBase64)
+	if (!signatureBase64) {
 		return NextResponse.json({ message: 'Missing X-Sign header' }, { status: 400 });
+	}
 
 	const body = await req.text();
+	const signatureBuf = Buffer.from(signatureBase64, 'base64');
 
-	const { data: publicKeyResp } = await axios.get(`${MONO_CHECKOUT_URL}signature/public/key`, {
-		headers: { 'X-Token': MONO_SECRET },
+	// Отримання публічного ключа від Mono
+	const publicKeyResp = await fetch(`${MONO_CHECKOUT_URL}signature/public/key`, {
+		headers: { 'X-Token': MONO_SECRET ?? '' },
 	});
 
-	const signatureBuf = Buffer.from(signatureBase64, 'base64');
-	const publicKeyBuf = Buffer.from(publicKeyResp.key, 'base64');
+	if (!publicKeyResp.ok) {
+		return NextResponse.json(
+			{ message: 'Failed to fetch public key from Mono' },
+			{ status: publicKeyResp.status }
+		);
+	}
 
+	const publicKeyData = await publicKeyResp.json();
+	const publicKeyBuf = Buffer.from(publicKeyData.key, 'base64');
+
+	// Перевірка підпису
 	const verify = crypto.createVerify('sha256');
 	verify.update(body);
 	verify.end();
 
 	const isValid = verify.verify(publicKeyBuf, signatureBuf);
-	//if (!isValid) return NextResponse.json({ message: 'Invalid signature' }, { status: 401 });
+
+	// if (!isValid) return NextResponse.json({ message: 'Invalid signature' }, { status: 401 });
 
 	const parsedBody = JSON.parse(body);
 	const { orderId, generalStatus } = parsedBody;
 
+	// Обробка замовлення
 	const existingOrder = await Order.findOne({ orderId });
 	if (!existingOrder) {
 		await Order.create(parsedBody);

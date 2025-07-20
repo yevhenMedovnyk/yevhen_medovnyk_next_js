@@ -16,8 +16,7 @@ const Store: React.FC = () => {
 		const fetchProducts = async () => {
 			setIsLoading(true);
 			try {
-				const response = await fetchClient('/api/store/products');
-				const data = await response.json();
+				const data = await fetchClient('/api/store/products');
 				setProducts(data);
 				setIsLoading(false);
 			} catch (error) {

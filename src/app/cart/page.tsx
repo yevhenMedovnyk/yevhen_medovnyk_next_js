@@ -1,33 +1,30 @@
-"use client";
+'use client';
 
 import React from 'react';
 import s from './cart.module.scss';
 import { useAppSelector, useAppDispatch } from '../../hooks/redux';
 import { increaseQuantity, decreaseQuantity, removeFromCart } from '../../redux/slices/cartSlice';
-import {
-	selectCartItemCount,
-	selectCartItems,
-	selectCartTotal,
-} from '@/utils/cartSelectors';
+import { selectCartItemCount, selectCartItems, selectCartTotal } from '@/utils/cartSelectors';
 import CartItem from '@/components/CartItem/CartItem';
 import Button from '@/components/UI/Button/Button';
 import { useCheckoutMutation } from '@/redux/checkoutApi';
 
 import Cookies from 'js-cookie';
 
-
 import Link from 'next/link';
+import { useFetchClient } from '@/hooks/useFetchClient';
 
 const Cart = () => {
 	const dispatch = useAppDispatch();
 	const cartItems = useAppSelector(selectCartItems);
 	const total = useAppSelector(selectCartTotal);
 	const [createOrder] = useCheckoutMutation();
+	const fetchClient = useFetchClient();
 
 	const itemsCount = useAppSelector(selectCartItemCount);
 	console.log('cart', cartItems);
 
-	const onClickBuy = () => {
+	const onClickBuy = async () => {
 		const order_ref = Date.now().toString();
 		const body = {
 			order_ref: order_ref,
@@ -37,17 +34,21 @@ const Cart = () => {
 			//"code_checkbox": "3315974",
 		};
 
-		createOrder(body)
-			.unwrap()
-			.then((res) => {
-				Cookies.set('last_order_ref', order_ref, { expires: 1 });
-				if (res.result.redirect_url) {
-					window.location.assign(res.result.redirect_url);
-				}
-			})
-			.catch((err) => {
-				console.error('Помилка при створенні замовлення:', err);
+		try {
+			const res = await fetchClient('/api/checkout', {
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				method: 'POST',
+				body: JSON.stringify(body),
 			});
+			Cookies.set('last_order_ref', order_ref, { expires: 1 });
+			if (res.result.redirect_url) {
+				window.location.assign(res.result.redirect_url);
+			}
+		} catch (error: any) {
+			console.error('Помилка при створенні замовлення:', error);
+		}
 	};
 
 	return (

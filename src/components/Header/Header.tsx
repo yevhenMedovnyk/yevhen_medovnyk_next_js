@@ -7,8 +7,6 @@ import NavLinks from './NavLinks/NavLinks';
 import BurgerOpenBtn from './BurgerOpenBtn/BurgerOpenBtn';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
 import CartIcon from './CartIcon/CartIcon';
-//import dynamic from 'next/dynamic';
-//const NavLinks = dynamic(() => import('./NavLinks/NavLinks'), { ssr: false });
 
 const Header: React.FC = () => {
 	const [isBurgerMenuOpen, setIsBurgerMenuOpen] = React.useState(false);

@@ -85,7 +85,7 @@ const StoreItem: React.FC<IStoreItemProps> = ({ product, full_page = false, hand
 						<Button
 							type="button"
 							disabled={!product || isInCart}
-							name={isInCart ? 'Додано до кошика' : 'Додати до кошика'}
+							name={isInCart ? 'В кошику' : 'Додати до кошика'}
 							onClick={() => handleAddToCart(product)}
 							class_name="storeItem"
 						/>
