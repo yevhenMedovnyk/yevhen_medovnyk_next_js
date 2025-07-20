@@ -21,8 +21,16 @@ export const updateOrderStatus = async (
 				email: '',
 				emailTo: order.mainClientInfo.email,
 				name: order.mainClientInfo.first_name,
-				subject: 'Замовлення успішно прийняте',
+				subject: 'Замовлення на YM | FineArt Prints',
 				templateName: 'orderSuccessMessage',
+				context: { order },
+			});
+			await sendMail({
+				email: '',
+				emailTo: process.env.GMAIL_USER!,
+				name: '',
+				subject: 'Нове замовлення на YM | FineArt Prints',
+				templateName: 'newOrderMessage',
 				context: { order },
 			});
 		}

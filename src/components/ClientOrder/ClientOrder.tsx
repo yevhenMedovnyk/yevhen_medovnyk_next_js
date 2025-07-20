@@ -7,6 +7,7 @@ import Button from '../UI/Button/Button';
 import { showSuccessToast } from '../UI/showSuccessToast';
 import Link from 'next/link';
 import { useFetchClient } from '@/hooks/useFetchClient';
+import { showErrorToast } from '../UI/showErrorToast';
 
 const img =
 	'https://res.cloudinary.com/yevhenmedovnyk/image/upload/v1751304457/Frame_cow_bf_uiulsu.webp';
@@ -48,7 +49,9 @@ const ClientOrder: React.FC<IOrder> = ({
 			setIsLoading(false);
 		} catch (error) {
 			console.error('Помилка оновлення ТТН:', error);
-			showSuccessToast('Помилка оновлення ТТН');
+			showErrorToast('Помилка оновлення ТТН');
+		}finally {
+			setIsLoading(false);
 		}
 	};
 

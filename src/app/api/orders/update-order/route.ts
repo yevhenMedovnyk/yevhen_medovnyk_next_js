@@ -26,7 +26,7 @@ export async function PUT(req: NextRequest) {
 			email: '',
 			emailTo: order.mainClientInfo.email,
 			name: order.mainClientInfo.first_name,
-			subject: 'Ваше замовлення відправлено',
+			subject: `Замовлення №${order.basket_id} | YM | FineArt Prints`,
 			templateName: 'addTrackingNumberMessage',
 			context: {
 				order,

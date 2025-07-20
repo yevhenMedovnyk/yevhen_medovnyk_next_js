@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Нове замовлення</title>
+  {{> styles }}
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      Нове замовлення №{{order.basket_id}}
+    </div>
+
+    <div class="content">
+      <p>Нове замовлення на YM | FineArt Prints:</p>
+
+      <div class="order-details">
+        <table>
+          <thead>
+            <tr>
+              <th>Товар</th>
+              <th>Кількість</th>
+              <th>Сума</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each order.products}}
+            <tr>
+              <td>{{this.name}}</td>
+              <td>{{this.cnt}}</td>
+              <td>{{multiply this.price this.cnt}} грн</td>
+            </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+
+      <p><strong>Загальна сума:</strong> {{order.amount}} грн</p>
+      <p><strong>Доставка:</strong> {{order.delivery_method_desc}}, {{order.delivery_branch_address}}</p>
+			<p><strong>Отримувач:</strong> {{order.deliveryRecipientInfo.last_name}} {{order.deliveryRecipientInfo.first_name}}, 
+			{{order.deliveryRecipientInfo.phoneNumber}}</p>
+    </div>
+  </div>
+</body>
+</html>
