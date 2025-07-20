@@ -1,12 +1,13 @@
-"use client";
+'use client';
 
 import React from 'react';
 import s from './ClientOrder.module.scss';
 import { IOrder } from '../../types/IOrder';
 import Button from '../UI/Button/Button';
-import { useUpdateOrderMutation } from '../../redux/ordersApi';
 import { showSuccessToast } from '../UI/showSuccessToast';
 import Link from 'next/link';
+import { useFetchClient } from '@/hooks/useFetchClient';
+import { showErrorToast } from '../UI/showErrorToast';
 
 const img =
 	'https://res.cloudinary.com/yevhenmedovnyk/image/upload/v1751304457/Frame_cow_bf_uiulsu.webp';
@@ -24,21 +25,33 @@ const ClientOrder: React.FC<IOrder> = ({
 	tracking_number,
 }) => {
 	const [inputTTNValue, setInputTTNValue] = React.useState(tracking_number || '');
+	const [isLoading, setIsLoading] = React.useState(false);
+	const fetchClient = useFetchClient();
 
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setInputTTNValue(event.target.value);
 	};
 
-	const [updateTrackingNumber, { isLoading }] = useUpdateOrderMutation();
 
 	const handleUpdateTTN = async () => {
 		try {
-			await updateTrackingNumber({ order_id, tracking_number: inputTTNValue }).unwrap();
+			setIsLoading(true);
+			await fetchClient(
+				'/api/orders/update-order',
+				{
+					method: 'PUT',
+					body: JSON.stringify({ order_id, tracking_number: inputTTNValue }),
+				},
+				true
+			);
 			console.log('ТТН оновлено');
 			showSuccessToast('ТТН оновлено');
+			setIsLoading(false);
 		} catch (error) {
 			console.error('Помилка оновлення ТТН:', error);
-			showSuccessToast('Помилка оновлення ТТН');
+			showErrorToast('Помилка оновлення ТТН');
+		}finally {
+			setIsLoading(false);
 		}
 	};
 

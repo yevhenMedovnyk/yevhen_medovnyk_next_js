@@ -1,13 +1,31 @@
-"use client";
+'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import s from './store.module.scss';
 import StoreItem from '@/components/StoreItem/StoreItem';
-import { useGetProductsQuery } from '../../redux/storeApi';
 import { ClipLoader } from 'react-spinners';
+import { IProduct } from '@/types/IProduct';
+import { useFetchClient } from '@/hooks/useFetchClient';
 
 const Store: React.FC = () => {
-	const { data: products, isLoading } = useGetProductsQuery();
+	const [isLoading, setIsLoading] = React.useState(true);
+	const [products, setProducts] = React.useState<IProduct[] | null>(null);
+	const fetchClient = useFetchClient();
+
+	useEffect(() => {
+		const fetchProducts = async () => {
+			setIsLoading(true);
+			try {
+				const data = await fetchClient('/api/store/products');
+				setProducts(data);
+				setIsLoading(false);
+			} catch (error) {
+				console.error('Error fetching products:', error);
+				setIsLoading(false);
+			}
+		};
+		fetchProducts();
+	}, []);
 
 	if (isLoading) {
 		return (
@@ -19,7 +37,9 @@ const Store: React.FC = () => {
 
 	return (
 		<div className={s.storeContainer}>
-			{products?.map((product) => <StoreItem key={product._id} product={product} />)}
+			{products?.map((product) => (
+				<StoreItem key={product._id} product={product} />
+			))}
 		</div>
 	);
 };

@@ -10,7 +10,7 @@ import { useAppSelector } from '../../hooks/redux';
 import Link from 'next/link';
 
 type IFolderProps = IAlbum & {
-	deleteFolder: (id: number) => void;
+	deleteFolder: (slug: string) => void;
 };
 
 const Folder: React.FC<IFolderProps> = ({ cover_img, name, category, _id, slug, deleteFolder }) => {
@@ -20,14 +20,14 @@ const Folder: React.FC<IFolderProps> = ({ cover_img, name, category, _id, slug, 
 		<div className={s.folder}>
 			{isAdmin && (
 				<div className={s.btns}>
-					<Link href={`/create-edit-album?albumId=${_id}`} className={s.editBtn}>
+					<Link href={`/create-edit-album/${slug}`} className={s.editBtn}>
 						<BiEdit /> <span>Редагувати</span>
 					</Link>
 					<button
 						onClick={
-							_id
+							slug
 								? () => {
-										deleteFolder(_id);
+										deleteFolder(slug);
 									}
 								: () => {
 										console.log('no id');

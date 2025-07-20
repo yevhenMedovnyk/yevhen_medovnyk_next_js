@@ -21,7 +21,6 @@
 	max-width: 30rem;
 	width: 100%;
 	margin-bottom: 4rem;
-	font-size: 0.9rem;
 }
 
 .input{
@@ -36,8 +35,13 @@
 	border: 1px solid $color-secondary;
 }
 
-.textareaContainer{
+.input::placeholder{
+	font-family: inherit;
+	font-size: .88rem;
+	font-weight: normal;
+
 }
+
 .textarea{
 	display: block;
 	width: 100%;
@@ -53,6 +57,10 @@
 .textarea:focus{
 	outline: none;
 	border: 1px solid $color-secondary;
+}
+
+.textarea::placeholder{
+	font-size: .88rem;
 }
 
 .button{

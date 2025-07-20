@@ -3,11 +3,13 @@ export const fetchClient = async (
 	options: RequestInit = {},
 	withCookies: boolean = false
 ) => {
+	const isFormData = options.body instanceof FormData;
+
 	const config: RequestInit = {
 		...options,
 		credentials: withCookies ? 'include' : 'same-origin',
 		headers: {
-			'Content-Type': 'application/json',
+			...(isFormData ? {} : { 'Content-Type': 'application/json' }),
 			...(options.headers || {}),
 		},
 	};
