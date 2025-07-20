@@ -7,6 +7,7 @@ import NavLinks from './NavLinks/NavLinks';
 import BurgerOpenBtn from './BurgerOpenBtn/BurgerOpenBtn';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
 import CartIcon from './CartIcon/CartIcon';
+import { UserAuth } from '@/hooks/useAuth';
 
 const Header: React.FC = () => {
 	const [isBurgerMenuOpen, setIsBurgerMenuOpen] = React.useState(false);
@@ -18,6 +19,10 @@ const Header: React.FC = () => {
 	const handleBurgerLinkClick = () => {
 		setIsBurgerMenuOpen(false);
 	};
+
+	const { signInWithGoogle } = UserAuth();
+	
+
 
 	return (
 		<header className={s.container}>
@@ -32,6 +37,7 @@ const Header: React.FC = () => {
 				isBurgerMenuOpen={isBurgerMenuOpen}
 				handleBurgerMenuClick={handleBurgerMenuClick}
 			/>
+			<button onClick={signInWithGoogle}>hjgh</button>
 		</header>
 	);
 };

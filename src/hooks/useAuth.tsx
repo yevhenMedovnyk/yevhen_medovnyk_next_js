@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { createContext, useContext, useEffect, ReactNode } from 'react';
 import {
@@ -8,11 +8,11 @@ import {
 	signOut,
 	User,
 } from 'firebase/auth';
-import { useCreateUserMutation, useLazyGetUserByUIDQuery } from '../redux/usersApi';
 import { useAppDispatch } from './redux';
 import { setUser } from '../redux/slices/authSlice';
 import { IUser } from '../types/IUser';
 import { auth } from '../../firebase';
+import { useFetchClient } from './useFetchClient';
 
 const AuthContext = createContext({
 	signInWithGoogle: async () => {},
@@ -23,9 +23,8 @@ const AuthContext = createContext({
 export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 	const dispatch = useAppDispatch();
 	const provider = new GoogleAuthProvider();
-	const [createUser] = useCreateUserMutation();
-	const [getUserByUID] = useLazyGetUserByUIDQuery();
 	const [loading, setLoading] = React.useState(true);
+	const fetchClient = useFetchClient();
 
 	// універсальна функція: створює юзера тільки якщо треба
 	const fetchAndSetUser = async (user: User, shouldCreate = false) => {
@@ -38,7 +37,8 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ childre
 			let user_db;
 
 			try {
-				user_db = await getUserByUID(uid).unwrap();
+				const res = await fetchClient('/api/users/get-user?uid=' + uid);
+				user_db = res;
 			} catch {
 				user_db = null;
 			}
@@ -51,7 +51,14 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ childre
 					isAdmin: Boolean(claims.isAdmin),
 				};
 
-				await createUser(newUser);
+				await fetchClient(
+					'/api/users/create-user',
+					{
+						method: 'POST',
+						body: JSON.stringify(newUser),
+					},
+					true
+				);
 				user_db = newUser;
 			}
 
@@ -73,7 +80,7 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ childre
 			const userCredential = await signInWithPopup(auth, provider);
 			const user = userCredential?.user;
 			if (user) {
-				await fetchAndSetUser(user, true); // ✅ створюємо користувача лише тут
+				await fetchAndSetUser(user, true); //створюємо користувача лише тут
 			}
 		} catch (error) {
 			console.error('Error during Google login:', error);
@@ -99,7 +106,7 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ childre
 	useEffect(() => {
 		const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
 			if (currentUser?.uid) {
-				await fetchAndSetUser(currentUser, false); // ❌ без створення
+				await fetchAndSetUser(currentUser, false); // без створення
 			}
 			setLoading(false);
 		});
