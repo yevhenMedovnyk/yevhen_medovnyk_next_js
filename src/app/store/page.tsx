@@ -1,47 +1,11 @@
-'use client';
-
-import React, { useEffect } from 'react';
-import s from './store.module.scss';
-import StoreItem from '@/components/StoreItem/StoreItem';
-import { ClipLoader } from 'react-spinners';
+import Store from '@/components/Store/Store';
 import { IProduct } from '@/types/IProduct';
-import { useFetchClient } from '@/hooks/useFetchClient';
 
-const Store: React.FC = () => {
-	const [isLoading, setIsLoading] = React.useState(true);
-	const [products, setProducts] = React.useState<IProduct[] | null>(null);
-	const fetchClient = useFetchClient();
+export default async function StorePage() {
+	const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/store/products`, {
+		next: { revalidate: 60 },
+	});
+	const products: IProduct[] = await res.json();
 
-	useEffect(() => {
-		const fetchProducts = async () => {
-			setIsLoading(true);
-			try {
-				const data = await fetchClient('/api/store/products');
-				setProducts(data);
-				setIsLoading(false);
-			} catch (error) {
-				console.error('Error fetching products:', error);
-				setIsLoading(false);
-			}
-		};
-		fetchProducts();
-	}, []);
-
-	if (isLoading) {
-		return (
-			<div className={s.spinnerWrapper}>
-				<ClipLoader color="#b0bab8" size={50} />
-			</div>
-		);
-	}
-
-	return (
-		<div className={s.storeContainer}>
-			{products?.map((product) => (
-				<StoreItem key={product._id} product={product} />
-			))}
-		</div>
-	);
-};
-
-export default Store;
+	return <Store products={products} />;
+}
