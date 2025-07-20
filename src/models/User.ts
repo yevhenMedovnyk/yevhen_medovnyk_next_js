@@ -15,6 +15,6 @@ const userSchema = new Schema<IUser>({
 });
 
 // Кешування моделі для уникнення повторного визначення під час HMR
-const User: Model<IUser> = mongoose.models.user || mongoose.model<IUser>('user', userSchema);
+const User: Model<IUser> = mongoose.models.User || mongoose.model<IUser>('User', userSchema);
 
 export default User;
