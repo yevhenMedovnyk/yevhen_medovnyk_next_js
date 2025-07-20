@@ -3,7 +3,7 @@ import { IProduct } from '@/types/IProduct';
 
 export default async function StorePage() {
 	const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/store/products`, {
-		next: { revalidate: 60 },
+		next: { revalidate: 1800, tags: ['Store'] },
 	});
 	const products: IProduct[] = await res.json();
 

@@ -1,71 +1,47 @@
-'use client';
-
-import React, { useEffect } from 'react';
-import s from './product.module.scss';
+import { Metadata } from 'next';
 import StoreItem from '@/components/StoreItem/StoreItem';
 import { IProduct } from '@/types/IProduct';
-import { useAppDispatch } from '@/hooks/redux';
-import { addToCart } from '@/redux/slices/cartSlice';
-import { showSuccessToast } from '@/components/UI/showSuccessToast';
-import { ClipLoader } from 'react-spinners';
-import { useParams } from 'next/navigation';
-import Link from 'next/link';
-import { useFetchClient } from '@/hooks/useFetchClient';
+import { notFound } from 'next/navigation';
+import s from './product.module.scss';
 
-const StoreItemPage: React.FC = () => {
-	const dispatch = useAppDispatch();
-	const params = useParams();
-	const slug = params.product;
+// Завантаження товару на сервері
+async function getProduct(slug: string): Promise<IProduct | null> {
+	try {
+		const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/store/${slug}`, {
+			next: { revalidate: 1800, tags: ['Store', 'Product'] },
+		});
+		if (!res.ok) return null;
+		return res.json();
+	} catch (e) {
+		console.error(e);
+		return null;
+	}
+}
 
-	const [isLoading, setIsLoading] = React.useState(true);
-	const [product, setProduct] = React.useState<IProduct | null>(null);
-	const [isError, setIsError] = React.useState(false);
+interface Props {
+	params: { product: string };
+}
 
-	const fetchClient = useFetchClient();
+export async function generateMetadata(props: Props): Promise<Metadata> {
+	const params = await props.params;
 
-	useEffect(() => {
-		const fetchProduct = async() => {
-			setIsLoading(true);
-			try {
-				const data = await fetchClient(`/api/store/${slug}`);
-				setProduct(data);
-				setIsLoading(false);
-			} catch (error) {
-				console.error('Error fetching product:', error);
-				setIsLoading(false);
-				setIsError(true);
-			}
-		}
-		fetchProduct();
-	}, [slug]);
+	const product = await getProduct(params.product);
+	if (!product) return { title: 'Товар не знайдено' };
 
-
-	if (!slug) return <div>Помилка: відсутній slug товару</div>;
-
-	if (isLoading)
-		return (
-			<div className={s.spinnerWrapper}>
-				<ClipLoader color="#b0bab8" size={50} />
-			</div>
-		);
-	if (isError || !product) return <div>Помилка при завантаженні товару</div>;
-
-	const handleAddToCart = (product: IProduct): void => {
-		dispatch(addToCart(product));
-		showSuccessToast(
-			'Товар додано!',
-			<Link href="/cart" className={s.toastLink}>
-				→ Перейти до кошика
-			</Link>,
-			5000
-		);
+	return {
+		title: product.name,
+		description: product.captured_info,
 	};
+}
+
+export default async function StoreItemPage(props: Props) {
+	const params = await props.params;
+	const product = await getProduct(params.product);
+	if (!product) return notFound();
 
 	return (
 		<div className={s.StoreItemPageContainer}>
-			<StoreItem handleAddToCart={handleAddToCart} full_page product={product} />
+			<StoreItem full_page product={product} />
 		</div>
 	);
-};
-
-export default StoreItemPage;
+}

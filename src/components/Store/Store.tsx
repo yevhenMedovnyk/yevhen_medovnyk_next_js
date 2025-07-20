@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import s from './Store.module.scss';
 import StoreItem from '@/components/StoreItem/StoreItem';
