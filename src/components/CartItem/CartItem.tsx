@@ -16,12 +16,12 @@ interface ICartItemProps {
 }
 
 const CartItem: React.FC<ICartItemProps> = ({ item, onIncrease, onDecrease, onRemove }) => {
-	const { _id, imgs, name, price, quantity_in_cart } = item;
+	const { _id, imgs, name, price, quantity_in_cart, slug } = item;
 	const itemTotal = price * quantity_in_cart;
 
 	return (
 		<div className={s.container}>
-			<Link href={`/store/${_id}`} className={s.img}>
+			<Link href={`/store/${slug}`} className={s.img}>
 				<img src={imgs[0].img} alt={name} />
 			</Link>
 			<div className={s.info}>

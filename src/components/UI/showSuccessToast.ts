@@ -1,7 +1,7 @@
 import { toast } from 'sonner';
 
 export const showSuccessToast = (
-	message: string,
+	message: string | React.ReactNode,
 	description?: string | React.ReactNode,
 	duration?: number
 ) => {
