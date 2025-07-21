@@ -8,5 +8,7 @@ export default async function StorePage() {
 
 	const productsMinimal: Pick<IProduct, '_id' | 'slug' | 'name' | 'imgs'>[] = await res.json();
 
+	
+
 	return <Store productsMinimal={productsMinimal} />;
 }

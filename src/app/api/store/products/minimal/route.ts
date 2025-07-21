@@ -6,7 +6,7 @@ export async function GET(request: NextRequest) {
 	
 	try {
 		await dbConnect();
-		const products = await StoreItem.find({}).select('name slug price imgs');
+		const products = await StoreItem.find({}).select('name slug price');
 		return NextResponse.json(products);
 
 	} catch (error: any) {

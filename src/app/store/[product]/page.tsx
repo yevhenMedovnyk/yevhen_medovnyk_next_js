@@ -8,7 +8,7 @@ import s from './product.module.scss';
 async function getProduct(slug: string): Promise<IProduct | null> {
 	try {
 		const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/store/${slug}`, {
-			next: { revalidate: 1800, tags: ['Store', 'Product'] },
+			next: { revalidate: 0, tags: ['Store', 'Product'] },
 		});
 		if (!res.ok) return null;
 		return res.json();

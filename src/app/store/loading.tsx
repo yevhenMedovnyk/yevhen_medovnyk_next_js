@@ -1,11 +1,19 @@
 
 'use client';
-import { ClipLoader } from 'react-spinners';
 
 export default function Loading() {
 	return (
-		<div className="spinnerWrapper">
-			<ClipLoader color="#b0bab8" size={50} />
-		</div>
+		<div
+				style={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+						color: '#555',
+						fontSize: '16px',
+						fontWeight: '500',
+					}}
+				>
+					Завантаження...
+				</div>
 	);
 }
