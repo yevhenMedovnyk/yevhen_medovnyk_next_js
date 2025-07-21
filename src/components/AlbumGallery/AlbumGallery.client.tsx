@@ -45,7 +45,7 @@ const AlbumGalleryClient: React.FC<Props> = ({ albums }) => {
 			)}
 			<div className={s.container}>
 				{galleryAlbums?.map((folder) => (
-					<Folder key={folder._id} {...folder} deleteFolder={handleDeleteFolder} />
+					<Folder key={folder._id} folder={folder} deleteFolder={handleDeleteFolder} />
 				))}
 			</div>
 		</>
