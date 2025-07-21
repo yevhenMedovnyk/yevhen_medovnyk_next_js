@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import dbConnect from '@/lib/dbConnect';
 import Image_album from '@/models/ImageAlbum';
 import slugify from 'slugify';
+import { revalidateTag } from 'next/cache';
 
 
 
@@ -28,6 +29,9 @@ export async function POST(request: NextRequest) {
 		}
 
 		const newAlbum = await Image_album.create({ ...body, slug });
+
+		revalidateTag('Albums');
+
 		return NextResponse.json(newAlbum, { status: 201 });
 	} catch (error: any) {
 		return NextResponse.json({ message: error.message || 'Server error' }, { status: 400 });

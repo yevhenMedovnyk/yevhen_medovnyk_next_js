@@ -3,6 +3,8 @@ import Image from "@/models/Image";
 import { NextResponse } from "next/server";
 
 
+
+// Оновити опис зображення
 export async function PATCH(request: Request, context: { params: { id: string } }) {
 	const { id } = context.params;
 	const { description } = await request.json();

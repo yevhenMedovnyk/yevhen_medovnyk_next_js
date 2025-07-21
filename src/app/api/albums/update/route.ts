@@ -3,7 +3,11 @@ import dbConnect from '@/lib/dbConnect';
 import Image_album from '@/models/ImageAlbum';
 import Image from '@/models/Image';
 import slugify from 'slugify';
+import { revalidateTag } from 'next/cache';
 
+
+
+// Оновлення альбому
 export async function PUT(req: NextRequest) {
 	try {
 		await dbConnect();
@@ -45,6 +49,9 @@ export async function PUT(req: NextRequest) {
 		if (oldSlug !== slug) {
 			await Image.updateMany({ album_slug: oldSlug }, { $set: { album_slug: slug } });
 		}
+
+		revalidateTag('Albums');
+		revalidateTag('Images');
 
 		return NextResponse.json(album.toObject(), { status: 200 });
 	} catch (error: any) {

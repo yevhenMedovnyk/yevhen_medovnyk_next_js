@@ -4,6 +4,7 @@ import Image from '@/models/Image';
 import { NextRequest, NextResponse } from 'next/server';
 import { getPublicIdFromUrl } from '@/utils/getPublicIdFromUrl';
 import cloudinary from '@/lib/cloudinary';
+import { revalidateTag } from 'next/cache';
 
 
 
@@ -37,6 +38,8 @@ export async function DELETE(request: NextRequest) {
 		if (!deletedAlbum) {
 			return NextResponse.json({ message: 'Album not found' }, { status: 404 });
 		}
+
+		revalidateTag('Albums');
 
 		return NextResponse.json({ message: 'Album and related images deleted', album: deletedAlbum });
 	} catch (error: any) {

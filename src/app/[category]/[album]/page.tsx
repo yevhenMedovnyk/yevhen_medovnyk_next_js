@@ -16,7 +16,7 @@ interface Props {
 async function getImagesMinimal(slug: string): Promise<ImageMinimal[] | null> {
 	try {
 		const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/images/minimal/${slug}`, {
-			next: { revalidate: 0, tags: ['Images'] },
+			next: { revalidate: 3600, tags: ['Images'] },
 		});
 		if (!res.ok) return null;
 		return res.json();

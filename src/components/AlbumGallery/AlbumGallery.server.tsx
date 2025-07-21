@@ -7,7 +7,7 @@ interface Props {
 
 async function getAlbums(category: string): Promise<IAlbum[]> {
 	const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/albums?category=${category}`, {
-		next: { revalidate: 0, tags: ['Albums'] },
+		next: { revalidate: 3600, tags: ['Albums'] },
 	});
 	return res.json();
 }
