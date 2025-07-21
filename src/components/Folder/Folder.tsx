@@ -13,7 +13,7 @@ type IFolderProps = IAlbum & {
 	deleteFolder: (slug: string) => void;
 };
 
-const Folder: React.FC<IFolderProps> = ({ cover_img, name, category, _id, slug, deleteFolder }) => {
+const Folder: React.FC<IFolderProps> = ({ cover_img, name, category, slug, deleteFolder }) => {
 	const { isAdmin } = useAppSelector((state) => state.auth.user);
 
 	return (
