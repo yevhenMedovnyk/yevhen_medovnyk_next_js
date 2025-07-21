@@ -1,38 +1,35 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import s from './album.module.scss';
 import Gallery from '@/components/Gallery/Gallery';
-import { useParams } from 'next/navigation';
-import { useFetchClient } from '@/hooks/useFetchClient';
+import { notFound } from 'next/navigation';
 
-interface ImageId {
+interface ImageMinimal {
 	_id: string;
 	width: number;
 	height: number;
 }
 
-const Album = () => {
-	const params = useParams();
-	const slug = params.album as string;
-	const [imagesIdObject, setImagesIdObject] = useState<ImageId[]>([]);
+interface Props {
+	params: { category: string; album: string };
+}
 
-	const fetchClient = useFetchClient();
+async function getImagesMinimal(slug: string): Promise<ImageMinimal[] | null> {
+	try {
+		const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/images/minimal/${slug}`, {
+			next: { revalidate: 0, tags: ['Images'] },
+		});
+		if (!res.ok) return null;
+		return res.json();
+	} catch (e) {
+		console.error(e);
+		return null;
+	}
+}
 
-	useEffect(() => {
-		if (!slug) return;
-
-		const fetchImages = async () => {
-			try {
-				const data = await fetchClient(`/api/images/images-id/${slug}`);
-				setImagesIdObject(data);
-			} catch (err) {
-				console.error('Помилка завантаження зображень:', err);
-			}
-		};
-
-		fetchImages();
-	}, [slug]);
+export default async function AlbumPage(props: Props) {
+	const params = await props.params;
+	const imagesIdObject = await getImagesMinimal(params.album);
+	if (!imagesIdObject) return notFound();
 
 	const imageIds = imagesIdObject.map(({ _id, width, height }) => ({
 		_id,
@@ -45,6 +42,4 @@ const Album = () => {
 			<Gallery imageIds={imageIds} />
 		</div>
 	);
-};
-
-export default Album;
+}

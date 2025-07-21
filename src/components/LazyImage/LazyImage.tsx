@@ -1,6 +1,6 @@
 'use client';
 
-import React, { use, useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import s from './LazyImage.module.scss';
 import { useInView } from 'react-intersection-observer';
 import { ClipLoader } from 'react-spinners';

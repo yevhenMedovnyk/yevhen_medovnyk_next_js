@@ -10,6 +10,7 @@ interface IImage {
 export interface IStoreItem extends Document {
 	code_product: number;
 	name: string;
+	slug: string;
 	imgs: IImage[];
 	price: number;
 	quantity?: number;
@@ -34,6 +35,7 @@ const imageSchema = new Schema<IImage>(
 const storeItemSchema = new Schema<IStoreItem>({
 	code_product: { type: Number, required: true },
 	name: { type: String, required: true },
+	slug: { type: String, required: true },
 	imgs: { type: [imageSchema], default: [] },
 	price: { type: Number, required: true },
 	quantity: { type: Number, required: false },

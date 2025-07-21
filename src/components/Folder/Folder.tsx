@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React from 'react';
 import s from './Folder.module.scss';
@@ -8,13 +8,23 @@ import { MdFolderDelete } from 'react-icons/md';
 import { IAlbum } from '../../types/IAlbum';
 import { useAppSelector } from '../../hooks/redux';
 import Link from 'next/link';
+import { ClipLoader } from 'react-spinners';
 
-type IFolderProps = IAlbum & {
+type IFolderProps = {
 	deleteFolder: (slug: string) => void;
+	folder: IAlbum;
 };
 
-const Folder: React.FC<IFolderProps> = ({ cover_img, name, category, _id, slug, deleteFolder }) => {
+const Folder: React.FC<IFolderProps> = ({ folder, deleteFolder }) => {
+	const { cover_img, name, category, slug } = folder;
 	const { isAdmin } = useAppSelector((state) => state.auth.user);
+
+	if (!slug)
+		return (
+			<div className="spinnerWrapper">
+				<ClipLoader color="#b0bab8" size={50} />
+			</div>
+		);
 
 	return (
 		<div className={s.folder}>

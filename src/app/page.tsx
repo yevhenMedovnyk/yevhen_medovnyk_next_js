@@ -1,5 +1,5 @@
 import React from 'react';
-import AlbumGallery from '@/components/AlbumGallery/AlbumGallery';
+import AlbumGallery from '@/components/AlbumGallery/AlbumGallery.server';
 
 const GalleryPage: React.FC = () => {
 	return (
