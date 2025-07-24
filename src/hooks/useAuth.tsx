@@ -8,11 +8,10 @@ import {
 	signOut,
 	User,
 } from 'firebase/auth';
-import { useAppDispatch } from './redux';
-import { setUser } from '../redux/slices/authSlice';
 import { IUser } from '../types/IUser';
 import { auth } from '../../firebase';
 import { useFetchClient } from './useFetchClient';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 const AuthContext = createContext({
 	signInWithGoogle: async () => {},
@@ -21,10 +20,11 @@ const AuthContext = createContext({
 });
 
 export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-	const dispatch = useAppDispatch();
 	const provider = new GoogleAuthProvider();
 	const [loading, setLoading] = React.useState(true);
 	const fetchClient = useFetchClient();
+
+	const setUser = useAuthStore((state) => state.setUser);
 
 	// універсальна функція: створює юзера тільки якщо треба
 	const fetchAndSetUser = async (user: User, shouldCreate = false) => {
@@ -63,12 +63,12 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ childre
 			}
 
 			if (user_db) {
-				dispatch(
-					setUser({
-						...user_db,
-						isAdmin: Boolean(claims.isAdmin),
-					})
-				);
+				setUser({
+					...user_db,
+					isAdmin: Boolean(claims.isAdmin),
+				});
+			} else {
+				console.error('User not found');
 			}
 		} catch (error) {
 			console.error('fetchAndSetUser error:', error);
@@ -90,14 +90,12 @@ export const AuthContextProvider: React.FC<{ children: ReactNode }> = ({ childre
 	const logout = async () => {
 		try {
 			await signOut(auth);
-			dispatch(
-				setUser({
-					displayName: '',
-					email: '',
-					uid: '',
-					isAdmin: false,
-				})
-			);
+			setUser({
+				displayName: '',
+				email: '',
+				uid: '',
+				isAdmin: false,
+			});
 		} catch (error) {
 			console.error(error);
 		}

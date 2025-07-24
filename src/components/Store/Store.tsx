@@ -21,9 +21,6 @@ const Store: React.FC<Props> = ({ productsMinimal }) => {
 		triggerOnce: false,
 	});
 
-	console.log("loadedProducts",loadedProducts);
-	
-
 	const fetchProductDetails = useCallback(async (slug: string): Promise<IProduct | null> => {
 		try {
 			const res = await fetch(`/api/store/${slug}`);
@@ -33,7 +30,6 @@ const Store: React.FC<Props> = ({ productsMinimal }) => {
 			return null;
 		}
 	}, []);
-
 
 	useEffect(() => {
 		if (inView && !isFetching && loadIndex < productsMinimal.length) {

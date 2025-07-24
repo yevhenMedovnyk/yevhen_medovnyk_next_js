@@ -1,18 +1,14 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { PiShoppingCartSimpleFill } from 'react-icons/pi';
-import { useAppSelector } from '@/hooks/redux';
-import { selectCartItemCount } from '@/utils/cartSelectors';
 
 import s from './CartIcon.module.scss';
-import { useEffect, useState } from 'react';
-import { ICartItem } from '@/types/ICartItem';
+import { useCartItemCount } from '@/stores/hooks/cartSelectors';
 
 const CartIcon = () => {
 	const pathname = usePathname();
 	const isShowCartIcon = pathname.startsWith('/store') || pathname === '/cart';
-	const itemsCount = useAppSelector(selectCartItemCount);
-
+	const itemsCount = useCartItemCount();
 
 	if (!isShowCartIcon) return null;
 

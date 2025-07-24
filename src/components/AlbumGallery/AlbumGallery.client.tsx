@@ -9,6 +9,7 @@ import { useAppSelector } from '@/hooks/redux';
 import { showSuccessToast } from '../UI/showSuccessToast';
 import { showErrorToast } from '../UI/showErrorToast';
 import { useFetchClient } from '@/hooks/useFetchClient';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 interface Props {
 	albums: IAlbum[];
@@ -16,8 +17,10 @@ interface Props {
 
 const AlbumGalleryClient: React.FC<Props> = ({ albums }) => {
 	const [galleryAlbums, setGalleryAlbums] = useState<IAlbum[]>(albums);
-	const { isAdmin } = useAppSelector((state) => state.auth.user);
+	const isAdmin = useAuthStore((state) => state.items?.isAdmin);
 	const fetchClient = useFetchClient();
+
+	console.log(isAdmin);
 
 	const handleDeleteFolder = async (slug: string) => {
 		try {

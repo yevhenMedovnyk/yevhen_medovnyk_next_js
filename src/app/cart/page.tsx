@@ -2,27 +2,23 @@
 
 import React from 'react';
 import s from './cart.module.scss';
-import { useAppSelector, useAppDispatch } from '../../hooks/redux';
-import { increaseQuantity, decreaseQuantity, removeFromCart } from '../../redux/slices/cartSlice';
-import { selectCartItemCount, selectCartItems, selectCartTotal } from '@/utils/cartSelectors';
+import { useCartItemCount, useCartItems, useCartTotal } from '@/stores/hooks/cartSelectors';
 import CartItem from '@/components/CartItem/CartItem';
 import Button from '@/components/UI/Button/Button';
-import { useCheckoutMutation } from '@/redux/checkoutApi';
-
 import Cookies from 'js-cookie';
-
 import Link from 'next/link';
 import { useFetchClient } from '@/hooks/useFetchClient';
+import { useCartStore } from '@/stores/useCartStore';
 
 const Cart = () => {
-	const dispatch = useAppDispatch();
-	const cartItems = useAppSelector(selectCartItems);
-	const total = useAppSelector(selectCartTotal);
-	const [createOrder] = useCheckoutMutation();
 	const fetchClient = useFetchClient();
 
-	const itemsCount = useAppSelector(selectCartItemCount);
-	console.log('cart', cartItems);
+	const cartItems = useCartItems();
+	const total = useCartTotal();
+	const itemsCount = useCartItemCount();
+	const increaseQuantity = useCartStore((state) => state.increaseQuantity);
+	const decreaseQuantity = useCartStore((state) => state.decreaseQuantity);
+	const removeFromCart = useCartStore((state) => state.removeFromCart);
 
 	const onClickBuy = async () => {
 		const order_ref = Date.now().toString();
@@ -71,9 +67,9 @@ const Cart = () => {
 						<CartItem
 							key={item._id}
 							item={item}
-							onIncrease={() => dispatch(increaseQuantity(item._id))}
-							onDecrease={() => dispatch(decreaseQuantity(item._id))}
-							onRemove={() => dispatch(removeFromCart(item._id))}
+							onIncrease={() => increaseQuantity(item._id)}
+							onDecrease={() => decreaseQuantity(item._id)}
+							onRemove={() => removeFromCart(item._id)}
 						/>
 					))}
 					<div className={s.total}>

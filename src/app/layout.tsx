@@ -5,7 +5,6 @@ import Header from '@/components/Header/Header';
 import styles from './page.module.scss';
 import Footer from '@/components/Footer/Footer';
 import MainTitle from '@/components/MainTitle/MainTitle';
-import ReduxProvider from '@/utils/ReduxProvider';
 import { AuthContextProvider } from '@/hooks/useAuth';
 import ScrollToTopOnRouteChange from '@/utils/ScrollToTopOnRouteChange';
 import { Toaster } from 'sonner';
@@ -44,14 +43,12 @@ export default function RootLayout({
 				className={`${mulish.variable} ${montserrat_Alternates.variable} ${indie_Flower.variable}`}
 			>
 				<div className={styles.layoutContainer}>
-					<ReduxProvider>
-						<AuthContextProvider>
-							<Header />
-							<MainTitle />
-							<main className={styles.main}>{children}</main>
-							<Footer />
-						</AuthContextProvider>
-					</ReduxProvider>
+					<AuthContextProvider>
+						<Header />
+						<MainTitle />
+						<main className={styles.main}>{children}</main>
+						<Footer />
+					</AuthContextProvider>
 				</div>
 				<ScrollToTopOnRouteChange />
 				<Toaster duration={2500} />

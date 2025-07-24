@@ -6,9 +6,9 @@ import { BiEdit } from 'react-icons/bi';
 import { MdFolderDelete } from 'react-icons/md';
 
 import { IAlbum } from '../../types/IAlbum';
-import { useAppSelector } from '../../hooks/redux';
 import Link from 'next/link';
 import { ClipLoader } from 'react-spinners';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 type IFolderProps = {
 	deleteFolder: (slug: string) => void;
@@ -17,7 +17,7 @@ type IFolderProps = {
 
 const Folder: React.FC<IFolderProps> = ({ folder, deleteFolder }) => {
 	const { cover_img, name, category, slug } = folder;
-	const { isAdmin } = useAppSelector((state) => state.auth.user);
+	const isAdmin = useAuthStore((state) => state.items?.isAdmin);
 
 	if (!slug)
 		return (

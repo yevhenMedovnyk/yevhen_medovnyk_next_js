@@ -16,7 +16,7 @@ interface ICartItemProps {
 }
 
 const CartItem: React.FC<ICartItemProps> = ({ item, onIncrease, onDecrease, onRemove }) => {
-	const { _id, imgs, name, price, quantity_in_cart, slug } = item;
+	const { imgs, name, price, quantity_in_cart, slug } = item;
 	const itemTotal = price * quantity_in_cart;
 
 	return (
@@ -26,7 +26,6 @@ const CartItem: React.FC<ICartItemProps> = ({ item, onIncrease, onDecrease, onRe
 			</Link>
 			<div className={s.info}>
 				<div className={s.name}>{name}</div>
-				{/*<div className={s.price}>Ціна: {price} грн</div>*/}
 				<div className={s.quantityContainer}>
 					<FiMinus
 						className={clsx(s.minusBtn, quantity_in_cart === 1 && s.disabled)}
