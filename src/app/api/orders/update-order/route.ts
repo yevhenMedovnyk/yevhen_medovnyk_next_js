@@ -2,10 +2,18 @@ import dbConnect from '@/lib/dbConnect';
 import Order from '@/models/Order';
 import { sendMail } from '@/utils/sendMail';
 import { NextRequest, NextResponse } from 'next/server';
+import { authOptions } from '../../auth/[...nextauth]/route';
+import { getServerSession } from 'next-auth/next';
 
 
 // Додати/редагувати ТТН до замовлення
 export async function PUT(req: NextRequest) {
+	const session = await getServerSession(authOptions);
+
+	if (session?.user?.role !== 'admin') {
+		return NextResponse.json({ message: 'Only admins can update orders' }, { status: 403 });
+	}
+	
 	try {
 		await dbConnect();
 		const body = await req.json();

@@ -1,13 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { authOptions } from '../../auth/[...nextauth]/route';
+import { getServerSession } from 'next-auth/next';
+import { revalidateTag } from 'next/cache';
+import slugify from 'slugify';
 import dbConnect from '@/lib/dbConnect';
 import Image_album from '@/models/ImageAlbum';
-import slugify from 'slugify';
-import { revalidateTag } from 'next/cache';
-
-
 
 // Створення нового альбому
 export async function POST(request: NextRequest) {
+	const session = await getServerSession(authOptions);
+
+	if (session?.user?.role !== 'admin') {
+		return NextResponse.json({ error: 'Only admins can create albums' }, { status: 403 });
+	}
 
 	try {
 		await dbConnect();

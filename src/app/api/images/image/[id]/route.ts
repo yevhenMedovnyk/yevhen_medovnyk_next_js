@@ -4,8 +4,8 @@ import Image from '@/models/Image';
 import cloudinary from '@/lib/cloudinary';
 import { getPublicIdFromUrl } from '@/utils/getPublicIdFromUrl';
 import mongoose from 'mongoose';
-
-
+import { authOptions } from '../../../auth/[...nextauth]/route';
+import { getServerSession } from 'next-auth/next';
 
 export async function GET(request: NextRequest, context: { params: { id: string } }) {
 	const params = await context.params;
@@ -27,8 +27,13 @@ export async function GET(request: NextRequest, context: { params: { id: string 
 	}
 }
 
-
 export async function DELETE(request: Request, context: { params: { id: string } }) {
+	const session = await getServerSession(authOptions);
+
+	if (session?.user?.role !== 'admin') {
+		return NextResponse.json({ error: 'Only admins can delete images' }, { status: 403 });
+	}
+
 	const params = await context.params;
 	const id = params?.id;
 

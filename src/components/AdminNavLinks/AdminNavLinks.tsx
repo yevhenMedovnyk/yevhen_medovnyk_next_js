@@ -1,10 +1,11 @@
 'use client';
 
+import { signOut, useSession } from 'next-auth/react';
+
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import s from './AdminNavLinks.module.scss';
-import { UserAuth } from '@/hooks/useAuth';
 
 interface INavLinks {
 	title: string;
@@ -20,7 +21,6 @@ const navLinksList: INavLinks[] = [
 
 const AdminNavLinks: React.FC = () => {
 	const pathname = usePathname();
-	const { logout } = UserAuth();
 
 	return (
 		<div className={s.container}>
@@ -33,7 +33,7 @@ const AdminNavLinks: React.FC = () => {
 					</Link>
 				);
 			})}
-			<button onClick={logout} className={s.link}>
+			<button onClick={() => signOut({ callbackUrl: '/' })} className={s.link}>
 				Logout
 			</button>
 		</div>

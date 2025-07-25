@@ -5,11 +5,19 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getPublicIdFromUrl } from '@/utils/getPublicIdFromUrl';
 import cloudinary from '@/lib/cloudinary';
 import { revalidateTag } from 'next/cache';
+import { authOptions } from '../../auth/[...nextauth]/route';
+import { getServerSession } from 'next-auth/next';
 
 
 
 //Видалити альбом
 export async function DELETE(request: NextRequest) {
+	const session = await getServerSession(authOptions);
+
+	if (session?.user?.role !== 'admin') {
+		return NextResponse.json({ error: 'Only admins can delete albums' }, { status: 403 });
+	}
+	
 	try {
 		const slug = request.nextUrl.searchParams.get('slug');
 
