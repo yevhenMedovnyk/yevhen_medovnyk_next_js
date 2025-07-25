@@ -8,7 +8,7 @@ import { MdFolderDelete } from 'react-icons/md';
 import { IAlbum } from '../../types/IAlbum';
 import Link from 'next/link';
 import { ClipLoader } from 'react-spinners';
-import { useAuthStore } from '@/stores/useAuthStore';
+import { useSession } from 'next-auth/react';
 
 type IFolderProps = {
 	deleteFolder: (slug: string) => void;
@@ -17,7 +17,8 @@ type IFolderProps = {
 
 const Folder: React.FC<IFolderProps> = ({ folder, deleteFolder }) => {
 	const { cover_img, name, category, slug } = folder;
-	const isAdmin = useAuthStore((state) => state.items?.isAdmin);
+	const { data: session } = useSession();
+	const isAdmin = session?.user?.role === 'admin';
 
 	if (!slug)
 		return (

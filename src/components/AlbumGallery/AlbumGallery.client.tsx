@@ -5,11 +5,10 @@ import s from './AlbumGallery.module.scss';
 import Folder from '@/components/Folder/Folder';
 import Link from 'next/link';
 import { IAlbum } from '@/types/IAlbum';
-import { useAppSelector } from '@/hooks/redux';
 import { showSuccessToast } from '../UI/showSuccessToast';
 import { showErrorToast } from '../UI/showErrorToast';
 import { useFetchClient } from '@/hooks/useFetchClient';
-import { useAuthStore } from '@/stores/useAuthStore';
+import { useSession } from 'next-auth/react';
 
 interface Props {
 	albums: IAlbum[];
@@ -17,10 +16,9 @@ interface Props {
 
 const AlbumGalleryClient: React.FC<Props> = ({ albums }) => {
 	const [galleryAlbums, setGalleryAlbums] = useState<IAlbum[]>(albums);
-	const isAdmin = useAuthStore((state) => state.items?.isAdmin);
 	const fetchClient = useFetchClient();
-
-	console.log(isAdmin);
+	const { data: session } = useSession();
+	const isAdmin = session?.user?.role === 'admin';
 
 	const handleDeleteFolder = async (slug: string) => {
 		try {

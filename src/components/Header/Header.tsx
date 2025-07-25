@@ -1,13 +1,13 @@
 'use client';
 
 import React from 'react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import s from './Header.module.scss';
 import Logo from './Logo/Logo';
 import NavLinks from './NavLinks/NavLinks';
 import BurgerOpenBtn from './BurgerOpenBtn/BurgerOpenBtn';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
 import CartIcon from './CartIcon/CartIcon';
-import { UserAuth } from '@/hooks/useAuth';
 
 const Header: React.FC = () => {
 	const [isBurgerMenuOpen, setIsBurgerMenuOpen] = React.useState(false);
@@ -20,9 +20,10 @@ const Header: React.FC = () => {
 		setIsBurgerMenuOpen(false);
 	};
 
-	const { signInWithGoogle } = UserAuth();
-	
+	const { data: session } = useSession();
 
+	console.log(session);
+	
 
 	return (
 		<header className={s.container}>
@@ -37,7 +38,7 @@ const Header: React.FC = () => {
 				isBurgerMenuOpen={isBurgerMenuOpen}
 				handleBurgerMenuClick={handleBurgerMenuClick}
 			/>
-			<button onClick={signInWithGoogle}>hjgh</button>
+			<button onClick={() => signIn('google')}>hjgh</button>
 		</header>
 	);
 };

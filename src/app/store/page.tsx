@@ -3,10 +3,10 @@ import { IProduct } from '@/types/IProduct';
 
 export default async function StorePage() {
 	const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/store/products/minimal`, {
-		next: { revalidate: 0, tags: ['Store'] },
+		next: { revalidate: 3600, tags: ['Store'] },
 	});
 
-	const productsMinimal: Pick<IProduct, '_id' | 'slug' | 'name' | 'imgs'>[] = await res.json();
+	const productsMinimal: Pick<IProduct, '_id' | 'slug' | 'name' >[] = await res.json();
 
 	
 

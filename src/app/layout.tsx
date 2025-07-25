@@ -5,9 +5,9 @@ import Header from '@/components/Header/Header';
 import styles from './page.module.scss';
 import Footer from '@/components/Footer/Footer';
 import MainTitle from '@/components/MainTitle/MainTitle';
-import { AuthContextProvider } from '@/hooks/useAuth';
 import ScrollToTopOnRouteChange from '@/utils/ScrollToTopOnRouteChange';
 import { Toaster } from 'sonner';
+import Providers from '@/providers';
 
 const mulish = Mulish({
 	variable: '--font-mulish',
@@ -38,17 +38,17 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html lang="ua">
 			<body
 				className={`${mulish.variable} ${montserrat_Alternates.variable} ${indie_Flower.variable}`}
 			>
 				<div className={styles.layoutContainer}>
-					<AuthContextProvider>
+					<Providers>
 						<Header />
 						<MainTitle />
 						<main className={styles.main}>{children}</main>
 						<Footer />
-					</AuthContextProvider>
+					</Providers>
 				</div>
 				<ScrollToTopOnRouteChange />
 				<Toaster duration={2500} />

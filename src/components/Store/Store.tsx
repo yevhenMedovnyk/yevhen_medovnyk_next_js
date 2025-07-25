@@ -8,7 +8,7 @@ import s from './Store.module.scss';
 import { ClipLoader } from 'react-spinners';
 
 interface Props {
-	productsMinimal: Pick<IProduct, '_id' | 'slug' | 'name' | 'imgs'>[];
+	productsMinimal: Pick<IProduct, '_id' | 'slug' | 'name'>[];
 }
 
 const Store: React.FC<Props> = ({ productsMinimal }) => {
