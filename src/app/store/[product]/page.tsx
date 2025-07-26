@@ -29,7 +29,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 	if (!product) return { title: 'Товар не знайдено' };
 
 	return {
-		title: product.name,
+		title: product.name + ' | YM FineArt Prints',
 		description: product.captured_info,
 	};
 }

@@ -16,7 +16,7 @@
 	animation: fadeIn 500ms forwards;
 	margin-bottom: 0.6rem;
 
-	@include tablet{
+	@include tablet {
 		padding: 0.5rem;
 		min-height: 15rem;
 		justify-content: center;
@@ -31,13 +31,13 @@
 }
 
 @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
-    }
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
 
 .image {
 	width: 100%;
@@ -52,41 +52,39 @@
 	opacity: 1;
 }
 
-.image.editMode{
-	height:fit-content;
-	margin-bottom: .6rem;
+.image.editMode {
+	height: fit-content;
+	margin-bottom: 0.6rem;
 }
 
-.descriptionInput{
-		width: 100%;
-	padding: 0.4rem;
+.descriptionInput {
+	width: 100%;
+	padding: 0.6rem;
 	border: 1px solid $color-border-secondary;
 	border-radius: 4px;
 	margin-bottom: 0.5rem;
 	resize: none;
-
 }
 
-.descriptionInput:not(:last-of-type){
-	margin-top:auto;
+.descriptionInput:not(:last-of-type) {
+	margin-top: auto;
 }
 
-.descriptionInput::placeholder{
+.descriptionInput::placeholder {
 	color: $color-tertiary;
-	font-size: 0.6em;
-	padding: 0.4em;
+	font-size: 0.8em;
 }
 
-.description{
+.description {
 	display: block;
-	margin-top: .3rem;
+	margin-top: 0.3rem;
 	font-size: 0.8rem;
 	color: $color-tertiary;
 	font-weight: 300;
 	padding-left: 0.3rem;
 }
 
-.deleteIcon{
+.deleteIcon {
 	z-index: 10;
 	position: absolute;
 	top: 1.3rem;
@@ -95,7 +93,7 @@
 	color: $color-accent;
 	cursor: pointer;
 	transition: all 0.1s ease-in-out;
-	&:hover{
+	&:hover {
 		opacity: 0.85;
 	}
 }

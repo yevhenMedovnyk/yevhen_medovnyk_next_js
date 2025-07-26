@@ -1,6 +1,5 @@
 import dbConnect from '@/lib/dbConnect';
 import ImageAlbum from '@/models/ImageAlbum';
-import Image from '@/models/Image';
 import { NextRequest, NextResponse } from 'next/server';
 
 
