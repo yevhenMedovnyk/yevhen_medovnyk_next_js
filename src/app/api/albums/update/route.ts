@@ -6,6 +6,22 @@ import slugify from 'slugify';
 import { revalidateTag } from 'next/cache';
 import { authOptions } from '../../auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth/next';
+import cloudinary from '@/lib/cloudinary';
+import { getPublicIdFromUrl } from '@/utils/getPublicIdFromUrl';
+
+interface UpdateAlbumBody {
+	albumId: string;
+	name: {
+		en: string;
+		ua: string;
+	};
+	category?: string;
+	cover_img: string; // base64 або URL
+}
+
+function isBase64(str: string) {
+	return /^data:image\/[a-z]+;base64,/.test(str);
+}
 
 // Оновлення альбому
 export async function PUT(req: NextRequest) {
@@ -18,19 +34,19 @@ export async function PUT(req: NextRequest) {
 	try {
 		await dbConnect();
 
-		const body = await req.json();
+		const body: UpdateAlbumBody = await req.json();
 		const { albumId, name, category, cover_img } = body;
 
 		if (!albumId) {
-			return NextResponse.json({ message: 'AlbumId is required' }, { status: 400 });
+			return NextResponse.json({ message: 'albumId is required' }, { status: 400 });
 		}
 
-		const nameEn = name?.en;
-		if (!nameEn) {
-			return NextResponse.json({ message: 'Album name is required' }, { status: 400 });
+		if (!name?.en) {
+			return NextResponse.json({ message: 'Album name (en) is required' }, { status: 400 });
 		}
 
-		let baseSlug = slugify(nameEn, { lower: true, strict: true });
+		// Генерація унікального slug
+		const baseSlug = slugify(name.en, { lower: true, strict: true });
 		let slug = baseSlug;
 		let counter = 1;
 
@@ -45,9 +61,25 @@ export async function PUT(req: NextRequest) {
 
 		const oldSlug = album.slug;
 
-		album.name = name ?? album.name;
-		album.category = category ?? album.category;
-		album.cover_img = cover_img ?? album.cover_img;
+		// Якщо cover_img - base64, завантажуємо нове зображення, інакше залишаємо старе
+		if (cover_img && isBase64(cover_img)) {
+			const oldPublicId = getPublicIdFromUrl(album.cover_img);
+			if (oldPublicId) {
+				await cloudinary.uploader.destroy(oldPublicId);
+			}
+
+			const uploaded = await cloudinary.uploader.upload(cover_img, {
+				folder: 'albums_cover',
+			});
+
+			album.cover_img = uploaded.secure_url;
+		} else if (cover_img) {
+			// Якщо прийшов URL, просто оновлюємо
+			album.cover_img = cover_img;
+		}
+
+		album.name = name;
+		if (category) album.category = category;
 		album.slug = slug;
 
 		await album.save();
