@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
 import s from './orderStatus.module.scss';
 import { useFetchClient } from '@/hooks/useFetchClient';
-
+import { useCartStore } from '@/stores/useCartStore';
 
 interface OrderData {
 	result: {
@@ -14,67 +14,59 @@ interface OrderData {
 	};
 }
 
-
 const OrderStatus = () => {
-	const [orderRef, setOrderRef] = React.useState('');
-	const [orderData, setOrderData] = React.useState<OrderData | null>(null);
+	const [orderData, setOrderData] = useState<OrderData | null>(null);
 	const fetchClient = useFetchClient();
+	const clearCart = useCartStore((state) => state.clearCart);
 
 	useEffect(() => {
 		const orderRef = Cookies.get('last_order_ref');
-		if (orderRef) {
-			setOrderRef(orderRef);
-		}
-	}, []);
+		if (!orderRef) return;
 
+		(async () => {
+			try {
+				const res = await fetchClient(`/api/checkout/order?order_ref=${orderRef}`);
+				setOrderData(res);
 
-	useEffect(() => {
-		const fetchOrder = async () => {
-			const res = await fetchClient(`/api/checkout/order?order_ref=${orderRef}`);
-			setOrderData(res);
-		};
-		if (orderRef) {
-			fetchOrder();
-		}
-	}, [orderRef]);
+				if (res?.result?.generalStatus === 'success') {
+					clearCart();
+				}
+			} catch (error) {
+				console.error('Помилка при завантаженні замовлення:', error);
+			}
+		})();
+	}, [fetchClient, clearCart]);
 
-	console.log('data', orderData);
-
-
-	const generalStatus = orderData?.result?.generalStatus;
-	const isOrderSuccess = generalStatus === 'success';
-	
 	if (!orderData) {
 		return <div className={s.container}>Завантаження...</div>;
 	}
-	
+
+	const { generalStatus, basket_id } = orderData.result;
+	const isOrderSuccess = generalStatus === 'success';
+
 	return (
 		<div className={s.container}>
 			{isOrderSuccess ? (
 				<>
-					{' '}
-					<img src={'/order-status/paper_cat_icon.png'} alt="paper_cat_icon" className={s.icon} />
+					<img src="/order-status/paper_cat_icon.png" alt="paper_cat_icon" className={s.icon} />
 					<span className={s.successText}>
+						<br />
 						Дякуємо!
 						<br />
-						Замовлення №{orderData?.result.basket_id}
+						<br />
+						Замовлення №{basket_id}
 						<br /> успішно прийняте!
 					</span>
-					<Link className={s.backLink} href="/store">
-						Повернутись до магазину
-					</Link>
 				</>
 			) : (
 				<div className={s.errorStatusContainer}>
-					<img className={s.icon} src={'/404page/pirate_cat_icon.png'} alt="404_image" />
-					<span className={s.errorStatusText}>
-						Ууупс, щось пішло не так: {orderData?.result.generalStatus}
-					</span>
-					<Link className={s.backLink} href="/store">
-						Повернутись до магазину
-					</Link>
+					<img src="/404page/pirate_cat_icon.png" alt="404_image" className={s.icon} />
+					<span className={s.errorStatusText}>Ууупс, щось пішло не так: {generalStatus}</span>
 				</div>
 			)}
+			<Link className={s.backLink} href="/store">
+				Повернутись до магазину
+			</Link>
 		</div>
 	);
 };

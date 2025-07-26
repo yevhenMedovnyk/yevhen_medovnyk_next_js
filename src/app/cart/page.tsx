@@ -2,7 +2,7 @@
 
 import React from 'react';
 import s from './cart.module.scss';
-import { useCartItemCount, useCartItems, useCartTotal } from '@/stores/hooks/cartSelectors';
+import { useCartItemCount, useCartTotal } from '@/stores/hooks/cartSelectors';
 import CartItem from '@/components/CartItem/CartItem';
 import Button from '@/components/UI/Button/Button';
 import Cookies from 'js-cookie';
@@ -13,12 +13,16 @@ import { useCartStore } from '@/stores/useCartStore';
 const Cart = () => {
 	const fetchClient = useFetchClient();
 
-	const cartItems = useCartItems();
 	const total = useCartTotal();
 	const itemsCount = useCartItemCount();
-	const increaseQuantity = useCartStore((state) => state.increaseQuantity);
-	const decreaseQuantity = useCartStore((state) => state.decreaseQuantity);
-	const removeFromCart = useCartStore((state) => state.removeFromCart);
+
+	const {
+		items: cartItems,
+		increaseQuantity,
+		decreaseQuantity,
+		removeFromCart,
+		hasHydrated
+	} = useCartStore((state) => state);
 
 	const onClickBuy = async () => {
 		const order_ref = Date.now().toString();
@@ -46,6 +50,10 @@ const Cart = () => {
 			console.error('Помилка при створенні замовлення:', error);
 		}
 	};
+
+	if (!hasHydrated) {
+		return null;
+	}
 
 	return (
 		<div className={s.cart}>

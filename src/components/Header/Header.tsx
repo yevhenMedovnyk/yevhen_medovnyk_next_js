@@ -20,11 +20,7 @@ const Header: React.FC = () => {
 		setIsBurgerMenuOpen(false);
 	};
 
-	const { data: session } = useSession();
-
-	console.log(session);
 	
-
 	return (
 		<header className={s.container}>
 			<Logo />

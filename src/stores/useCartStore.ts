@@ -5,6 +5,8 @@ import { createPersistStorage } from './persistConfig';
 
 interface CartState {
 	items: ICartItem[];
+	hasHydrated: boolean;
+	setHasHydrated: (state: boolean) => void;
 	addToCart: (product: ICartItem) => void;
 	removeFromCart: (id: number) => void;
 	decreaseQuantity: (id: number) => void;
@@ -16,6 +18,8 @@ export const useCartStore = create<CartState>()(
 	persist(
 		(set) => ({
 			items: [],
+			hasHydrated: false,
+			setHasHydrated: (state) => set({ hasHydrated: state }),
 			addToCart: (product) =>
 				set((state) => ({
 					items: [...state.items, product],
@@ -39,8 +43,11 @@ export const useCartStore = create<CartState>()(
 			clearCart: () => set({ items: [] }),
 		}),
 		{
-			name: 'cart-storage', // назва ключа в localStorage
+			name: 'cart-storage',
 			storage: createPersistStorage<CartState>(),
+			onRehydrateStorage: () => (state) => {
+				state?.setHasHydrated(true);
+			},
 		}
 	)
 );

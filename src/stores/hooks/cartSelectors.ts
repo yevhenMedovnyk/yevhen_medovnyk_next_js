@@ -15,7 +15,3 @@ export const useIsInCart = (productId: number) => {
 	return items.some((item) => item._id === productId);
 };
 
-export const useCartItems = () => {
-	const items = useCartStore((state) => state.items);
-	return items;
-};
