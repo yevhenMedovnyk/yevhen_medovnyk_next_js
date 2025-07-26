@@ -25,7 +25,8 @@
 	font-size: 0.9rem;
 }
 
-.input {
+.input,
+.select {
 	width: 100%;
 	padding: 0.6rem;
 	border: 1px solid $color-border-secondary;
@@ -35,15 +36,16 @@
 .inputContainer {
 	display: flex;
 	flex-direction: column;
-	gap: 0.2em;
+	//gap: 0.2em;
 }
 
 .label {
 	font-weight: 600;
 	padding-left: 0.5em;
+	margin-bottom: 0.25rem;
 }
 
-.nameAndCover{
+.nameAndCover {
 	display: flex;
 	flex-direction: column;
 	gap: 1rem;
@@ -83,7 +85,7 @@
 	width: auto;
 	align-self: center;
 	border-radius: 8px;
-	font-size: 0.8rem;
+	font-size: .9rem;
 	padding: 0.7em 2.6em;
 	background-color: $color-secondary;
 	color: $color-bg;
@@ -106,3 +108,4 @@
 	margin-top: 0.5em;
 	padding-left: 0.5em;
 }
+

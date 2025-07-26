@@ -8,6 +8,7 @@ import { IImage } from '../../../types/IImage';
 import { useRouter, useParams } from 'next/navigation';
 import { IAlbum } from '@/types/IAlbum';
 import { useFetchClient } from '@/hooks/useFetchClient';
+import { createAlbumSchema } from '@/schemas/createAlbum.schema';
 
 const CreateOrEditAlbum = () => {
 	const router = useRouter();
@@ -207,7 +208,7 @@ const CreateOrEditAlbum = () => {
 		setFieldValue: FormikHelpers<typeof initialValues>['setFieldValue']
 	) => {
 		const { name, value } = event.target; // name буде "name.ua" або "name.en"
-		setFieldValue(name, value); // ✅ встановлюємо напряму вкладене поле
+		setFieldValue(name, value); // встановлюємо напряму вкладене поле
 		setAlbumName((prev) => ({
 			...prev,
 			[name.split('.')[1]]: value, // ua або en
@@ -248,7 +249,7 @@ const CreateOrEditAlbum = () => {
 	};
 
 	const handleCategoryChange = (
-		event: React.ChangeEvent<HTMLInputElement>,
+		event: React.ChangeEvent<HTMLSelectElement>,
 		setFieldValue: FormikHelpers<typeof initialValues>['setFieldValue']
 	) => {
 		setFieldValue('category', event.target.value);
@@ -278,7 +279,12 @@ const CreateOrEditAlbum = () => {
 	return (
 		<div className={s.container}>
 			<h1 className={s.title}>Створення альбому</h1>
-			<Formik initialValues={initialValues} onSubmit={onSubmit} enableReinitialize={true}>
+			<Formik
+				initialValues={initialValues}
+				validationSchema={createAlbumSchema}
+				onSubmit={onSubmit}
+				enableReinitialize={true}
+			>
 				{(formik) => (
 					<Form className={s.form}>
 						<div className={s.nameAndCoverAndCoverImg}>
@@ -305,10 +311,14 @@ const CreateOrEditAlbum = () => {
 								</div>
 
 								<div className={s.inputContainer}>
-									<label className={s.label}>Обкладинка альбому:</label>
+									<label htmlFor="cover_img" className={s.label}>
+										Обкладинка альбому:
+									</label>
 									<input
 										className={s.input}
 										type="file"
+										id="cover_img"
+										name="cover_img"
 										accept="image/*"
 										onChange={(event) => handleCoverChange(event, formik.setFieldValue)}
 									/>
@@ -316,10 +326,14 @@ const CreateOrEditAlbum = () => {
 									<ErrorMessage name="cover_img" component="span" className={s.error} />
 								</div>
 								<div className={s.inputContainer}>
-									<label className={s.label}>Додати зображення до альбому:</label>
+									<label htmlFor="album_images" className={s.label}>
+										Додати зображення до альбому:
+									</label>
 									<input
 										className={s.input}
 										type="file"
+										id="album_images"
+										name="album_images"
 										accept="image/*"
 										multiple
 										onChange={(event) => handleImagesChange(event, formik.setFieldValue)}
@@ -327,14 +341,18 @@ const CreateOrEditAlbum = () => {
 									<ErrorMessage name="album_images" component="span" className={s.error} />
 								</div>
 								<div className={s.inputContainer}>
-									<label className={s.label}>Категорія:</label>
-									<input
-										className={s.input}
-										type="text"
-										placeholder="Категорія альбому"
+									<label htmlFor="category-select" className={s.label}>
+										Категорія:
+									</label>
+									<select
+										id="category-select"
+										className={s.select}
 										{...formik.getFieldProps('category')}
 										onChange={(event) => handleCategoryChange(event, formik.setFieldValue)}
-									/>
+									>
+										<option value="gallery">Галерея</option>
+										<option value="projects">Проєкти</option>
+									</select>
 									<ErrorMessage name="category" component="span" className={s.error} />
 								</div>
 							</div>
