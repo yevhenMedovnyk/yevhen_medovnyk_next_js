@@ -9,6 +9,7 @@ import { useRouter, useParams } from 'next/navigation';
 import { IAlbum } from '@/types/IAlbum';
 import { useFetchClient } from '@/hooks/useFetchClient';
 import { createAlbumSchema } from '@/schemas/createAlbum.schema';
+import { editAlbumSchema } from '@/schemas/editAlbum.schema';
 
 const CreateOrEditAlbum = () => {
 	const router = useRouter();
@@ -281,7 +282,7 @@ const CreateOrEditAlbum = () => {
 			<h1 className={s.title}>Створення альбому</h1>
 			<Formik
 				initialValues={initialValues}
-				validationSchema={createAlbumSchema}
+				validationSchema={!!coverPreview ? editAlbumSchema : createAlbumSchema}
 				onSubmit={onSubmit}
 				enableReinitialize={true}
 			>
