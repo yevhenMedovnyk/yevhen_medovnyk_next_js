@@ -9,6 +9,7 @@ import Button from '@/components/UI/Button/Button';
 import { showErrorToast } from '@/components/UI/showErrorToast';
 import { showSuccessToast } from '@/components/UI/showSuccessToast';
 import { useFetchClient } from '@/hooks/useFetchClient';
+import { useLocale, useTranslations } from 'next-intl';
 
 const Contacts: React.FC = () => {
 	const initialValues = {
@@ -16,6 +17,10 @@ const Contacts: React.FC = () => {
 		email: '',
 		message: '',
 	};
+
+	const t = useTranslations('Contacts');
+	const locale = useLocale();
+	let ua = locale === 'ua';
 
 	const fetchClient = useFetchClient();
 	const onSubmit = async (
@@ -40,8 +45,9 @@ const Contacts: React.FC = () => {
 	return (
 		<div className={s.container}>
 			<div className={s.title}>
-				Якщо ви маєте будь-які питання чи пропозиції, будь ласка,
-				<br /> зв’яжіться зі мною зручним для вас способом:
+				{t.rich('title', {
+					br: () => <br />,
+				})}
 			</div>
 			<SocialNetLinksList variant="imgIcon" />
 			<Formik
@@ -56,7 +62,7 @@ const Contacts: React.FC = () => {
 								className={s.input}
 								type="text"
 								name="name"
-								placeholder="Ваше ім'я"
+								placeholder={ua ? "Ваше ім'я" : 'Your name'}
 								autoComplete="off"
 							/>
 							<ErrorMessage name="name" component="span" className={s.error} />
@@ -65,7 +71,7 @@ const Contacts: React.FC = () => {
 							<Field
 								className={s.input}
 								name="email"
-								placeholder="Ваша електронна пошта"
+								placeholder={ua ? 'Ваша електронна пошта' : 'Your email'}
 								autoComplete="off"
 							/>
 							<ErrorMessage name="email" component="span" className={s.error} />
@@ -76,13 +82,17 @@ const Contacts: React.FC = () => {
 								rows={10}
 								className={s.textarea}
 								name="message"
-								placeholder="Введіть ваше повідомлення"
+								placeholder={ua ? 'Введіть ваше повідомлення' : 'Enter your message'}
 								autoComplete="off"
 								as="textarea"
 							/>
 							<ErrorMessage name="message" component="span" className={s.error} />
 						</div>
-						<Button type="submit" name="Надіслати" class_name="contactPage" />
+						<Button
+							type="submit"
+							name={ua ? 'Надіслати' : 'Send'}
+							class_name="contactPage"
+						/>
 					</Form>
 				)}
 			</Formik>

@@ -1,12 +1,10 @@
 import React from 'react';
 import { clsx } from 'clsx';
 import s from './NavLinks.module.scss';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useLocale } from 'next-intl';
 import { INavLink } from '@/types/INavLink';
-
-
+import { Link } from '@/i18n/navigation';
 
 interface INavLinksProps {
 	navLinks: INavLink[];

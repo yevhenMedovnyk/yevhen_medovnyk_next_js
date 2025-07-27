@@ -23,10 +23,35 @@
 			}
 		]
 	},
+	"Contacts": {
+		"title": "If you have any questions or suggestions, please<br></br>contact me in the way that is most convenient for you:"
+	},
 	"Footer": {
 		"copyright": {
 			"author": "Yevhen Medovnyk",
 			"text": "All photographs on this website are protected by copyright,<br></br>and any use without the author's permission is prohibited."
-		}
+		},
+		"nav": [
+			{
+				"title": "Store",
+				"to": "/store"
+			},
+			{
+				"title": "Privacy Policy",
+				"to": "/privacy-policy"
+			},
+			{
+				"title": "Delivery and Payment",
+				"to": "/delivery-and-payment"
+			},
+			{
+				"title": "Public Offer",
+				"to": "/public-offer"
+			},
+			{
+				"title": "Contacts",
+				"to": "/contacts"
+			}
+		]
 	}
 }

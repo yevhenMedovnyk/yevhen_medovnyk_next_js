@@ -52,7 +52,7 @@ export default async function RootLayout({
 
 	const messages = await getMessages({ locale });
 	const navLinks: INavLink[] = messages.Header.nav;
-	
+	const footerNav: INavLink[] = messages.Footer.nav;
 
 	return (
 		<html lang={locale}>
@@ -65,7 +65,7 @@ export default async function RootLayout({
 							<Header navLinks={navLinks} />
 							<MainTitle />
 							<main className={styles.main}>{children}</main>
-							<Footer />
+							<Footer navLinks={footerNav} />
 						</Providers>
 					</div>
 					<ScrollToTopOnRouteChange />
