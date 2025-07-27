@@ -1,6 +1,32 @@
 {
-	"HomePage": {
-		"title": "Hello world!",
-		"about": "Go to the about page"
+	"Header": {
+		"nav": [
+			{
+				"title": "Gallery",
+				"to": "/"
+			},
+			{
+				"title": "Projects",
+				"to": "/projects"
+			},
+			{
+				"title": "Print Shop",
+				"to": "/store"
+			},
+			{
+				"title": "Contacts",
+				"to": "/contacts"
+			},
+			{
+				"title": "About",
+				"to": "/about"
+			}
+		]
+	},
+	"Footer": {
+		"copyright": {
+			"author": "Yevhen Medovnyk",
+			"text": "All photographs on this website are protected by copyright,<br></br>and any use without the author's permission is prohibited."
+		}
 	}
 }

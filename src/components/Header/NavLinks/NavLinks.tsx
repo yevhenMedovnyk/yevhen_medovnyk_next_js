@@ -4,48 +4,19 @@ import s from './NavLinks.module.scss';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useLocale } from 'next-intl';
+import { INavLink } from '@/types/INavLink';
 
-interface INavLinks {
-	title: string;
-	to: string;
-}
+
 
 interface INavLinksProps {
+	navLinks: INavLink[];
 	class_name?: string;
 	onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 }
 
-const navLinksList: INavLinks[] = [
-	{
-		title: 'Галерея',
-		to: '/',
-	},
-	{
-		title: 'Проєкти',
-		to: '/projects',
-	},
-	{
-		title: 'Магазин принтів',
-		to: '/store',
-	},
-	{
-		title: 'Контакти',
-		to: '/contacts',
-	},
-	{
-		title: 'Про автора',
-		to: '/about',
-	},
-];
-
-const NavLinks: React.FC<INavLinksProps> = ({ class_name, onClick }) => {
+const NavLinks: React.FC<INavLinksProps> = ({ class_name, onClick, navLinks }) => {
 	const pathname = usePathname();
 	const locale = useLocale();
-
-	console.log(locale);
-	console.log("pathname", pathname);
-	
-	
 
 	const isActive = (link: string) => {
 		if (link === '/') return pathname === `/${locale}` ? s.active : '';
@@ -55,7 +26,7 @@ const NavLinks: React.FC<INavLinksProps> = ({ class_name, onClick }) => {
 	return (
 		<nav>
 			<ul className={clsx(s.container, class_name && s[class_name])}>
-				{navLinksList.map(({ title, to }) => (
+				{navLinks?.map(({ title, to }) => (
 					<li className={clsx(isActive(to), s.link, class_name && s[class_name])} key={to}>
 						<Link onClick={onClick} href={to}>
 							{title}

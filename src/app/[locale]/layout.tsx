@@ -12,6 +12,8 @@ import Providers from '@/providers';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
+import { getMessages } from 'next-intl/server';
+import { INavLink } from '@/types/INavLink';
 
 const mulish = Mulish({
 	variable: '--font-mulish',
@@ -48,6 +50,10 @@ export default async function RootLayout({
 		notFound();
 	}
 
+	const messages = await getMessages({ locale });
+	const navLinks: INavLink[] = messages.Header.nav;
+	
+
 	return (
 		<html lang={locale}>
 			<body
@@ -56,7 +62,7 @@ export default async function RootLayout({
 				<NextIntlClientProvider>
 					<div className={styles.layoutContainer}>
 						<Providers>
-							<Header />
+							<Header navLinks={navLinks} />
 							<MainTitle />
 							<main className={styles.main}>{children}</main>
 							<Footer />
