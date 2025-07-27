@@ -3,6 +3,7 @@ import { clsx } from 'clsx';
 import s from './NavLinks.module.scss';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useLocale } from 'next-intl';
 
 interface INavLinks {
 	title: string;
@@ -39,10 +40,16 @@ const navLinksList: INavLinks[] = [
 
 const NavLinks: React.FC<INavLinksProps> = ({ class_name, onClick }) => {
 	const pathname = usePathname();
+	const locale = useLocale();
+
+	console.log(locale);
+	console.log("pathname", pathname);
+	
+	
 
 	const isActive = (link: string) => {
-		if (link === '/') return pathname === '/' ? s.active : '';
-		return pathname.startsWith(link) ? s.active : '';
+		if (link === '/') return pathname === `/${locale}` ? s.active : '';
+		return pathname.startsWith(`/${locale}${link}`) ? s.active : '';
 	};
 
 	return (

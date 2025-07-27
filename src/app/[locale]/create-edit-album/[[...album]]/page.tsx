@@ -3,8 +3,8 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import s from './createEditAlbum.module.scss';
 import { ErrorMessage, Form, Formik, FormikHelpers } from 'formik';
-import Gallery from '../../../components/Gallery/Gallery';
-import { IImage } from '../../../types/IImage';
+import Gallery from '../../../../components/Gallery/Gallery';
+import { IImage } from '../../../../types/IImage';
 import { useRouter, useParams } from 'next/navigation';
 import { IAlbum } from '@/types/IAlbum';
 import { useFetchClient } from '@/hooks/useFetchClient';
