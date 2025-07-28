@@ -24,7 +24,15 @@
 		]
 	},
 	"Contacts": {
-		"title": "If you have any questions or suggestions, please<br></br>contact me in the way that is most convenient for you:"
+		"title": "If you have any questions or suggestions, please<br></br>contact me in the way that is most convenient for you:",
+		"form": {
+			"namePlaceholder": "Your name",
+			"emailPlaceholder": "Your email",
+			"messagePlaceholder": "Enter your message",
+			"submit": "Send"
+		},
+		"successMessage": "Message sent successfully",
+		"errorMessage": "Something went wrong"
 	},
 	"Footer": {
 		"copyright": {
@@ -53,5 +61,40 @@
 				"to": "/contacts"
 			}
 		]
+	},
+	"Gallery": {
+		"folder": {
+			"edit": "Edit",
+			"delete": "Delete"
+		},
+		"createAlbumButton": "Create album",
+		"deleteAlbumSuccess": "Album deleted successfully",
+		"deleteAlbumError": "Something went wrong"
+	},
+	"CreateAlbum": {
+		"title-create": "Create new album",
+		"title-update": "Update album",
+		"form": {
+			"labels": {
+				"albumCover": "Album cover:",
+				"addImage": "Add images to album:",
+				"category": "Choose category:"
+			},
+			"selectOptions": {
+				"gallery": "Gallery",
+				"projects": "Projects"
+			},
+			"btn": {
+				"create": "Create album",
+				"update": "Update album",
+				"updating": "Updating...",
+				"uploading": "Uploading...",
+				"imageUploading": "Uploading image..."
+			}
+		},
+		"successCreateMessage": "New album created successfully.",
+		"successUpdateMessage": "Album updated successfully.",
+		"errorMessage": "Something went wrong. Please try again.",
+		"errorUploadImage": "Error uploading images."
 	}
 }

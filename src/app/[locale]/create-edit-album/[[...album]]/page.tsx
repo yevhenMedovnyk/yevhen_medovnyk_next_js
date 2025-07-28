@@ -10,6 +10,9 @@ import { IAlbum } from '@/types/IAlbum';
 import { useFetchClient } from '@/hooks/useFetchClient';
 import { createAlbumSchema } from '@/schemas/createAlbum.schema';
 import { editAlbumSchema } from '@/schemas/editAlbum.schema';
+import { useLocale, useTranslations } from 'next-intl';
+import { showSuccessToast } from '@/components/UI/showSuccessToast';
+import { showErrorToast } from '@/components/UI/showErrorToast';
 
 const CreateOrEditAlbum = () => {
 	const router = useRouter();
@@ -30,8 +33,9 @@ const CreateOrEditAlbum = () => {
 
 	const fetchClient = useFetchClient();
 
-	//Тимчасово
-	const lang = 'ua';
+	const t = useTranslations('CreateAlbum');
+	const locale = useLocale();
+	const currentLocale = locale as keyof IAlbum['name'];
 
 	const initialValues = useMemo(
 		() => ({
@@ -59,7 +63,7 @@ const CreateOrEditAlbum = () => {
 				);
 				setImages(data);
 			} catch (err) {
-				console.error('Помилка завантаження зображень:', err);
+				console.error('Get images error:', err);
 			}
 		};
 
@@ -70,7 +74,7 @@ const CreateOrEditAlbum = () => {
 				});
 				setAlbumData(data);
 			} catch (err) {
-				console.error('Помилка завантаження зображень:', err);
+				console.error('Get album error:', err);
 			}
 		};
 
@@ -93,7 +97,7 @@ const CreateOrEditAlbum = () => {
 		{ resetForm }: { resetForm: () => void }
 	) => {
 		if (!values.cover_img && !albumData?.cover_img) {
-			alert('Будь ласка, оберіть обкладинку альбому');
+			alert('Please select a cover image');
 			return;
 		}
 
@@ -130,7 +134,8 @@ const CreateOrEditAlbum = () => {
 					true
 				);
 				setIsUpdatingAlbum(true);
-				console.log('✅ Альбом оновлено');
+				console.log('✅ Album updated');
+				showSuccessToast(t('successUpdateMessage'));
 				setIsUpdatingAlbum(false);
 				album_slug = album.slug;
 			} else {
@@ -150,10 +155,11 @@ const CreateOrEditAlbum = () => {
 				);
 				setIsCreatingAlbum(true);
 				if (!album || !album._id) {
-					throw new Error('Не вдалося отримати ID альбому');
+					throw new Error('Get album id error');
 				}
 
-				console.log('✅ Альбом створено');
+				console.log('✅ Album created');
+				showSuccessToast(t('successCreateMessage'));
 				setIsAlbumCreated(true);
 				setIsCreatingAlbum(false);
 				finalAlbumId = album._id;
@@ -185,9 +191,9 @@ const CreateOrEditAlbum = () => {
 						},
 						true
 					);
-					console.log('✅ Зображення завантажені');
+					console.log('✅ Images uploaded');
 				} catch (error) {
-					console.error('Помилка завантаження зображень:', error);
+					console.error('❌ Images upload error:', error);
 				} finally {
 					setIsUploadingImages(false);
 				}
@@ -199,8 +205,8 @@ const CreateOrEditAlbum = () => {
 			setAlbumFiles([]);
 			router.push(`/${values.category}/${album_slug}`);
 		} catch (err) {
-			console.error('❌ Помилка при створенні/оновленні альбому:', err);
-			alert('Не вдалося створити або оновити альбом. Спробуйте ще раз.');
+			console.error('❌ Create or update album error:', err);
+			showErrorToast(t('errorMessage'));
 		}
 	};
 
@@ -279,10 +285,10 @@ const CreateOrEditAlbum = () => {
 
 	return (
 		<div className={s.container}>
-			<h1 className={s.title}>Створення альбому</h1>
+			<h1 className={s.title}>{!!slug ? t('title-update') : t('title-create')}</h1>
 			<Formik
 				initialValues={initialValues}
-				validationSchema={!!coverPreview ? editAlbumSchema : createAlbumSchema}
+				validationSchema={!!slug ? editAlbumSchema : createAlbumSchema}
 				onSubmit={onSubmit}
 				enableReinitialize={true}
 			>
@@ -313,7 +319,7 @@ const CreateOrEditAlbum = () => {
 
 								<div className={s.inputContainer}>
 									<label htmlFor="cover_img" className={s.label}>
-										Обкладинка альбому:
+										{t('form.labels.albumCover')}
 									</label>
 									<input
 										className={s.input}
@@ -328,7 +334,7 @@ const CreateOrEditAlbum = () => {
 								</div>
 								<div className={s.inputContainer}>
 									<label htmlFor="album_images" className={s.label}>
-										Додати зображення до альбому:
+										{t('form.labels.addImage')}
 									</label>
 									<input
 										className={s.input}
@@ -343,7 +349,7 @@ const CreateOrEditAlbum = () => {
 								</div>
 								<div className={s.inputContainer}>
 									<label htmlFor="category-select" className={s.label}>
-										Категорія:
+										{t('form.labels.category')}
 									</label>
 									<select
 										id="category-select"
@@ -351,8 +357,8 @@ const CreateOrEditAlbum = () => {
 										{...formik.getFieldProps('category')}
 										onChange={(event) => handleCategoryChange(event, formik.setFieldValue)}
 									>
-										<option value="gallery">Галерея</option>
-										<option value="projects">Проєкти</option>
+										<option value="gallery">{t('form.selectOptions.gallery')}</option>
+										<option value="projects">{t('form.selectOptions.projects')}</option>
 									</select>
 									<ErrorMessage name="category" component="span" className={s.error} />
 								</div>
@@ -367,7 +373,7 @@ const CreateOrEditAlbum = () => {
 										/>
 									) : null}
 								</div>
-								<span className={s.albumName}>{lang === 'ua' ? albumName.ua : albumName.en}</span>
+								<span className={s.albumName}>{albumName[currentLocale]}</span>
 							</div>
 						</div>
 
@@ -377,14 +383,14 @@ const CreateOrEditAlbum = () => {
 							type="submit"
 						>
 							{isCreatingAlbum
-								? 'Створюється альбом...'
+								? t('form.btn.uploading')
 								: isUploadingImages
-									? 'Завантажуються зображення...'
+									? t('form.btn.imageUploading')
 									: isUpdatingAlbum
-										? 'Оновлюється альбом...'
+										? t('form.btn.updating')
 										: slug
-											? 'Оновити альбом'
-											: 'Створити альбом'}
+											? t('form.btn.update')
+											: t('form.btn.create')}
 						</button>
 					</Form>
 				)}

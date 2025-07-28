@@ -9,7 +9,7 @@ import Button from '@/components/UI/Button/Button';
 import { showErrorToast } from '@/components/UI/showErrorToast';
 import { showSuccessToast } from '@/components/UI/showSuccessToast';
 import { useFetchClient } from '@/hooks/useFetchClient';
-import { useLocale, useTranslations } from 'next-intl';
+import {  useTranslations } from 'next-intl';
 
 const Contacts: React.FC = () => {
 	const initialValues = {
@@ -19,8 +19,6 @@ const Contacts: React.FC = () => {
 	};
 
 	const t = useTranslations('Contacts');
-	const locale = useLocale();
-	let ua = locale === 'ua';
 
 	const fetchClient = useFetchClient();
 	const onSubmit = async (
@@ -32,13 +30,13 @@ const Contacts: React.FC = () => {
 				method: 'POST',
 				body: JSON.stringify(values),
 			});
-			showSuccessToast('Повідомлення надіслано');
+			showSuccessToast(t('successMessage'));
 			console.log('response', response);
 
 			resetForm();
 		} catch (error) {
-			console.error('Помилка надсилання:', error);
-			showErrorToast('Помилка надсилання повідомлення');
+			console.error('Send mail error:', error);
+			showErrorToast(t('errorMessage'));
 		}
 	};
 
@@ -62,7 +60,7 @@ const Contacts: React.FC = () => {
 								className={s.input}
 								type="text"
 								name="name"
-								placeholder={ua ? "Ваше ім'я" : 'Your name'}
+								placeholder={t('form.namePlaceholder')}
 								autoComplete="off"
 							/>
 							<ErrorMessage name="name" component="span" className={s.error} />
@@ -71,7 +69,7 @@ const Contacts: React.FC = () => {
 							<Field
 								className={s.input}
 								name="email"
-								placeholder={ua ? 'Ваша електронна пошта' : 'Your email'}
+								placeholder={t('form.emailPlaceholder')}
 								autoComplete="off"
 							/>
 							<ErrorMessage name="email" component="span" className={s.error} />
@@ -82,7 +80,7 @@ const Contacts: React.FC = () => {
 								rows={10}
 								className={s.textarea}
 								name="message"
-								placeholder={ua ? 'Введіть ваше повідомлення' : 'Enter your message'}
+								placeholder={t('form.messagePlaceholder')}
 								autoComplete="off"
 								as="textarea"
 							/>
@@ -90,7 +88,7 @@ const Contacts: React.FC = () => {
 						</div>
 						<Button
 							type="submit"
-							name={ua ? 'Надіслати' : 'Send'}
+							name={t('form.submit')}
 							class_name="contactPage"
 						/>
 					</Form>

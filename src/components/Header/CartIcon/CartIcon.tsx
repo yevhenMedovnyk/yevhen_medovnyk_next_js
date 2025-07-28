@@ -4,10 +4,12 @@ import { PiShoppingCartSimpleFill } from 'react-icons/pi';
 
 import s from './CartIcon.module.scss';
 import { useCartItemCount } from '@/stores/hooks/cartSelectors';
+import { useLocale } from 'next-intl';
 
 const CartIcon = () => {
+	const locale = useLocale();
 	const pathname = usePathname();
-	const isShowCartIcon = pathname.startsWith('/store') || pathname === '/cart';
+	const isShowCartIcon = pathname.startsWith(`/${locale}/store`) || pathname === `/${locale}/cart`;
 	const itemsCount = useCartItemCount();
 
 	if (!isShowCartIcon) return null;

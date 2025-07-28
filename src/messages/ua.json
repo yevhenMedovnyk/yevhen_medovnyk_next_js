@@ -24,7 +24,15 @@
 		]
 	},
 	"Contacts": {
-		"title": "Якщо ви маєте будь-які питання чи пропозиції, будь ласка,<br></br>зв’яжіться зі мною зручним для вас способом:"
+		"title": "Якщо ви маєте будь-які питання чи пропозиції, будь ласка,<br></br>зв’яжіться зі мною зручним для вас способом:",
+		"form": {
+			"namePlaceholder": "Ваше імʼя",
+			"emailPlaceholder": "Ваша електронна пошта",
+			"messagePlaceholder": "Введіть ваше повідомлення",
+			"submit": "Надіслати"
+		},
+		"successMessage": "Повідомлення надіслано",
+		"errorMessage": "Щось пішло не так, спробуєте ще раз"
 	},
 	"Footer": {
 		"copyright": {
@@ -53,5 +61,40 @@
 				"to": "/contacts"
 			}
 		]
+	},
+	"Gallery": {
+		"folder": {
+			"edit": "Редагувати",
+			"delete": "Видалити"
+		},
+		"createAlbumButton": "Створити альбом",
+		"deleteAlbumSuccess": "Альбом видалено",
+		"deleteAlbumError": "Помилка при видаленні альбому"
+	},
+	"CreateAlbum": {
+		"title-create": "Створити альбом",
+		"title-update": "Редагувати альбом",
+		"form": {
+			"labels": {
+				"albumCover": "Обкладинка альбому:",
+				"addImage": "Додати зображення до альбому:",
+				"category": "Оберіть категорію:"
+			},
+			"selectOptions": {
+				"gallery": "Галерея",
+				"projects": "Проєкти"
+			},
+			"btn": {
+				"create": "Створити альбом",
+				"update": "Редагувати альбом",
+				"updating": "Оновлення...",
+				"uploading": "Завантаження...",
+				"imageUploading": "Завантаження зображень..."
+			}
+		},
+		"successCreateMessage": "Альбом створено",
+		"successUpdateMessage": "Альбом оновлено",
+		"errorMessage": "Помилка при створенні альбому",
+		"errorUploadImage": "Помилка при завантаженні зображень"
 	}
 }
