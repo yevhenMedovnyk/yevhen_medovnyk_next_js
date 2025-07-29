@@ -96,5 +96,8 @@
 		"successUpdateMessage": "Album updated successfully.",
 		"errorMessage": "Something went wrong. Please try again.",
 		"errorUploadImage": "Error uploading images."
+	},
+	"Currency": {
+		"uah": "uah"
 	}
 }

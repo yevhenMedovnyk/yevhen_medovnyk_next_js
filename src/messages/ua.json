@@ -96,5 +96,8 @@
 		"successUpdateMessage": "Альбом оновлено",
 		"errorMessage": "Помилка при створенні альбому",
 		"errorUploadImage": "Помилка при завантаженні зображень"
+	},
+	"Currency": {
+		"uah": "грн"
 	}
 }

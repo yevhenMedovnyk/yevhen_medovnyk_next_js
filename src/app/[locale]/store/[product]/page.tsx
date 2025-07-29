@@ -3,12 +3,14 @@ import StoreItem from '@/components/StoreItem/StoreItem';
 import { IProduct } from '@/types/IProduct';
 import { notFound } from 'next/navigation';
 import s from './product.module.scss';
+import { getLocale } from 'next-intl/server';
+import ProductFull from '@/components/StoreItem/ProductFull';
 
 // Завантаження товару на сервері
 async function getProduct(slug: string): Promise<IProduct | null> {
 	try {
 		const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/store/${slug}`, {
-			next: { revalidate: 3600, tags: ['Store', 'Product'] },
+			next: { revalidate: 0, tags: ['Store', 'Product'] },
 		});
 		if (!res.ok) return null;
 		return res.json();
@@ -28,9 +30,11 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 	const product = await getProduct(params.product);
 	if (!product) return { title: 'Товар не знайдено' };
 
+	const locale = await getLocale();
+
 	return {
-		title: product.name + ' | YM FineArt Prints',
-		description: product.captured_info,
+		title: product.name[locale as keyof typeof product.name] + ' | YM FineArt Prints',
+		description: product.captured_info[locale as keyof typeof product.captured_info],
 	};
 }
 
@@ -41,7 +45,7 @@ export default async function StoreItemPage(props: Props) {
 
 	return (
 		<div className={s.StoreItemPageContainer}>
-			<StoreItem full_page product={product} />
+			<ProductFull product={product} />
 		</div>
 	);
 }
