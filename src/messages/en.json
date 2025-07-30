@@ -103,6 +103,13 @@
 		"goToCart": "→ Go to cart",
 		"framing": "Framing"
 	},
+	"Cart": {
+		"totalPrice": "Total price",
+		"checkout": "Checkout",
+		"emptyCart": "Oops, your cart is empty!",
+		"backToStore": "←  Back to store",
+		"errorMessage": "Something went wrong, please try again"
+	},
 	"Currency": {
 		"uah": "uah"
 	}

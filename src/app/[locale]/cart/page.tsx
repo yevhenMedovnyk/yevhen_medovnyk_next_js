@@ -9,12 +9,17 @@ import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useFetchClient } from '@/hooks/useFetchClient';
 import { useCartStore } from '@/stores/useCartStore';
+import { showErrorToast } from '@/components/UI/showErrorToast';
+import { useTranslations } from 'next-intl';
 
 const Cart = () => {
 	const fetchClient = useFetchClient();
 
 	const total = useCartTotal();
 	const itemsCount = useCartItemCount();
+
+	const t = useTranslations();
+
 
 	const {
 		items: cartItems,
@@ -48,6 +53,7 @@ const Cart = () => {
 			}
 		} catch (error: any) {
 			console.error('Помилка при створенні замовлення:', error);
+			showErrorToast(t('Cart.errorMessage'));
 		}
 	};
 
@@ -64,9 +70,9 @@ const Cart = () => {
 						src={'/cart/hungry_cat_icon.png'}
 						alt="hungry_cat_icon"
 					/>
-					<h1 className={s.emptyCartTitle}>Ууупс, Ваш кошик порожній!</h1>
+					<h1 className={s.emptyCartTitle}>{t('Cart.emptyCart')}</h1>
 					<Link className={s.emptyCartLink} href="/store">
-						Повернутись до магазину
+						{t('Cart.backToStore')}
 					</Link>
 				</div>
 			) : (
@@ -81,10 +87,10 @@ const Cart = () => {
 						/>
 					))}
 					<div className={s.total}>
-						<span>Загальна сума:</span>
-						{total} грн
+						<span>{t('Cart.totalPrice')}:</span>
+						{total} {t('Currency.uah')}
 					</div>
-					<Button name="Оформити замовлення" onClick={() => onClickBuy()} class_name="cart" />
+					<Button name={t('Cart.checkout')} onClick={() => onClickBuy()} class_name="cart" />
 				</>
 			)}
 		</div>
