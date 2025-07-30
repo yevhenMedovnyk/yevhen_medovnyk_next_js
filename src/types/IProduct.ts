@@ -1,18 +1,37 @@
 import { IImage } from './IImage';
 
-export interface IProduct {
-	_id: number;
-	code_product: number;
-	name: string;
-	slug: string;
-	captured_info: string;
-	paper_info: string;
-	note: string;
+export interface IProductSize {
+	id: string;
+	label: string;
 	price: number;
-	size_with_borders: string;
-	size_without_borders: string;
+}
+
+export interface IProduct {
+	_id:  string;
+	code_product: number;
+	name: {
+		ua: string;
+		en: string;
+	};
+	slug: string;
+	captured_info: {
+		ua: string;
+		en: string;
+	};
+	paper_info: {
+		ua: string;
+		en: string;
+	};
+	note: {
+		ua: string;
+		en: string;
+	};
+	sizes: IProductSize[];
 	isLimited: boolean;
 	imgs: IImage[];
-	isFramed: boolean;
+	frame: {
+		ua: string;
+		en: string;
+	};
 	quantity?: number;
 }

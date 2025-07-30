@@ -7,9 +7,9 @@ export const showSuccessToast = (
 ) => {
 	toast.success(message, {
 		description,
-		duration: duration || 2000,
+		duration: duration || 5000,
 		style: {
-			color: 'mediumseagreen',
+			color: 'forestgreen',
 		},
 	});
 };

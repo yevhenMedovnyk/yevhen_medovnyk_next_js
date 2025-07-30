@@ -1,0 +1,110 @@
+{
+	"Header": {
+		"nav": [
+			{
+				"title": "Gallery",
+				"to": "/"
+			},
+			{
+				"title": "Projects",
+				"to": "/projects"
+			},
+			{
+				"title": "Print Shop",
+				"to": "/store"
+			},
+			{
+				"title": "Contacts",
+				"to": "/contacts"
+			},
+			{
+				"title": "About",
+				"to": "/about"
+			}
+		]
+	},
+	"Contacts": {
+		"title": "If you have any questions or suggestions, please<br></br>contact me in the way that is most convenient for you:",
+		"form": {
+			"namePlaceholder": "Your name",
+			"emailPlaceholder": "Your email",
+			"messagePlaceholder": "Enter your message",
+			"submit": "Send"
+		},
+		"successMessage": "Message sent successfully",
+		"errorMessage": "Something went wrong"
+	},
+	"Footer": {
+		"copyright": {
+			"author": "Yevhen Medovnyk",
+			"text": "All photographs on this website are protected by copyright,<br></br>and any use without the author's permission is prohibited."
+		},
+		"nav": [
+			{
+				"title": "Store",
+				"to": "/store"
+			},
+			{
+				"title": "Privacy Policy",
+				"to": "/privacy-policy"
+			},
+			{
+				"title": "Delivery and Payment",
+				"to": "/delivery-and-payment"
+			},
+			{
+				"title": "Public Offer",
+				"to": "/public-offer"
+			},
+			{
+				"title": "Contacts",
+				"to": "/contacts"
+			}
+		]
+	},
+	"Gallery": {
+		"folder": {
+			"edit": "Edit",
+			"delete": "Delete"
+		},
+		"createAlbumButton": "Create album",
+		"deleteAlbumSuccess": "Album deleted successfully",
+		"deleteAlbumError": "Something went wrong"
+	},
+	"CreateAlbum": {
+		"title-create": "Create new album",
+		"title-update": "Update album",
+		"form": {
+			"labels": {
+				"albumCover": "Album cover:",
+				"addImage": "Add images to album:",
+				"category": "Choose category:"
+			},
+			"selectOptions": {
+				"gallery": "Gallery",
+				"projects": "Projects"
+			},
+			"btn": {
+				"create": "Create album",
+				"update": "Update album",
+				"updating": "Updating...",
+				"uploading": "Uploading...",
+				"imageUploading": "Uploading image..."
+			}
+		},
+		"successCreateMessage": "New album created successfully.",
+		"successUpdateMessage": "Album updated successfully.",
+		"errorMessage": "Something went wrong. Please try again.",
+		"errorUploadImage": "Error uploading images."
+	},
+	"ProductFull": {
+		"addToCart": "Add to cart",
+		"inCart": "Product in cart",
+		"addToCartSuccess": "Product added to cart",
+		"goToCart": "→ Go to cart",
+		"framing": "Framing"
+	},
+	"Currency": {
+		"uah": "uah"
+	}
+}

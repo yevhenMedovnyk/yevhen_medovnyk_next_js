@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React from 'react';
 import s from './FooterNavLinks.module.scss';
@@ -6,36 +6,13 @@ import clsx from 'clsx';
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { INavLink } from '@/types/INavLink';
 
-interface IFooterNavLinks {
-	title: string;
-	to: string;
+interface IFooterProps {
+	navLinks: INavLink[];
 }
 
-const footerNavLinksList: IFooterNavLinks[] = [
-	{
-		title: 'Магазин',
-		to: '/store',
-	},
-	{
-		title: 'Політика конфіденційності',
-		to: '/privacy-policy',
-	},
-	{
-		title: 'Доставка та оплата',
-		to: '/delivery-and-payment',
-	},
-	{
-		title: 'Публічна оферта',
-		to: '/about',
-	},
-	{
-		title: 'Контакти',
-		to: '/contacts',
-	},
-];
-
-const FooterNavLinks: React.FC = () => {
+const FooterNavLinks: React.FC<IFooterProps> = ({ navLinks }) => {
 	const pathname = usePathname();
 
 	const isActive = (link: string) => (pathname === link ? s.active : '');
@@ -43,7 +20,7 @@ const FooterNavLinks: React.FC = () => {
 	return (
 		<nav>
 			<ul className={s.container}>
-				{footerNavLinksList.map(({ title, to }) => (
+				{navLinks.map(({ title, to }) => (
 					<li className={clsx(isActive(to), s.link)} key={to}>
 						<Link href={to}>{title}</Link>
 					</li>

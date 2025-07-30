@@ -9,17 +9,35 @@ interface IImage {
 
 export interface IStoreItem extends Document {
 	code_product: number;
-	name: string;
+	name: {
+		ua: string;
+		en: string;
+	};
 	slug: string;
 	imgs: IImage[];
-	price: number;
 	quantity?: number;
 	isLimited: boolean;
-	paper_info: string;
-	size_with_borders: string;
-	size_without_borders: string;
-	captured_info: string;
-	note: string;
+	paper_info: {
+		ua: string;
+		en: string;
+	};
+	sizes: {
+		id: string;
+		label: string;
+		price: number;
+	}[];
+	captured_info: {
+		ua: string;
+		en: string;
+	};
+	note: {
+		ua: string;
+		en: string;
+	};
+	frame: {
+		ua: string;
+		en: string;
+	};
 }
 
 const imageSchema = new Schema<IImage>(
@@ -34,17 +52,16 @@ const imageSchema = new Schema<IImage>(
 
 const storeItemSchema = new Schema<IStoreItem>({
 	code_product: { type: Number, required: true },
-	name: { type: String, required: true },
+	name: { type: { ua: String, en: String }, required: true },
 	slug: { type: String, required: true },
 	imgs: { type: [imageSchema], default: [] },
-	price: { type: Number, required: true },
 	quantity: { type: Number, required: false },
 	isLimited: { type: Boolean, required: true },
-	paper_info: { type: String, required: true },
-	size_with_borders: { type: String, required: true },
-	size_without_borders: { type: String, required: true },
-	captured_info: { type: String, required: true },
-	note: { type: String, required: true },
+	paper_info: { type: { ua: String, en: String }, required: true },
+	sizes: { type: [{ id: String, label: String, price: String }], required: true },
+	captured_info: { type: { ua: String, en: String }, required: true },
+	note: { type: { ua: String, en: String }, required: true },
+	frame: { type: { ua: String, en: String }, required: true },
 });
 
 // Запобігаємо повторному визначенню моделі при гарячому перезавантаженні
