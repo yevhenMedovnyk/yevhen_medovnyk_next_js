@@ -97,6 +97,13 @@
 		"errorMessage": "Помилка при створенні альбому",
 		"errorUploadImage": "Помилка при завантаженні зображень"
 	},
+	"ProductFull": {
+		"addToCart": "Додати до кошика",
+		"inCart": "Вже в кошику",
+		"addToCartSuccess": "Товар додано до кошика",
+		"goToCart": "→ Перейти до кошика",
+		"framing": "Оформлення"
+	},
 	"Currency": {
 		"uah": "грн"
 	}

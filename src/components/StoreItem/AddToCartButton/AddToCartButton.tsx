@@ -9,6 +9,7 @@ import { useIsInCart } from '@/stores/hooks/cartSelectors';
 import Link from 'next/link';
 import { useCartStore } from '@/stores/useCartStore';
 import { useProductSize } from '@/stores/useProductSizeStore';
+import { useTranslations } from 'next-intl';
 
 interface AddToCartButtonProps {
 	product: IProduct;
@@ -16,7 +17,7 @@ interface AddToCartButtonProps {
 
 const AddToCartButton: React.FC<AddToCartButtonProps> = ({ product }) => {
 	const size = useProductSize((state) => state.items);
-
+	const t = useTranslations('ProductFull');
 
 	const ProductData = {
 		...product,
@@ -31,9 +32,9 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({ product }) => {
 	const handleAddToCart = () => {
 		addToCart(ProductData);
 		showSuccessToast(
-			'Товар додано!',
+			t('addToCartSuccess'),
 			<Link href="/cart" className={s.toastLink}>
-				→ Перейти до кошика
+				{t('goToCart')}
 			</Link>,
 			5000
 		);
@@ -43,7 +44,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({ product }) => {
 		<Button
 			type="button"
 			disabled={!product || isInCart}
-			name={isInCart ? 'В кошику' : 'Додати до кошика'}
+			name={isInCart ? t('inCart') : t('addToCart')}
 			onClick={handleAddToCart}
 			class_name="storeItem"
 		/>

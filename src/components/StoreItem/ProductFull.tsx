@@ -14,7 +14,8 @@ interface IProductFullProps {
 const ProductFull = async ({ product }: IProductFullProps) => {
 	const locale = getLocale();
 	const currentLocale = (await locale) as keyof IProduct['name'];
-	const t = await getTranslations('Currency');
+	const t = await getTranslations('ProductFull');
+	
 
 	const renderImageSection = () => {
 		return (
@@ -38,7 +39,7 @@ const ProductFull = async ({ product }: IProductFullProps) => {
 					<h1 className={s.name}>{product?.name[currentLocale]}</h1>
 
 					<div className={s.isFramed}>
-						Оформлення: <span>{product?.frame[currentLocale]}</span>
+						{t('framing')}: <span>{product?.frame[currentLocale]}</span>
 						<SizeSelector sizes={product?.sizes} productId={product?._id} />
 					</div>
 

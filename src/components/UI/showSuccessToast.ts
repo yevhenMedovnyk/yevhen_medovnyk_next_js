@@ -9,7 +9,7 @@ export const showSuccessToast = (
 		description,
 		duration: duration || 5000,
 		style: {
-			color: 'mediumseagreen',
+			color: 'forestgreen',
 		},
 	});
 };
