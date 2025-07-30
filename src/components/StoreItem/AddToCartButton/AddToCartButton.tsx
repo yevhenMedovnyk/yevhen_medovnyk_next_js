@@ -5,7 +5,6 @@ import Button from '@/components/UI/Button/Button';
 import { IProduct } from '@/types/IProduct';
 import { showSuccessToast } from '@/components/UI/showSuccessToast';
 import s from '../StoreItem.module.scss';
-import { useIsInCart } from '@/stores/hooks/cartSelectors';
 import Link from 'next/link';
 import { useCartStore } from '@/stores/useCartStore';
 import { useProductSize } from '@/stores/useProductSizeStore';
@@ -26,7 +25,6 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({ product }) => {
 		selectedPrice: size[0]?.price,
 	};
 
-	const isInCart = useIsInCart(product._id);
 	const { addToCart } = useCartStore();
 
 	const handleAddToCart = () => {
@@ -43,8 +41,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({ product }) => {
 	return (
 		<Button
 			type="button"
-			disabled={!product || isInCart}
-			name={isInCart ? t('inCart') : t('addToCart')}
+			name={t('addToCart')}
 			onClick={handleAddToCart}
 			class_name="storeItem"
 		/>

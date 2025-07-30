@@ -99,7 +99,6 @@
 	},
 	"ProductFull": {
 		"addToCart": "Add to cart",
-		"inCart": "Product in cart",
 		"addToCartSuccess": "Product added to cart",
 		"goToCart": "→ Go to cart",
 		"framing": "Framing"

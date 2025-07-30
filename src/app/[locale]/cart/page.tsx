@@ -21,7 +21,7 @@ const Cart = () => {
 		increaseQuantity,
 		decreaseQuantity,
 		removeFromCart,
-		hasHydrated
+		hasHydrated,
 	} = useCartStore((state) => state);
 
 	const onClickBuy = async () => {
@@ -73,10 +73,10 @@ const Cart = () => {
 				<>
 					{cartItems.map((item) => (
 						<CartItem
-							key={item._id}
+							key={item._id + item.selectedSize}
 							item={item}
-							onIncrease={() => increaseQuantity(item._id)}
-							onDecrease={() => decreaseQuantity(item._id)}
+							onIncrease={() => increaseQuantity(item._id, item.selectedSize)}
+							onDecrease={() => decreaseQuantity(item._id, item.selectedSize)}
 							onRemove={() => removeFromCart(item._id)}
 						/>
 					))}

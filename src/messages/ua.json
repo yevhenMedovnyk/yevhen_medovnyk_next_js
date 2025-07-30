@@ -99,7 +99,6 @@
 	},
 	"ProductFull": {
 		"addToCart": "Додати до кошика",
-		"inCart": "Вже в кошику",
 		"addToCartSuccess": "Товар додано до кошика",
 		"goToCart": "→ Перейти до кошика",
 		"framing": "Оформлення"
