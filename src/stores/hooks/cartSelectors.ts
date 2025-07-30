@@ -7,11 +7,10 @@ export const useCartItemCount = () => {
 
 export const useCartTotal = () => {
 	const items = useCartStore((state) => state.items);
-	return items.reduce((total, item) => total + item.price * item.quantity_in_cart, 0);
+	return items.reduce((total, item) => total + item.selectedPrice * item.quantity_in_cart, 0);
 };
 
-export const useIsInCart = (productId: number) => {
+export const useIsInCart = (productId: string) => {
 	const items = useCartStore((state) => state.items);
 	return items.some((item) => item._id === productId);
 };
-

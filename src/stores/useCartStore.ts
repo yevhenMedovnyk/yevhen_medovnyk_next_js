@@ -8,9 +8,9 @@ interface CartState {
 	hasHydrated: boolean;
 	setHasHydrated: (state: boolean) => void;
 	addToCart: (product: ICartItem) => void;
-	removeFromCart: (id: number) => void;
-	decreaseQuantity: (id: number) => void;
-	increaseQuantity: (id: number) => void;
+	removeFromCart: (id: string) => void;
+	decreaseQuantity: (id: string) => void;
+	increaseQuantity: (id: string) => void;
 	clearCart: () => void;
 }
 

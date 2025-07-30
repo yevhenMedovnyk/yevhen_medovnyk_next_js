@@ -39,7 +39,7 @@ const ProductFull = async ({ product }: IProductFullProps) => {
 
 					<div className={s.isFramed}>
 						Оформлення: <span>{product?.frame[currentLocale]}</span>
-						<SizeSelector sizes={product?.sizes} />
+						<SizeSelector sizes={product?.sizes} productId={product?._id} />
 					</div>
 
 					<div className={s.printInfo}>

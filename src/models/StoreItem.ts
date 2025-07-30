@@ -1,4 +1,3 @@
-import { id } from './../../node_modules/next-auth/client/__tests__/helpers/mocks.d';
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
 interface IImage {

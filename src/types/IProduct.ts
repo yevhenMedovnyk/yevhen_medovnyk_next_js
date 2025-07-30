@@ -1,7 +1,13 @@
 import { IImage } from './IImage';
 
+export interface IProductSize {
+	id: string;
+	label: string;
+	price: number;
+}
+
 export interface IProduct {
-	_id: number;
+	_id:  string;
 	code_product: number;
 	name: {
 		ua: string;
@@ -20,11 +26,7 @@ export interface IProduct {
 		ua: string;
 		en: string;
 	};
-	sizes: {
-		id: string;
-		label: string;
-		price: number;
-	}[];
+	sizes: IProductSize[];
 	isLimited: boolean;
 	imgs: IImage[];
 	frame: {

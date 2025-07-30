@@ -9,9 +9,9 @@ export async function POST(req: NextRequest) {
 	const body = await req.json();
 
 	const products = body.products.map((product: any) => ({
-		name: product.name,
+		name: product.name.ua,
 		cnt: product.quantity_in_cart,
-		price: product.price,
+		price: product.selectedPrice,
 		code_product: product.code_product,
 		product_img_src: product.imgs[0].img,
 	}));
