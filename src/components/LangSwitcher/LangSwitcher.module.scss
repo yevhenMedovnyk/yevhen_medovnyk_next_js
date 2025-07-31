@@ -1,0 +1,22 @@
+.langSwitcher {
+	display: inline-block;
+	height: 1.3rem;
+}
+
+.langBtn {
+	width: 1.3rem;
+	height: 1.3rem;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+	overflow: hidden;
+	&:hover {
+		opacity: 0.85;
+	}
+	img {
+		width: 100%;
+	}
+}
+
+.active {
+	display: none;
+}
