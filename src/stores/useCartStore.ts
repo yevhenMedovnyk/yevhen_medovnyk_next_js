@@ -8,7 +8,7 @@ interface CartState {
 	hasHydrated: boolean;
 	setHasHydrated: (state: boolean) => void;
 	addToCart: (product: ICartItem) => void;
-	removeFromCart: (id: string) => void;
+	removeFromCart: (id: string, size: string) => void;
 	decreaseQuantity: (id: string, size: string) => void;
 	increaseQuantity: (id: string, size: string) => void;
 	clearCart: () => void;
@@ -42,9 +42,9 @@ export const useCartStore = create<CartState>()(
 					}
 				}),
 
-			removeFromCart: (id) =>
+			removeFromCart: (id, size) =>
 				set((state) => ({
-					items: state.items.filter((item) => item._id !== id),
+					items: state.items.filter((item) => !(item._id === id && item.selectedSize === size)),
 				})),
 			decreaseQuantity: (id, size) =>
 				set((state) => ({

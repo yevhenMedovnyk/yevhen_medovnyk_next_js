@@ -10,7 +10,8 @@ import Link from 'next/link';
 import { useFetchClient } from '@/hooks/useFetchClient';
 import { useCartStore } from '@/stores/useCartStore';
 import { showErrorToast } from '@/components/UI/showErrorToast';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import { IProduct } from '@/types/IProduct';
 
 const Cart = () => {
 	const fetchClient = useFetchClient();
@@ -19,7 +20,8 @@ const Cart = () => {
 	const itemsCount = useCartItemCount();
 
 	const t = useTranslations();
-
+	const locale = useLocale();
+	const currentLocale = locale as keyof IProduct['name'];
 
 	const {
 		items: cartItems,
@@ -29,13 +31,16 @@ const Cart = () => {
 		hasHydrated,
 	} = useCartStore((state) => state);
 
+
+	const products = cartItems.map((item) => ({ ...item, name: item.name[currentLocale] }));
+
 	const onClickBuy = async () => {
 		const order_ref = Date.now().toString();
 		const body = {
 			order_ref: order_ref,
 			amount: total,
 			count: itemsCount,
-			products: cartItems,
+			products,
 			//"code_checkbox": "3315974",
 		};
 
@@ -83,7 +88,7 @@ const Cart = () => {
 							item={item}
 							onIncrease={() => increaseQuantity(item._id, item.selectedSize)}
 							onDecrease={() => decreaseQuantity(item._id, item.selectedSize)}
-							onRemove={() => removeFromCart(item._id)}
+							onRemove={() => removeFromCart(item._id, item.selectedSize)}
 						/>
 					))}
 					<div className={s.total}>
