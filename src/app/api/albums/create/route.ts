@@ -14,6 +14,10 @@ interface AlbumBody {
 	};
 	category?: string;
 	cover_img: string; // base64 string
+	description?: {
+		en?: string;
+		ua?: string;
+	};
 }
 
 export async function POST(request: NextRequest) {
@@ -29,6 +33,7 @@ export async function POST(request: NextRequest) {
 		const body: AlbumBody = await request.json();
 		const nameEn = body?.name?.en;
 		const base64String = body?.cover_img;
+
 
 		if (!nameEn) {
 			return NextResponse.json({ message: 'Album name is required' }, { status: 400 });

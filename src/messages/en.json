@@ -1,4 +1,8 @@
 {
+	"RootLayout": {
+		"title": "Yevhen Medovnyk | YM FineArt Prints",
+		"description": "Site of photographer Yevhen Medovnyk"
+	},
 	"Header": {
 		"nav": [
 			{
@@ -23,7 +27,38 @@
 			}
 		]
 	},
+
+	"Gallery": {
+		"meta": {
+			"title": "Gallery | Yevhen Medovnyk",
+			"description": "Gallery | Site of photographer Yevhen Medovnyk"
+		},
+
+		"folder": {
+			"edit": "Edit",
+			"delete": "Delete"
+		},
+		"createAlbumButton": "Create album",
+		"deleteAlbumSuccess": "Album deleted successfully",
+		"deleteAlbumError": "Something went wrong"
+	},
+	"Projects": {
+		"meta": {
+			"title": "Projects | Yevhen Medovnyk",
+			"description": "Projects | Site of photographer Yevhen Medovnyk"
+		}
+	},
+	"Store": {
+		"meta": {
+			"title": "Store | YM FineArt Prints",
+			"description": "Store | Site of photographer Yevhen Medovnyk"
+		}
+	},
 	"Contacts": {
+		"meta": {
+			"title": "Contacts | Yevhen Medovnyk",
+			"description": "Contacts | Site of photographer Yevhen Medovnyk"
+		},
 		"title": "If you have any questions or suggestions, please<br></br>contact me in the way that is most convenient for you:",
 		"form": {
 			"namePlaceholder": "Your name",
@@ -33,6 +68,54 @@
 		},
 		"successMessage": "Message sent successfully",
 		"errorMessage": "Something went wrong"
+	},
+	"About": {
+		"meta": {
+			"title": "About | Yevhen Medovnyk",
+			"description": "About | Site of photographer Yevhen Medovnyk"
+		},
+		"about": "About me"
+	},
+	"ProductFull": {
+		"addToCart": "Add to cart",
+		"addToCartSuccess": "Product added to cart",
+		"goToCart": "→ Go to cart",
+		"framing": "Framing"
+	},
+	"Cart": {
+		"totalPrice": "Total price",
+		"checkout": "Checkout",
+		"emptyCart": "Oops, your cart is empty!",
+		"backToStore": "←  Back to store",
+		"errorMessage": "Something went wrong, please try again"
+	},
+	"CreateAlbum": {
+		"title-create": "Create new album",
+		"title-update": "Update album",
+		"form": {
+			"labels": {
+				"albumCover": "Album cover:",
+				"addImage": "Add images to album:",
+				"addDescUa": "Додати опис:",
+				"addDescEn": "Add description:",
+				"category": "Choose category:"
+			},
+			"selectOptions": {
+				"gallery": "Gallery",
+				"projects": "Projects"
+			},
+			"btn": {
+				"create": "Create album",
+				"update": "Update album",
+				"updating": "Updating...",
+				"uploading": "Uploading...",
+				"imageUploading": "Uploading image..."
+			}
+		},
+		"successCreateMessage": "New album created successfully.",
+		"successUpdateMessage": "Album updated successfully.",
+		"errorMessage": "Something went wrong. Please try again.",
+		"errorUploadImage": "Error uploading images."
 	},
 	"Footer": {
 		"copyright": {
@@ -61,54 +144,6 @@
 				"to": "/contacts"
 			}
 		]
-	},
-	"Gallery": {
-		"folder": {
-			"edit": "Edit",
-			"delete": "Delete"
-		},
-		"createAlbumButton": "Create album",
-		"deleteAlbumSuccess": "Album deleted successfully",
-		"deleteAlbumError": "Something went wrong"
-	},
-	"CreateAlbum": {
-		"title-create": "Create new album",
-		"title-update": "Update album",
-		"form": {
-			"labels": {
-				"albumCover": "Album cover:",
-				"addImage": "Add images to album:",
-				"category": "Choose category:"
-			},
-			"selectOptions": {
-				"gallery": "Gallery",
-				"projects": "Projects"
-			},
-			"btn": {
-				"create": "Create album",
-				"update": "Update album",
-				"updating": "Updating...",
-				"uploading": "Uploading...",
-				"imageUploading": "Uploading image..."
-			}
-		},
-		"successCreateMessage": "New album created successfully.",
-		"successUpdateMessage": "Album updated successfully.",
-		"errorMessage": "Something went wrong. Please try again.",
-		"errorUploadImage": "Error uploading images."
-	},
-	"ProductFull": {
-		"addToCart": "Add to cart",
-		"addToCartSuccess": "Product added to cart",
-		"goToCart": "→ Go to cart",
-		"framing": "Framing"
-	},
-	"Cart": {
-		"totalPrice": "Total price",
-		"checkout": "Checkout",
-		"emptyCart": "Oops, your cart is empty!",
-		"backToStore": "←  Back to store",
-		"errorMessage": "Something went wrong, please try again"
 	},
 	"Currency": {
 		"uah": "uah"

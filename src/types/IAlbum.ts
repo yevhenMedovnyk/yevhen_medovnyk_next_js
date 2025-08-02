@@ -7,4 +7,8 @@ export interface IAlbum {
 	};
 	category: string;
 	slug: string;
+	description?: {
+		ua?: string;
+		en?: string;
+	};
 }

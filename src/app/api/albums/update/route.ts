@@ -17,6 +17,10 @@ interface UpdateAlbumBody {
 	};
 	category?: string;
 	cover_img: string; // base64 або URL
+	description?: {
+		en: string;
+		ua: string;
+	};
 }
 
 function isBase64(str: string) {
@@ -35,7 +39,7 @@ export async function PUT(req: NextRequest) {
 		await dbConnect();
 
 		const body: UpdateAlbumBody = await req.json();
-		const { albumId, name, category, cover_img } = body;
+		const { albumId, name, category, cover_img, description } = body;
 
 		if (!albumId) {
 			return NextResponse.json({ message: 'albumId is required' }, { status: 400 });
@@ -81,6 +85,10 @@ export async function PUT(req: NextRequest) {
 		album.name = name;
 		if (category) album.category = category;
 		album.slug = slug;
+
+		if (description) {
+			album.description = description;
+		}
 
 		await album.save();
 

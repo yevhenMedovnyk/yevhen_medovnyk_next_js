@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Mulish, Montserrat_Alternates, Indie_Flower } from 'next/font/google';
 import './globals.scss';
 import { cookies } from 'next/headers';
+import { getMessages } from 'next-intl/server';
 
 const mulish = Mulish({
 	variable: '--font-mulish',
@@ -21,10 +22,19 @@ const indie_Flower = Indie_Flower({
 	weight: ['400'],
 });
 
-export const metadata: Metadata = {
-	title: 'Yevhen Medovnyk | YM FineArt Prints',
-	description: 'Сайт фотографа Медовника Євгена',
-};
+interface Props {
+	params: { locale: string };
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+	const messages = await getMessages({ locale: params.locale });
+
+	return {
+		title: messages.RootLayout.title,
+		description: messages.RootLayout.description,
+	};
+}
+
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
 	const cookieStore = await cookies();

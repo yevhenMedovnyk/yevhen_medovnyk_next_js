@@ -46,6 +46,10 @@ const CreateOrEditAlbum = () => {
 			cover_img: null as File | null,
 			category: albumData?.category ?? 'gallery',
 			album_images: [] as File[],
+			description: {
+				ua: albumData?.description?.ua ?? '',
+				en: albumData?.description?.en ?? '',
+			},
 		}),
 		[albumData]
 	);
@@ -129,6 +133,7 @@ const CreateOrEditAlbum = () => {
 							name: values.name,
 							category: values.category,
 							cover_img: coverBase64 || albumData.cover_img,
+							description: values.description,
 						}),
 					},
 					true
@@ -149,6 +154,7 @@ const CreateOrEditAlbum = () => {
 							category: values.category ?? '',
 							cover_img: coverBase64 ?? '',
 							slug: '',
+							description: values.description,
 						}),
 					},
 					true
@@ -255,6 +261,14 @@ const CreateOrEditAlbum = () => {
 		Promise.all(previews).then(setImagePreviews as any);
 	};
 
+	const handleDescriptionChange = (
+		event: React.ChangeEvent<HTMLTextAreaElement>,
+		setFieldValue: FormikHelpers<typeof initialValues>['setFieldValue']
+	) => {
+		const { name, value } = event.target;
+		setFieldValue(name, value);
+	};
+
 	const handleCategoryChange = (
 		event: React.ChangeEvent<HTMLSelectElement>,
 		setFieldValue: FormikHelpers<typeof initialValues>['setFieldValue']
@@ -346,6 +360,30 @@ const CreateOrEditAlbum = () => {
 										onChange={(event) => handleImagesChange(event, formik.setFieldValue)}
 									/>
 									<ErrorMessage name="album_images" component="span" className={s.error} />
+								</div>
+								<div className={s.inputContainer}>
+									<label htmlFor="description.ua" className={s.label}>
+										{t('form.labels.addDescUa')}
+									</label>
+									<textarea
+										className={s.input}
+										id="description.ua"
+										{...formik.getFieldProps('description.ua')}
+										onChange={(event) => handleDescriptionChange(event, formik.setFieldValue)}
+									/>
+									<ErrorMessage name="description.ua" component="span" className={s.error} />
+								</div>
+								<div className={s.inputContainer}>
+									<label htmlFor="description.en" className={s.label}>
+										{t('form.labels.addDescEn')}
+									</label>
+									<textarea
+										className={s.input}
+										id="description.en"
+										{...formik.getFieldProps('description.en')}
+										onChange={(event) => handleDescriptionChange(event, formik.setFieldValue)}
+									/>
+									<ErrorMessage name="description.en" component="span" className={s.error} />
 								</div>
 								<div className={s.inputContainer}>
 									<label htmlFor="category-select" className={s.label}>

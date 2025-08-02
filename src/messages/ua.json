@@ -1,4 +1,8 @@
 {
+	"RootLayout": {
+		"title": "Євген Медовник | YM FineArt Prints",
+		"description": "Сайт фотографа Медовника Євгена"
+	},
 	"Header": {
 		"nav": [
 			{
@@ -23,7 +27,37 @@
 			}
 		]
 	},
+
+	"Gallery": {
+		"meta": {
+			"title": "Галерея | Yevhen Medovnyk",
+			"description": "Галерея | Фотограф Медовник Євген"
+		},
+		"folder": {
+			"edit": "Редагувати",
+			"delete": "Видалити"
+		},
+		"createAlbumButton": "Створити альбом",
+		"deleteAlbumSuccess": "Альбом видалено",
+		"deleteAlbumError": "Помилка при видаленні альбому"
+	},
+	"Projects": {
+		"meta": {
+			"title": "Проєкти | Yevhen Medovnyk",
+			"description": "Проєкти | Фотограф Медовник Євген"
+		}
+	},
+	"Store": {
+		"meta": {
+			"title": "Магазин | YM FineArt Prints",
+			"description": "Магазин | Фотограф Медовник Євген"
+		}
+	},
 	"Contacts": {
+		"meta": {
+			"title": "Контакти | Yevhen Medovnyk",
+			"description": "Контакти | Фотограф Медовник Євген"
+		},
 		"title": "Якщо ви маєте будь-які питання чи пропозиції, будь ласка,<br></br>зв’яжіться зі мною зручним для вас способом:",
 		"form": {
 			"namePlaceholder": "Ваше імʼя",
@@ -34,6 +68,56 @@
 		"successMessage": "Повідомлення надіслано",
 		"errorMessage": "Щось пішло не так, спробуєте ще раз"
 	},
+	"About": {
+		"meta": {
+			"title": "Про автора | Yevhen Medovnyk",
+			"description": "Про автора | Фотограф Медовник Євген"
+		},
+		"about": "Про мене"
+	},
+
+	"ProductFull": {
+		"addToCart": "Додати до кошика",
+		"addToCartSuccess": "Товар додано до кошика",
+		"goToCart": "→ Перейти до кошика",
+		"framing": "Оформлення"
+	},
+	"Cart": {
+		"totalPrice": "Загальна ціна",
+		"checkout": "Оформити замовлення",
+		"emptyCart": "Ууупс, Ваш кошик порожній!",
+		"backToStore": "← Повернутися до магазину",
+		"errorMessage": "Щось пішло не так, спробуєте ще раз"
+	},
+	"CreateAlbum": {
+		"title-create": "Створити альбом",
+		"title-update": "Редагувати альбом",
+		"form": {
+			"labels": {
+				"albumCover": "Обкладинка альбому:",
+				"addImage": "Додати зображення до альбому:",
+				"addDescUa": "Додати опис:",
+				"addDescEn": "Add description:",
+				"category": "Оберіть категорію:"
+			},
+			"selectOptions": {
+				"gallery": "Галерея",
+				"projects": "Проєкти"
+			},
+			"btn": {
+				"create": "Створити альбом",
+				"update": "Редагувати альбом",
+				"updating": "Оновлення...",
+				"uploading": "Завантаження...",
+				"imageUploading": "Завантаження зображень..."
+			}
+		},
+		"successCreateMessage": "Альбом створено",
+		"successUpdateMessage": "Альбом оновлено",
+		"errorMessage": "Помилка при створенні альбому",
+		"errorUploadImage": "Помилка при завантаженні зображень"
+	},
+
 	"Footer": {
 		"copyright": {
 			"author": "Євген Медовник",
@@ -61,54 +145,6 @@
 				"to": "/contacts"
 			}
 		]
-	},
-	"Gallery": {
-		"folder": {
-			"edit": "Редагувати",
-			"delete": "Видалити"
-		},
-		"createAlbumButton": "Створити альбом",
-		"deleteAlbumSuccess": "Альбом видалено",
-		"deleteAlbumError": "Помилка при видаленні альбому"
-	},
-	"CreateAlbum": {
-		"title-create": "Створити альбом",
-		"title-update": "Редагувати альбом",
-		"form": {
-			"labels": {
-				"albumCover": "Обкладинка альбому:",
-				"addImage": "Додати зображення до альбому:",
-				"category": "Оберіть категорію:"
-			},
-			"selectOptions": {
-				"gallery": "Галерея",
-				"projects": "Проєкти"
-			},
-			"btn": {
-				"create": "Створити альбом",
-				"update": "Редагувати альбом",
-				"updating": "Оновлення...",
-				"uploading": "Завантаження...",
-				"imageUploading": "Завантаження зображень..."
-			}
-		},
-		"successCreateMessage": "Альбом створено",
-		"successUpdateMessage": "Альбом оновлено",
-		"errorMessage": "Помилка при створенні альбому",
-		"errorUploadImage": "Помилка при завантаженні зображень"
-	},
-	"ProductFull": {
-		"addToCart": "Додати до кошика",
-		"addToCartSuccess": "Товар додано до кошика",
-		"goToCart": "→ Перейти до кошика",
-		"framing": "Оформлення"
-	},
-	"Cart": {
-		"totalPrice": "Загальна ціна",
-		"checkout": "Оформити замовлення",
-		"emptyCart": "Ууупс, Ваш кошик порожній!",
-		"backToStore": "← Повернутися до магазину",
-		"errorMessage": "Щось пішло не так, спробуєте ще раз"
 	},
 	"Currency": {
 		"uah": "грн"
