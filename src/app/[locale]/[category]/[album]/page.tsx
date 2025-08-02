@@ -4,6 +4,7 @@ import Gallery from '@/components/Gallery/Gallery';
 import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { IAlbum } from '@/types/IAlbum';
+import { getLocale } from 'next-intl/server';
 
 interface ImageMinimal {
 	_id: string;
@@ -32,8 +33,16 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 	const params = await props.params;
 	const album = await getAlbum(params.album);
 	if (!album) return { title: 'Album not found' };
+
+	const locale = await getLocale();
+	const nameLocale = locale as keyof IAlbum['name'];
+	const descLocale = locale as keyof IAlbum['description'];
+
 	return {
-		title: album.name.ua + ' | Yevhen Medovnyk',
+		title: album.name[nameLocale] + ' | Yevhen Medovnyk',
+		description: album.description
+			? album.description[descLocale]
+			: `${album.name[nameLocale]} | Photographer Yevhen Medovnyk'`,
 	};
 }
 
@@ -54,7 +63,6 @@ export async function generateStaticParams(): Promise<{ category: string; album:
 		return [];
 	}
 }
-
 
 async function getImagesMinimal(slug: string): Promise<ImageMinimal[] | null> {
 	try {

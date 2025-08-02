@@ -1,11 +1,11 @@
 'use client';
 
-import { signOut, useSession } from 'next-auth/react';
-
+import { signOut } from 'next-auth/react';
 import React from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import s from './AdminNavLinks.module.scss';
+import { useLocale } from 'next-intl';
 
 interface INavLinks {
 	title: string;
@@ -21,11 +21,13 @@ const navLinksList: INavLinks[] = [
 
 const AdminNavLinks: React.FC = () => {
 	const pathname = usePathname();
+	const locale = useLocale();
+
 
 	return (
 		<div className={s.container}>
 			{navLinksList.map(({ title, to }) => {
-				const isActive = pathname === to;
+				const isActive = `/${locale}${to}` === pathname;
 
 				return (
 					<Link key={title} href={to} className={`${s.link} ${isActive ? s.active : ''}`}>

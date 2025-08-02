@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { use, useEffect } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { contactFormSchema } from '@/schemas/contactForm.schema';
 import SocialNetLinksList from '@/components/SocialNetLinks/SocialNetLinks';
@@ -9,7 +9,7 @@ import Button from '@/components/UI/Button/Button';
 import { showErrorToast } from '@/components/UI/showErrorToast';
 import { showSuccessToast } from '@/components/UI/showSuccessToast';
 import { useFetchClient } from '@/hooks/useFetchClient';
-import {  useTranslations } from 'next-intl';
+import { useTranslations } from 'next-intl';
 
 const Contacts: React.FC = () => {
 	const initialValues = {
@@ -19,6 +19,13 @@ const Contacts: React.FC = () => {
 	};
 
 	const t = useTranslations('Contacts');
+
+	useEffect(() => {
+		document.title = t('meta.title');
+		document
+			.querySelector('meta[name="description"]')
+			?.setAttribute('content', t('meta.description'));
+	}, [t]);
 
 	const fetchClient = useFetchClient();
 	const onSubmit = async (
@@ -86,11 +93,7 @@ const Contacts: React.FC = () => {
 							/>
 							<ErrorMessage name="message" component="span" className={s.error} />
 						</div>
-						<Button
-							type="submit"
-							name={t('form.submit')}
-							class_name="contactPage"
-						/>
+						<Button type="submit" name={t('form.submit')} class_name="contactPage" />
 					</Form>
 				)}
 			</Formik>

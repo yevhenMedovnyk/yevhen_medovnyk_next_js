@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import s from './cart.module.scss';
 import { useCartItemCount, useCartTotal } from '@/stores/hooks/cartSelectors';
 import CartItem from '@/components/CartItem/CartItem';
@@ -23,6 +23,13 @@ const Cart = () => {
 	const locale = useLocale();
 	const currentLocale = locale as keyof IProduct['name'];
 
+	useEffect(() => {
+		document.title = t('Cart.meta.title');
+		document
+			.querySelector('meta[name="description"]')
+			?.setAttribute('content', t('Cart.meta.description'));
+	}, [t]);
+
 	const {
 		items: cartItems,
 		increaseQuantity,
@@ -30,7 +37,6 @@ const Cart = () => {
 		removeFromCart,
 		hasHydrated,
 	} = useCartStore((state) => state);
-
 
 	const products = cartItems.map((item) => ({ ...item, name: item.name[currentLocale] }));
 

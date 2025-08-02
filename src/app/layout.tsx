@@ -30,8 +30,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const messages = await getMessages({ locale: params.locale });
 
 	return {
-		title: messages.RootLayout.title,
-		description: messages.RootLayout.description,
+		title: messages.RootLayout.title ?? 'Yevhen Medovnyk | YM FineArt Prints',
+		description: messages.RootLayout.description ?? 'Photographer Yevhen Medovnyk',
 	};
 }
 

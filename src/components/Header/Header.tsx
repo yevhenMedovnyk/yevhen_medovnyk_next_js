@@ -41,7 +41,6 @@ const Header: React.FC<HeaderProps> = (navLinks) => {
 					handleBurgerLinkClick={handleBurgerLinkClick}
 					navLinks={navLinks.navLinks}
 				/>
-				{/*"Temp"*/}
 				<LangSwitcher switchLocale={switchLocale} locale={locale} />
 				<button onClick={() => signIn('google')} className={s.signInBtn}>
 					Sign In

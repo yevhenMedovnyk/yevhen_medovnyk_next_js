@@ -1,5 +1,4 @@
 import { Metadata } from 'next';
-import StoreItem from '@/components/StoreItem/StoreItem';
 import { IProduct } from '@/types/IProduct';
 import { notFound } from 'next/navigation';
 import s from './product.module.scss';
@@ -33,8 +32,8 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 	const locale = await getLocale();
 
 	return {
-		title: product.name[locale as keyof typeof product.name] + ' | YM FineArt Prints',
-		description: product.captured_info[locale as keyof typeof product.captured_info],
+		title: product.name[locale as keyof typeof product.name] + ' | YM FineArt Prints' ,
+		description: product.captured_info[locale as keyof typeof product.captured_info] ?? 'YM FineArt Prints',
 	};
 }
 

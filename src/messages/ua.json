@@ -50,7 +50,7 @@
 	"Store": {
 		"meta": {
 			"title": "Магазин | YM FineArt Prints",
-			"description": "Магазин | Фотограф Медовник Євген"
+			"description": "Магазин | YM FineArt Prints | Фотограф Медовник Євген"
 		}
 	},
 	"Contacts": {
@@ -83,6 +83,10 @@
 		"framing": "Оформлення"
 	},
 	"Cart": {
+		"meta": {
+			"title": "Кошик | YM FineArt Prints",
+			"description": "Кошик | YM FineArt Prints | Фотограф Медовник Євген"
+		},
 		"totalPrice": "Загальна ціна",
 		"checkout": "Оформити замовлення",
 		"emptyCart": "Ууупс, Ваш кошик порожній!",

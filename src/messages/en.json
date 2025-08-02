@@ -1,7 +1,7 @@
 {
 	"RootLayout": {
 		"title": "Yevhen Medovnyk | YM FineArt Prints",
-		"description": "Site of photographer Yevhen Medovnyk"
+		"description": "Photographer Yevhen Medovnyk"
 	},
 	"Header": {
 		"nav": [
@@ -31,7 +31,7 @@
 	"Gallery": {
 		"meta": {
 			"title": "Gallery | Yevhen Medovnyk",
-			"description": "Gallery | Site of photographer Yevhen Medovnyk"
+			"description": "Gallery | Photographer Yevhen Medovnyk"
 		},
 
 		"folder": {
@@ -45,19 +45,19 @@
 	"Projects": {
 		"meta": {
 			"title": "Projects | Yevhen Medovnyk",
-			"description": "Projects | Site of photographer Yevhen Medovnyk"
+			"description": "Projects | Photographer Yevhen Medovnyk"
 		}
 	},
 	"Store": {
 		"meta": {
 			"title": "Store | YM FineArt Prints",
-			"description": "Store | Site of photographer Yevhen Medovnyk"
+			"description": "Store | YM FineArt Prints | Photographer Yevhen Medovnyk"
 		}
 	},
 	"Contacts": {
 		"meta": {
 			"title": "Contacts | Yevhen Medovnyk",
-			"description": "Contacts | Site of photographer Yevhen Medovnyk"
+			"description": "Contacts | Photographer Yevhen Medovnyk"
 		},
 		"title": "If you have any questions or suggestions, please<br></br>contact me in the way that is most convenient for you:",
 		"form": {
@@ -72,7 +72,7 @@
 	"About": {
 		"meta": {
 			"title": "About | Yevhen Medovnyk",
-			"description": "About | Site of photographer Yevhen Medovnyk"
+			"description": "About | Photographer Yevhen Medovnyk"
 		},
 		"about": "About me"
 	},
@@ -83,6 +83,10 @@
 		"framing": "Framing"
 	},
 	"Cart": {
+		"meta": {
+			"title": "Cart | YM FineArt Prints",
+			"description": "Cart | YM FineArt Prints | Photographer Yevhen Medovnyk"
+		},
 		"totalPrice": "Total price",
 		"checkout": "Checkout",
 		"emptyCart": "Oops, your cart is empty!",
