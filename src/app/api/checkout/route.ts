@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 		payment_method_list: ['card'],
 		dlv_pay_merchant: false,
 		callback_url: `${process.env.DOMAIN}/api/checkout/callback`,
-		return_url: `${process.env.CLIENT_URL}/order-status`,
+		return_url: `${process.env.NEXT_PUBLIC_SITE_URL}/order-status`,
 		hold: false,
 		fl_recall: false,
 		destination: 'Оплата за фототовари',

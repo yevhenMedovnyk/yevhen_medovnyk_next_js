@@ -6,9 +6,6 @@ import NavLinks from '../NavLinks/NavLinks';
 import Logo from '../Logo/Logo';
 import clsx from 'clsx';
 import { Link } from '@/i18n/navigation';
-import useLocaleSwitcher from '@/utils/switchLocale';
-import { useLocale } from 'next-intl';
-import LangSwitcher from '@/components/LangSwitcher/LangSwitcher';
 import { INavLink } from '@/types/INavLink';
 
 interface IBurgerMenuProps {
@@ -22,8 +19,7 @@ const BurgerMenu: React.FC<IBurgerMenuProps> = ({
 	handleBurgerLinkClick,
 	navLinks,
 }) => {
-	const { switchLocale } = useLocaleSwitcher();
-	const locale = useLocale();
+	
 
 	
 
@@ -42,7 +38,6 @@ const BurgerMenu: React.FC<IBurgerMenuProps> = ({
 			<Link onClick={handleBurgerLinkClick} href="/" className={s.logoMini}>
 				<img src="/logo-mini-white.webp" alt="logo" />
 			</Link>
-			<LangSwitcher switchLocale={switchLocale} locale={locale} />
 		</nav>
 	);
 };

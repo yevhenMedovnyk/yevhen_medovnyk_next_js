@@ -9,6 +9,9 @@ import BurgerOpenBtn from './BurgerOpenBtn/BurgerOpenBtn';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
 import CartIcon from './CartIcon/CartIcon';
 import { INavLink } from '@/types/INavLink';
+import LangSwitcher from '../LangSwitcher/LangSwitcher';
+import useLocaleSwitcher from '@/utils/switchLocale';
+import { useLocale } from 'next-intl';
 
 interface HeaderProps {
 	navLinks: INavLink[];
@@ -16,6 +19,9 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = (navLinks) => {
 	const [isBurgerMenuOpen, setIsBurgerMenuOpen] = React.useState(false);
+
+	const { switchLocale } = useLocaleSwitcher();
+	const locale = useLocale();
 
 	const handleBurgerMenuClick = () => {
 		setIsBurgerMenuOpen((prev) => !prev);
@@ -29,18 +35,24 @@ const Header: React.FC<HeaderProps> = (navLinks) => {
 		<header className={s.container}>
 			<Logo />
 			<NavLinks {...navLinks} />
-			<CartIcon />
-			<BurgerMenu
-				isBurgerMenuOpen={isBurgerMenuOpen}
-				handleBurgerLinkClick={handleBurgerLinkClick}
-				navLinks={navLinks.navLinks}
-			/>
-			{/*"Temp"*/}
-			<button onClick={() => signIn('google')}>auth</button>
-			<BurgerOpenBtn
-				isBurgerMenuOpen={isBurgerMenuOpen}
-				handleBurgerMenuClick={handleBurgerMenuClick}
-			/>
+			<div className={s.rightSide}>
+				<BurgerMenu
+					isBurgerMenuOpen={isBurgerMenuOpen}
+					handleBurgerLinkClick={handleBurgerLinkClick}
+					navLinks={navLinks.navLinks}
+				/>
+				{/*"Temp"*/}
+				<LangSwitcher switchLocale={switchLocale} locale={locale} />
+				<button onClick={() => signIn('google')} className={s.signInBtn}>
+					Sign In
+				</button>
+				<CartIcon />
+
+				<BurgerOpenBtn
+					isBurgerMenuOpen={isBurgerMenuOpen}
+					handleBurgerMenuClick={handleBurgerMenuClick}
+				/>
+			</div>
 		</header>
 	);
 };
