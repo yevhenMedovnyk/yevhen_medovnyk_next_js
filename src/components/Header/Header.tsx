@@ -9,7 +9,6 @@ import BurgerOpenBtn from './BurgerOpenBtn/BurgerOpenBtn';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
 import CartIcon from './CartIcon/CartIcon';
 import { INavLink } from '@/types/INavLink';
-import LocaleSwitcher from '@/utils/switchLocale';
 
 interface HeaderProps {
 	navLinks: INavLink[];
@@ -17,9 +16,6 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = (navLinks) => {
 	const [isBurgerMenuOpen, setIsBurgerMenuOpen] = React.useState(false);
-
-	//Temp
-	const { switchLocale } = LocaleSwitcher();
 
 	const handleBurgerMenuClick = () => {
 		setIsBurgerMenuOpen((prev) => !prev);
@@ -37,15 +33,14 @@ const Header: React.FC<HeaderProps> = (navLinks) => {
 			<BurgerMenu
 				isBurgerMenuOpen={isBurgerMenuOpen}
 				handleBurgerLinkClick={handleBurgerLinkClick}
+				navLinks={navLinks.navLinks}
 			/>
+			{/*"Temp"*/}
+			<button onClick={() => signIn('google')}>auth</button>
 			<BurgerOpenBtn
 				isBurgerMenuOpen={isBurgerMenuOpen}
 				handleBurgerMenuClick={handleBurgerMenuClick}
 			/>
-			{/*"Temp"*/}
-			<button onClick={() => signIn('google')}>auth</button>
-			<button onClick={() => switchLocale('ua')}>ua</button>
-			<button onClick={() => switchLocale('en')}>en</button>
 		</header>
 	);
 };

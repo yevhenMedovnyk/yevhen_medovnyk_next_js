@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
 	const body = await req.json();
 
 	const products = body.products.map((product: any) => ({
-		name: product.name.ua,
+		name: product.name,
 		cnt: product.quantity_in_cart,
 		price: product.selectedPrice,
 		code_product: product.code_product,
@@ -29,6 +29,7 @@ export async function POST(req: NextRequest) {
 		return_url: `${process.env.CLIENT_URL}/order-status`,
 		hold: false,
 		fl_recall: false,
+		destination: 'Оплата за фототовари',
 	};
 
 	try {

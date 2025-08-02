@@ -16,6 +16,7 @@
 	visibility: hidden;
 	transition: all 0.2s ease-in-out;
 	transform: translateX(100%);
+	text-align: center;
 
 	&.open {
 		opacity: 1;

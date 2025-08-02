@@ -99,10 +99,16 @@
 	},
 	"ProductFull": {
 		"addToCart": "Додати до кошика",
-		"inCart": "Вже в кошику",
 		"addToCartSuccess": "Товар додано до кошика",
 		"goToCart": "→ Перейти до кошика",
 		"framing": "Оформлення"
+	},
+	"Cart": {
+		"totalPrice": "Загальна ціна",
+		"checkout": "Оформити замовлення",
+		"emptyCart": "Ууупс, Ваш кошик порожній!",
+		"backToStore": "← Повернутися до магазину",
+		"errorMessage": "Щось пішло не так, спробуєте ще раз"
 	},
 	"Currency": {
 		"uah": "грн"

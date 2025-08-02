@@ -8,9 +8,9 @@ interface CartState {
 	hasHydrated: boolean;
 	setHasHydrated: (state: boolean) => void;
 	addToCart: (product: ICartItem) => void;
-	removeFromCart: (id: string) => void;
-	decreaseQuantity: (id: string) => void;
-	increaseQuantity: (id: string) => void;
+	removeFromCart: (id: string, size: string) => void;
+	decreaseQuantity: (id: string, size: string) => void;
+	increaseQuantity: (id: string, size: string) => void;
 	clearCart: () => void;
 }
 
@@ -21,23 +21,45 @@ export const useCartStore = create<CartState>()(
 			hasHydrated: false,
 			setHasHydrated: (state) => set({ hasHydrated: state }),
 			addToCart: (product) =>
+				set((state) => {
+					const existingItem = state.items.find(
+						(item) => item._id === product._id && item.selectedSize === product.selectedSize
+					);
+
+					if (existingItem) {
+						return {
+							items: state.items.map((item) => {
+								if (item._id === product._id && item.selectedSize === product.selectedSize) {
+									return { ...item, quantity_in_cart: item.quantity_in_cart + 1 };
+								}
+								return item;
+							}),
+						};
+					} else {
+						return {
+							items: [...state.items, { ...product, quantity_in_cart: 1 }],
+						};
+					}
+				}),
+
+			removeFromCart: (id, size) =>
 				set((state) => ({
-					items: [...state.items, product],
+					items: state.items.filter((item) => !(item._id === id && item.selectedSize === size)),
 				})),
-			removeFromCart: (id) =>
-				set((state) => ({
-					items: state.items.filter((item) => item._id !== id),
-				})),
-			decreaseQuantity: (id) =>
+			decreaseQuantity: (id, size) =>
 				set((state) => ({
 					items: state.items.map((item) =>
-						item._id === id ? { ...item, quantity_in_cart: item.quantity_in_cart - 1 } : item
+						item._id === id && item.selectedSize === size
+							? { ...item, quantity_in_cart: item.quantity_in_cart - 1 }
+							: item
 					),
 				})),
-			increaseQuantity: (id) =>
+			increaseQuantity: (id, size) =>
 				set((state) => ({
 					items: state.items.map((item) =>
-						item._id === id ? { ...item, quantity_in_cart: item.quantity_in_cart + 1 } : item
+						item._id === id && item.selectedSize === size
+							? { ...item, quantity_in_cart: item.quantity_in_cart + 1 }
+							: item
 					),
 				})),
 			clearCart: () => set({ items: [] }),

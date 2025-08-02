@@ -9,6 +9,9 @@ import Cookies from 'js-cookie';
 import Link from 'next/link';
 import { useFetchClient } from '@/hooks/useFetchClient';
 import { useCartStore } from '@/stores/useCartStore';
+import { showErrorToast } from '@/components/UI/showErrorToast';
+import { useLocale, useTranslations } from 'next-intl';
+import { IProduct } from '@/types/IProduct';
 
 const Cart = () => {
 	const fetchClient = useFetchClient();
@@ -16,13 +19,20 @@ const Cart = () => {
 	const total = useCartTotal();
 	const itemsCount = useCartItemCount();
 
+	const t = useTranslations();
+	const locale = useLocale();
+	const currentLocale = locale as keyof IProduct['name'];
+
 	const {
 		items: cartItems,
 		increaseQuantity,
 		decreaseQuantity,
 		removeFromCart,
-		hasHydrated
+		hasHydrated,
 	} = useCartStore((state) => state);
+
+
+	const products = cartItems.map((item) => ({ ...item, name: item.name[currentLocale] }));
 
 	const onClickBuy = async () => {
 		const order_ref = Date.now().toString();
@@ -30,7 +40,7 @@ const Cart = () => {
 			order_ref: order_ref,
 			amount: total,
 			count: itemsCount,
-			products: cartItems,
+			products,
 			//"code_checkbox": "3315974",
 		};
 
@@ -48,6 +58,7 @@ const Cart = () => {
 			}
 		} catch (error: any) {
 			console.error('Помилка при створенні замовлення:', error);
+			showErrorToast(t('Cart.errorMessage'));
 		}
 	};
 
@@ -64,27 +75,27 @@ const Cart = () => {
 						src={'/cart/hungry_cat_icon.png'}
 						alt="hungry_cat_icon"
 					/>
-					<h1 className={s.emptyCartTitle}>Ууупс, Ваш кошик порожній!</h1>
+					<h1 className={s.emptyCartTitle}>{t('Cart.emptyCart')}</h1>
 					<Link className={s.emptyCartLink} href="/store">
-						Повернутись до магазину
+						{t('Cart.backToStore')}
 					</Link>
 				</div>
 			) : (
 				<>
 					{cartItems.map((item) => (
 						<CartItem
-							key={item._id}
+							key={item._id + item.selectedSize}
 							item={item}
-							onIncrease={() => increaseQuantity(item._id)}
-							onDecrease={() => decreaseQuantity(item._id)}
-							onRemove={() => removeFromCart(item._id)}
+							onIncrease={() => increaseQuantity(item._id, item.selectedSize)}
+							onDecrease={() => decreaseQuantity(item._id, item.selectedSize)}
+							onRemove={() => removeFromCart(item._id, item.selectedSize)}
 						/>
 					))}
 					<div className={s.total}>
-						<span>Загальна сума:</span>
-						{total} грн
+						<span>{t('Cart.totalPrice')}:</span>
+						{total} {t('Currency.uah')}
 					</div>
-					<Button name="Оформити замовлення" onClick={() => onClickBuy()} class_name="cart" />
+					<Button name={t('Cart.checkout')} onClick={() => onClickBuy()} class_name="cart" />
 				</>
 			)}
 		</div>
