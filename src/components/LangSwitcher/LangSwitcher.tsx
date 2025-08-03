@@ -10,11 +10,13 @@ interface ILangSwitcherProps {
 const LangSwitcher: React.FC<ILangSwitcherProps> = ({ switchLocale, locale: currentLocale }) => {
 	const icons = [
 		{
+			lang: 'Українська',
 			src: '/lang/ua.png',
 			alt: 'ua-flag',
 			locale: 'ua',
 		},
 		{
+			lang: 'English',
 			src: '/lang/usa.png',
 			alt: 'en',
 			locale: 'en',
@@ -23,13 +25,14 @@ const LangSwitcher: React.FC<ILangSwitcherProps> = ({ switchLocale, locale: curr
 
 	return (
 		<div className={s.langSwitcher}>
-			{icons.map(({ src, alt, locale }) => (
+			{icons.map(({ src, alt, locale, lang }) => (
 				<button
 					key={locale}
 					className={clsx(s.langBtn, locale === currentLocale ? s.active : '')}
 					onClick={() => switchLocale(locale)}
 				>
 					<img src={src} alt={alt} />
+					{lang}
 				</button>
 			))}
 		</div>

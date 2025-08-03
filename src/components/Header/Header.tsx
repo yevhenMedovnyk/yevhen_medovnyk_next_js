@@ -20,9 +20,6 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = (navLinks) => {
 	const [isBurgerMenuOpen, setIsBurgerMenuOpen] = React.useState(false);
 
-	const { switchLocale } = useLocaleSwitcher();
-	const locale = useLocale();
-
 	const handleBurgerMenuClick = () => {
 		setIsBurgerMenuOpen((prev) => !prev);
 	};
@@ -41,7 +38,6 @@ const Header: React.FC<HeaderProps> = (navLinks) => {
 					handleBurgerLinkClick={handleBurgerLinkClick}
 					navLinks={navLinks.navLinks}
 				/>
-				<LangSwitcher switchLocale={switchLocale} locale={locale} />
 				<button onClick={() => signIn('google')} className={s.signInBtn}>
 					Sign In
 				</button>

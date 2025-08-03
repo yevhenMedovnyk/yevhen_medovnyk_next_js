@@ -4,8 +4,10 @@
 }
 
 .langBtn {
-	width: 1.3rem;
-	height: 1.3rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.3rem;
 	cursor: pointer;
 	transition: all 0.2s ease-in-out;
 	overflow: hidden;
@@ -13,7 +15,7 @@
 		opacity: 0.85;
 	}
 	img {
-		width: 100%;
+		width: 1.2rem;
 	}
 }
 
