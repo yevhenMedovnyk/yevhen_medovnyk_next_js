@@ -6,6 +6,7 @@ import { IProduct } from '../../types/IProduct';
 import AddToCartButton from './AddToCartButton/AddToCartButton';
 import SizeSelector from './SizeSelector/SizeSelector';
 import { getTranslations, getLocale } from 'next-intl/server';
+import SetMainTitle from '../MainTitle/SetMainTitle';
 
 interface IProductFullProps {
 	product: IProduct;
@@ -15,7 +16,6 @@ const ProductFull = async ({ product }: IProductFullProps) => {
 	const locale = getLocale();
 	const currentLocale = (await locale) as keyof IProduct['name'];
 	const t = await getTranslations('ProductFull');
-	
 
 	const renderImageSection = () => {
 		return (

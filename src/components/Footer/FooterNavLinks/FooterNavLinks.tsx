@@ -4,9 +4,9 @@ import React from 'react';
 import s from './FooterNavLinks.module.scss';
 import clsx from 'clsx';
 
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { INavLink } from '@/types/INavLink';
+import Link from 'next/link';
 
 interface IFooterProps {
 	navLinks: INavLink[];

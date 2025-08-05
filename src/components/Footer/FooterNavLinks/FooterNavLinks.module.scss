@@ -28,14 +28,18 @@
 	color: $color-secondary;
 }
 
-.logoMini{
+.logoMini {
 	width: 1.85rem;
 	height: 1.85rem;
 	border-radius: 3px;
 	overflow: hidden;
-	margin-top: .7rem;
+	margin-top: 0.7rem;
+
+	:hover {
+		opacity: 0.85;
+	}
 }
 
-.logoMini img{
+.logoMini img {
 	width: 100%;
 }

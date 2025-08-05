@@ -1,32 +1,37 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import s from './MainTitle.module.scss';
 import { usePathname } from 'next/navigation';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
+import clsx from 'clsx';
 
 interface ITitleList {
-	id: number;
+	to: string;
 	title: string;
-	match: string;
 }
 
 const MainTitle: React.FC = () => {
+	const [title, setTitle] = React.useState('');
+
 	const pathname = usePathname();
 	const locale = useLocale();
+	const t = useTranslations();
 
-	const TitleList: ITitleList[] = [
-		{ id: 1, title: 'Галерея', match: `/${locale}` },
-		{ id: 2, title: 'Проєкти', match: `/${locale}/projects` },
-		{ id: 3, title: 'Магазин принтів', match: `/${locale}/store` },
-		{ id: 4, title: 'Контакти', match: `/${locale}/contacts` },
-		{ id: 5, title: 'Про автора', match: `/${locale}/about` },
-		{ id: 6, title: 'Кошик', match: `/${locale}/cart` },
-	];
+	const TitleList: ITitleList[] = t.raw('Header.nav');
 
-	const currentTitle = TitleList.find(({ match }) => match === pathname);
+	useEffect(() => {
+		const isHome = pathname === `/${locale}`;
+		if (isHome) {
+			const homeTitle = TitleList.find(({ to }) => to === '/');
+			homeTitle && setTitle(homeTitle?.title);
+		} else {
+			const currentTitle = TitleList.find(({ to }) => `/${locale}${to}` === pathname);
+			currentTitle ? setTitle(currentTitle?.title) : setTitle('');
+		}
+	}, [pathname, locale]);
 
-	return <h1 className={s.container}>{currentTitle?.title}</h1>;
+	return <h1 className={clsx(s.container, !title && s.transparent)}>{title}</h1>;
 };
 
 export default MainTitle;
