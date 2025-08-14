@@ -53,10 +53,16 @@
 	height: 100%;
 	transition: all 0.2s ease-in-out;
 	&:hover {
-		opacity: 0.93;
+		opacity: 0.91;
 	}
 }
 
 .albumName {
 	font-weight: 500;
+}
+
+.title{
+	:hover{
+		color: $color-secondary;
+	}
 }

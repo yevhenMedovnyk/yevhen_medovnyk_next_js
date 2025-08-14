@@ -1,0 +1,27 @@
+@use "../../../styles/variables" as *;
+
+.container {
+	max-width: 50rem;
+	width: 100%;
+	padding: 0 1rem;
+
+	p {
+		margin: 0.5rem 0;
+	}
+
+	span {
+		color: $color-primary;
+		font-weight: 600;
+	}
+}
+
+.link {
+	color: rgb(28, 154, 227);
+}
+
+.title {
+	text-align: center;
+	font-size: 1.3rem;
+	font-weight: 500;
+	margin: 0 0 1.3rem 0;
+}

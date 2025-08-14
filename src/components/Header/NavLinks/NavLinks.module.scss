@@ -8,6 +8,13 @@
 	align-items: center;
 	justify-content: center;
 	gap: 0 3rem;
+
+	ul{
+		list-style: none;
+	}
+	li{
+		list-style: none;
+	}
 }
 
 .container.burgerMenu {

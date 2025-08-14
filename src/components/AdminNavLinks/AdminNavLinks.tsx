@@ -17,12 +17,15 @@ const navLinksList: INavLinks[] = [
 		title: 'Client orders',
 		to: '/admin',
 	},
+	{
+		title: 'Delivery and payment info',
+		to: '/admin/delivery-and-payment-admin',
+	},
 ];
 
 const AdminNavLinks: React.FC = () => {
 	const pathname = usePathname();
 	const locale = useLocale();
-
 
 	return (
 		<div className={s.container}>

@@ -22,7 +22,7 @@ const NavLinks: React.FC<INavLinksProps> = ({ class_name, onClick, navLinks }) =
 	};
 
 	return (
-		<nav>
+		<nav className={s.nav}>
 			<ul className={clsx(s.container, class_name && s[class_name])}>
 				{navLinks?.map(({ title, to }) => (
 					<li className={clsx(isActive(to), s.link, class_name && s[class_name])} key={to}>

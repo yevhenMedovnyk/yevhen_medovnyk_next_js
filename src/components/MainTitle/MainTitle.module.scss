@@ -28,4 +28,9 @@
 .container.transparent {
 	background: none;
 	margin-top: -1rem;
+	margin-bottom: 2rem;
+
+	@include tablet {
+		margin-bottom: 1rem;
+	}
 }
