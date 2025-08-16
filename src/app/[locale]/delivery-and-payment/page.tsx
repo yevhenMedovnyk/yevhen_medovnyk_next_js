@@ -1,6 +1,8 @@
 import React from 'react';
 import s from './delivery.module.scss';
 import parse from 'html-react-parser';
+import { IDeliveryAndPayment } from '../admin/delivery-and-payment-admin/page';
+import { getLocale } from 'next-intl/server';
 
 export async function getDeliveryAndPaymentInfo() {
 	try {
@@ -17,10 +19,15 @@ export async function getDeliveryAndPaymentInfo() {
 
 const DeliveryAndPayment = async () => {
 	const deliveryAndPaymentInfo = await getDeliveryAndPaymentInfo();
+	const locale = await getLocale();
+
+	const currentLocale = locale as keyof IDeliveryAndPayment['content'];
 
 	return (
 		<div className={s.container}>
-			{deliveryAndPaymentInfo?.content ? parse(deliveryAndPaymentInfo.content) : null}
+			{deliveryAndPaymentInfo?.content[currentLocale]
+				? parse(deliveryAndPaymentInfo.content[currentLocale])
+				: null}
 		</div>
 	);
 };

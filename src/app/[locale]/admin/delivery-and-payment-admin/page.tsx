@@ -5,26 +5,41 @@ import QuillEditor from '@/components/QuillEditor/QuillEditor';
 import Button from '@/components/UI/Button/Button';
 import { showSuccessToast } from '@/components/UI/showSuccessToast';
 import { showErrorToast } from '@/components/UI/showErrorToast';
+import { useLocale } from 'next-intl';
+
+export interface IDeliveryAndPayment {
+	content: {
+		ua: string;
+		en: string;
+	};
+}
 
 const DeliveryAndPaymentAdmin = () => {
 	const [content, setContent] = React.useState('');
-
 	const [isLoading, setIsLoading] = React.useState(false);
+	const locale = useLocale();
+
+	const currentLocale = locale as keyof IDeliveryAndPayment['content'];
+
+	console.log('currentLocale', currentLocale, content);
+	
 
 	useEffect(() => {
 		const fetchContent = async () => {
 			try {
-				const response = await fetch('/api/admin/delivery-and-payment');
+				const response = await fetch('/api/admin/delivery-and-payment', {
+					method: 'GET',
+				});
 				const data = await response.json();
-				setContent(data.content);
+				setContent(data.content[currentLocale]);
 			} catch (error) {
 				console.error(error);
 			}
 		};
 		fetchContent();
-	}, []);
+	}, [currentLocale]);
 
-	const onSubmit = async (content: string) => {
+	const onSubmit = async (content: string,) => {
 		try {
 			setIsLoading(true);
 			await fetch('/api/admin/delivery-and-payment', {
@@ -32,8 +47,11 @@ const DeliveryAndPaymentAdmin = () => {
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ content }),
+				body: JSON.stringify({ locale: currentLocale, content }),
 			});
+
+			console.log('content', content, currentLocale);
+			
 			showSuccessToast('Збережено');
 			setIsLoading(false);
 		} catch (error) {
@@ -44,7 +62,7 @@ const DeliveryAndPaymentAdmin = () => {
 
 	return (
 		<div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-			<QuillEditor value={content} onChange={setContent} />
+			<QuillEditor value={content} onChange={setContent} locale={currentLocale} />
 			<Button
 				name={'Зберегти'}
 				onClick={() => onSubmit(content)}

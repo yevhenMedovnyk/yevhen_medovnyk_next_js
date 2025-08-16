@@ -14,7 +14,7 @@ interface INavLinks {
 
 const navLinksList: INavLinks[] = [
 	{
-		title: 'Замовлення',
+		title: 'Замовлення клієнтів',
 		to: '/admin',
 	},
 	{
@@ -24,6 +24,14 @@ const navLinksList: INavLinks[] = [
 	{
 		title: 'Політика конфіденційності',
 		to: '/admin/privacy-policy-admin',
+	},
+	{
+		title: 'Публічна оферта',
+		to: '/admin/public-offer-admin',
+	},
+	{
+		title: 'Про автора',
+		to: '/admin/about-admin',
 	},
 ];
 
@@ -43,7 +51,7 @@ const AdminNavLinks: React.FC = () => {
 				);
 			})}
 			<button onClick={() => signOut({ callbackUrl: '/' })} className={s.link}>
-				Logout
+				Вихід
 			</button>
 		</div>
 	);

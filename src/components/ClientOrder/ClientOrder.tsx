@@ -123,7 +123,7 @@ const ClientOrder: React.FC<IOrder> = ({
 							placeholder="Введіть номер ТТН"
 						/>
 						<Button
-							name="Відправити"
+							name="Відправити ТТН"
 							class_name="order"
 							onClick={handleUpdateTTN}
 							disabled={isLoading}

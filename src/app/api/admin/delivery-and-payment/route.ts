@@ -1,36 +1,55 @@
+import { IDeliveryAndPayment } from '@/app/[locale]/admin/delivery-and-payment-admin/page';
 import dbConnect from '@/lib/dbConnect';
 import DeliveryAndPayment from '@/models/DeliveryAndPayment';
 import { NextRequest, NextResponse } from 'next/server';
+
+export async function GET() {
+	await dbConnect();
+
+	try {
+		const deliveryInfo = await DeliveryAndPayment.findOne({});
+		if (!deliveryInfo) {
+			return NextResponse.json({ message: 'No delivery and payment info found' }, { status: 404 });
+		}
+
+		return NextResponse.json(deliveryInfo);
+	} catch (error: any) {
+		return NextResponse.json({ message: error.message }, { status: 400 });
+	}
+}
 
 export async function POST(req: NextRequest) {
 	await dbConnect();
 
 	try {
 		const body = await req.json();
-		if (!body.content) {
-			return NextResponse.json({ message: 'Content is required' }, { status: 400 });
+		const { locale, content } = body as {
+			locale: keyof IDeliveryAndPayment['content'];
+			content: string;
+		};
+
+		if (!content || !locale) {
+			return NextResponse.json({ message: 'Content and locale are required' }, { status: 400 });
 		}
 
-		const delivery = await DeliveryAndPayment.findOneAndUpdate({}, body, {
-			upsert: true,
-			new: true,
-		});
-		return NextResponse.json(delivery);
-	} catch (error: any) {
-		return NextResponse.json({ message: error.message }, { status: 400 });
-	}
-}
+		// Знаходимо документ
+		let deliveryInfo = await DeliveryAndPayment.findOne({});
 
-export async function GET() {
-	await dbConnect();
-
-	try {
-		const delivery = await DeliveryAndPayment.findOne({});
-		if (!delivery) {
-			return NextResponse.json({ message: 'No delivery and payment info found' }, { status: 404 });
+		// Якщо немає, створюємо новий
+		if (!deliveryInfo) {
+			deliveryInfo = new DeliveryAndPayment();
 		}
 
-		return NextResponse.json(delivery);
+		// Типізація для locale
+		if (locale === 'ua' || locale === 'en') {
+			deliveryInfo.content[locale] = content;
+		} else {
+			return NextResponse.json({ message: 'Invalid locale' }, { status: 400 });
+		}
+
+		await deliveryInfo.save();
+
+		return NextResponse.json(deliveryInfo);
 	} catch (error: any) {
 		return NextResponse.json({ message: error.message }, { status: 400 });
 	}

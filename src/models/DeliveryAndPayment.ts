@@ -1,11 +1,17 @@
 import mongoose, { Model, Schema } from 'mongoose';
 
 interface IDeliveryAndPayment {
-	content: string;
+	content: {
+		ua: string;
+		en: string;
+	};
 }
 
 const DeliveryAndPaymentSchema = new Schema<IDeliveryAndPayment>({
-	content: { type: String, required: true },
+	content: {
+		ua: { type: String, default: '' },
+		en: { type: String, default: '' },
+	},
 });
 
 const DeliveryAndPayment: Model<IDeliveryAndPayment> =
