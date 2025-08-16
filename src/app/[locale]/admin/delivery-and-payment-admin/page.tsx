@@ -1,13 +1,12 @@
 'use client';
 
-import TipTapEditor from '@/components/TipTap.tsx/TipTap';
+import QuillEditor from '@/components/QuillEditor/QuillEditor';
 import React from 'react';
 
 const DeliveryAndPaymentAdmin = () => {
-	
 	return (
 		<div>
-			<TipTapEditor />
+			<QuillEditor />
 		</div>
 	);
 };

@@ -1,17 +1,11 @@
 import type { Metadata } from 'next';
-import { Mulish, Montserrat_Alternates, Indie_Flower } from 'next/font/google';
+import { Mulish, Indie_Flower } from 'next/font/google';
 import './globals.scss';
 import { cookies } from 'next/headers';
 import { getMessages } from 'next-intl/server';
 
 const mulish = Mulish({
 	variable: '--font-mulish',
-	subsets: ['latin', 'cyrillic'],
-	weight: ['400', '500', '600'],
-});
-
-const montserrat_Alternates = Montserrat_Alternates({
-	variable: '--font-montserrat-alternates',
 	subsets: ['latin', 'cyrillic'],
 	weight: ['400', '500', '600'],
 });
@@ -35,7 +29,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	};
 }
 
-
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
 	const cookieStore = await cookies();
 	const localeCookie = cookieStore.get('NEXT_LOCALE');
@@ -44,7 +37,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 	return (
 		<html lang={locale}>
 			<body
-				className={`${mulish.variable} ${montserrat_Alternates.variable} ${indie_Flower.variable}`}
+				className={`${mulish.variable} ${indie_Flower.variable}`}
 			>
 				{children}
 			</body>

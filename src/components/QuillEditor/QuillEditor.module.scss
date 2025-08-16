@@ -1,0 +1,7 @@
+@use "../../styles/variables" as *;
+
+.editor{
+	min-height: 15rem;
+	height: 100%;
+	background-color: $color-bg-secondary;
+}
