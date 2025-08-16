@@ -6,15 +6,14 @@ import Button from '@/components/UI/Button/Button';
 import { showSuccessToast } from '@/components/UI/showSuccessToast';
 import { showErrorToast } from '@/components/UI/showErrorToast';
 
-const DeliveryAndPaymentAdmin = () => {
+const PrivacyPolicyAdmin = () => {
 	const [content, setContent] = React.useState('');
-
 	const [isLoading, setIsLoading] = React.useState(false);
 
 	useEffect(() => {
 		const fetchContent = async () => {
 			try {
-				const response = await fetch('/api/admin/delivery-and-payment');
+				const response = await fetch('/api/admin/privacy-policy');
 				const data = await response.json();
 				setContent(data.content);
 			} catch (error) {
@@ -27,7 +26,7 @@ const DeliveryAndPaymentAdmin = () => {
 	const onSubmit = async (content: string) => {
 		try {
 			setIsLoading(true);
-			await fetch('/api/admin/delivery-and-payment', {
+			await fetch('/api/admin/privacy-policy', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -56,4 +55,4 @@ const DeliveryAndPaymentAdmin = () => {
 	);
 };
 
-export default DeliveryAndPaymentAdmin;
+export default PrivacyPolicyAdmin;

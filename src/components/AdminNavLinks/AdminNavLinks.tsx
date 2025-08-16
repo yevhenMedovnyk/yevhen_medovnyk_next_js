@@ -14,12 +14,16 @@ interface INavLinks {
 
 const navLinksList: INavLinks[] = [
 	{
-		title: 'Client orders',
+		title: 'Замовлення',
 		to: '/admin',
 	},
 	{
-		title: 'Delivery and payment info',
+		title: 'Доставка та оплата',
 		to: '/admin/delivery-and-payment-admin',
+	},
+	{
+		title: 'Політика конфіденційності',
+		to: '/admin/privacy-policy-admin',
 	},
 ];
 

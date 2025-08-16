@@ -1,7 +1,10 @@
 @use "../../styles/variables" as *;
 
 .editor{
-	min-height: 15rem;
+	min-height: 7rem;
+	max-height: 25rem;
 	height: 100%;
 	background-color: $color-bg-secondary;
+	overflow: auto;
+	padding: 0.5rem;
 }

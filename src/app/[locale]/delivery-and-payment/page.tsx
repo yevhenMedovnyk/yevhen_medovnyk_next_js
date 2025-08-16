@@ -1,23 +1,26 @@
 import React from 'react';
 import s from './delivery.module.scss';
-import { Link } from '@/i18n/navigation';
+import parse from 'html-react-parser';
 
-const DeliveryAndPayment = () => {
+export async function getDeliveryAndPaymentInfo() {
+	try {
+		const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/admin/delivery-and-payment`, {
+			next: { revalidate: 0, tags: ['DeliveryAndPayment'] },
+		});
+
+		return res.json();
+	} catch (error: any) {
+		console.error(error);
+		return null;
+	}
+}
+
+const DeliveryAndPayment = async () => {
+	const deliveryAndPaymentInfo = await getDeliveryAndPaymentInfo();
+
 	return (
 		<div className={s.container}>
-			<h1 className={s.title}>Доставка та оплата</h1>
-			<p>
-				<span>Оплата:</span> на сайті можна оплатити замовлення карткою, Apple Pay чи Google Pay за
-				допомогою сервісу Mono Checkout від Monobank.
-			</p>
-			<p>
-				<span>Доставка:</span> по Україні доставка здійснюється Новою Поштою безкоштовно. За кордон
-				— через Укрпошту. Щоб замовити доставку за кордон, скористайтеся сторінкою{' '}
-				<Link className={s.link} href="/contacts">
-					«Контакти»{' '}
-				</Link>
-				.
-			</p>
+			{deliveryAndPaymentInfo?.content ? parse(deliveryAndPaymentInfo.content) : null}
 		</div>
 	);
 };
