@@ -1,18 +1,18 @@
 import { revalidateTag } from 'next/cache';
 import dbConnect from '@/lib/dbConnect';
-import PrivacyPolicy from '@/models/PrivacyPolicy';
+import PublicOffer from '@/models/PublicOffer';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET() {
 	await dbConnect();
 
 	try {
-		const privacyPolicy = await PrivacyPolicy.findOne({});
-		if (!privacyPolicy) {
-			return NextResponse.json({ message: 'No privacy policy info found' }, { status: 404 });
+		const publicOffer = await PublicOffer.findOne({});
+		if (!publicOffer) {
+			return NextResponse.json({ message: 'No public offer info found' }, { status: 404 });
 		}
 
-		return NextResponse.json(privacyPolicy);
+		return NextResponse.json(publicOffer);
 	} catch (error: any) {
 		return NextResponse.json({ message: error.message }, { status: 400 });
 	}
@@ -27,13 +27,13 @@ export async function POST(req: NextRequest) {
 			return NextResponse.json({ message: 'Content is required' }, { status: 400 });
 		}
 
-		const privacyPolicy = await PrivacyPolicy.findOneAndUpdate({}, body, {
+		const publicOffer = await PublicOffer.findOneAndUpdate({}, body, {
 			upsert: true,
 			new: true,
 		});
 
-		revalidateTag('PrivacyPolicy');
-		return NextResponse.json(privacyPolicy);
+		revalidateTag('PublicOffer');
+		return NextResponse.json(publicOffer);
 	} catch (error: any) {
 		return NextResponse.json({ message: error.message }, { status: 400 });
 	}

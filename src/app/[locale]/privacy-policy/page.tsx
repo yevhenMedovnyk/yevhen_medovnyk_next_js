@@ -5,7 +5,7 @@ import parse from 'html-react-parser';
 export async function getPrivacyPolicyInfo() {
 	try {
 		const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/admin/privacy-policy`, {
-			next: { revalidate: 0, tags: ['PrivacyPolicy'] },
+			next: { revalidate: 3600, tags: ['PrivacyPolicy'] },
 		});
 
 		return res.json();

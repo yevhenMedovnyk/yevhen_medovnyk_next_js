@@ -21,9 +21,6 @@ const DeliveryAndPaymentAdmin = () => {
 
 	const currentLocale = locale as keyof IDeliveryAndPayment['content'];
 
-	console.log('currentLocale', currentLocale, content);
-	
-
 	useEffect(() => {
 		const fetchContent = async () => {
 			try {
@@ -62,7 +59,7 @@ const DeliveryAndPaymentAdmin = () => {
 
 	return (
 		<div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-			<QuillEditor value={content} onChange={setContent} locale={currentLocale} />
+			<QuillEditor value={content} onChange={setContent} />
 			<Button
 				name={'Зберегти'}
 				onClick={() => onSubmit(content)}

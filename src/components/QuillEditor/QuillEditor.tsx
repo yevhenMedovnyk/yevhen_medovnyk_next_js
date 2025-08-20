@@ -7,7 +7,6 @@ import s from './QuillEditor.module.scss';
 interface QuillEditorProps {
 	value: string;
 	onChange: (content: string) => void;
-	locale: string;
 }
 
 const QuillEditor = memo(({ value, onChange }: QuillEditorProps) => {

@@ -1,3 +1,4 @@
+import { revalidateTag } from 'next/cache';
 import { IDeliveryAndPayment } from '@/app/[locale]/admin/delivery-and-payment-admin/page';
 import dbConnect from '@/lib/dbConnect';
 import DeliveryAndPayment from '@/models/DeliveryAndPayment';
@@ -48,6 +49,8 @@ export async function POST(req: NextRequest) {
 		}
 
 		await deliveryInfo.save();
+		
+		revalidateTag('DeliveryAndPayment');
 
 		return NextResponse.json(deliveryInfo);
 	} catch (error: any) {

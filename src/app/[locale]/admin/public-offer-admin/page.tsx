@@ -6,14 +6,14 @@ import Button from '@/components/UI/Button/Button';
 import { showSuccessToast } from '@/components/UI/showSuccessToast';
 import { showErrorToast } from '@/components/UI/showErrorToast';
 
-const PrivacyPolicyAdmin = () => {
+const PublicOfferAdmin = () => {
 	const [content, setContent] = React.useState('');
 	const [isLoading, setIsLoading] = React.useState(false);
 
 	useEffect(() => {
 		const fetchContent = async () => {
 			try {
-				const response = await fetch('/api/admin/privacy-policy', {
+				const response = await fetch('/api/admin/public-offer', {
 					method: 'GET',
 					
 				});
@@ -29,7 +29,7 @@ const PrivacyPolicyAdmin = () => {
 	const onSubmit = async (content: string) => {
 		try {
 			setIsLoading(true);
-			await fetch('/api/admin/privacy-policy', {
+			await fetch('/api/admin/public-offer', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json',
@@ -58,4 +58,4 @@ const PrivacyPolicyAdmin = () => {
 	);
 };
 
-export default PrivacyPolicyAdmin;
+export default PublicOfferAdmin;

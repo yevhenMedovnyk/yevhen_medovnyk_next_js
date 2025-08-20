@@ -7,7 +7,7 @@ import { getLocale } from 'next-intl/server';
 export async function getDeliveryAndPaymentInfo() {
 	try {
 		const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/admin/delivery-and-payment`, {
-			next: { revalidate: 0, tags: ['DeliveryAndPayment'] },
+			next: { revalidate: 3600, tags: ['DeliveryAndPayment'] },
 		});
 
 		return res.json();
