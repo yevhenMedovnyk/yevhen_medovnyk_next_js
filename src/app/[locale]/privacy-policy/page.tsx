@@ -1,6 +1,8 @@
 import React from 'react';
 import s from './privacy.module.scss';
 import parse from 'html-react-parser';
+import { getLocale } from 'next-intl/server';
+import { IPrivacyPolicy } from '../admin/privacy-policy-admin/page';
 
 export async function getPrivacyPolicyInfo() {
 	try {
@@ -18,9 +20,14 @@ export async function getPrivacyPolicyInfo() {
 const PrivacyPolicy = async () => {
 	const privacyPolicyInfo = await getPrivacyPolicyInfo();
 
+	const locale = await getLocale();
+	const currentLocale = locale as keyof IPrivacyPolicy['content'];
+
 	return (
 		<div className={s.container}>
-			{privacyPolicyInfo?.content ? parse(privacyPolicyInfo.content) : null}
+			{privacyPolicyInfo?.content[currentLocale]
+				? parse(privacyPolicyInfo.content[currentLocale])
+				: null}
 		</div>
 	);
 };

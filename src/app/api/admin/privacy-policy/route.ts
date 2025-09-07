@@ -2,6 +2,7 @@ import { revalidateTag } from 'next/cache';
 import dbConnect from '@/lib/dbConnect';
 import PrivacyPolicy from '@/models/PrivacyPolicy';
 import { NextRequest, NextResponse } from 'next/server';
+import { IPrivacyPolicy } from '@/app/[locale]/admin/privacy-policy-admin/page';
 
 export async function GET() {
 	await dbConnect();
@@ -23,17 +24,35 @@ export async function POST(req: NextRequest) {
 
 	try {
 		const body = await req.json();
-		if (!body.content) {
-			return NextResponse.json({ message: 'Content is required' }, { status: 400 });
+		const { locale, content } = body as {
+			locale: keyof IPrivacyPolicy['content'];
+			content: string;
+		};
+
+		console.log(locale, content);
+		
+
+		if (!content || !locale) {
+			return NextResponse.json({ message: 'Content and locale are required' }, { status: 400 });
 		}
 
-		const privacyPolicy = await PrivacyPolicy.findOneAndUpdate({}, body, {
-			upsert: true,
-			new: true,
-		});
+		let privacyPolicyInfo = await PrivacyPolicy.findOne({});
+
+		if (!privacyPolicyInfo) {
+			privacyPolicyInfo = new PrivacyPolicy();
+		}
+
+		if (locale === 'ua' || locale === 'en') {
+			privacyPolicyInfo.content[locale] = content;
+		} else {
+			return NextResponse.json({ message: 'Invalid locale' }, { status: 400 });
+		}
+
+		await privacyPolicyInfo.save();
 
 		revalidateTag('PrivacyPolicy');
-		return NextResponse.json(privacyPolicy);
+
+		return NextResponse.json(privacyPolicyInfo);
 	} catch (error: any) {
 		return NextResponse.json({ message: error.message }, { status: 400 });
 	}

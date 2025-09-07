@@ -47,8 +47,6 @@ const DeliveryAndPaymentAdmin = () => {
 				body: JSON.stringify({ locale: currentLocale, content }),
 			});
 
-			console.log('content', content, currentLocale);
-			
 			showSuccessToast('Збережено');
 			setIsLoading(false);
 		} catch (error) {

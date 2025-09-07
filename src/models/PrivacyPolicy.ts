@@ -1,11 +1,17 @@
 import mongoose, { Model, Schema } from 'mongoose';
 
 interface IPrivacyPolicy {
-	content: string;
+	content: {
+		ua: string;
+		en: string;
+	};
 }
 
 const PrivacyPolicySchema = new Schema<IPrivacyPolicy>({
-	content: { type: String, required: true },
+	content: {
+		ua: { type: String, default: '' },
+		en: { type: String, default: '' },
+	},
 });
 
 const PrivacyPolicy: Model<IPrivacyPolicy> =
