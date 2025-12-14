@@ -19,7 +19,7 @@ interface Props {
 export async function getAlbum(slug: string): Promise<IAlbum | null> {
 	try {
 		const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/albums/${slug}`, {
-			next: { revalidate: 3600, tags: ['Albums'] },
+			next: { revalidate: 0, tags: ['Albums'] },
 		});
 		if (!res.ok) return null;
 		return res.json();
@@ -32,7 +32,14 @@ export async function getAlbum(slug: string): Promise<IAlbum | null> {
 export async function generateMetadata(props: Props): Promise<Metadata> {
 	const params = await props.params;
 	const album = await getAlbum(params.album);
-	if (!album) return { title: 'Album not found' };
+
+	if (!album) {
+		notFound();
+	}
+
+	if (album.category !== params.category) {
+		notFound();
+	}
 
 	const locale = await getLocale();
 	const nameLocale = locale as keyof IAlbum['name'];
@@ -80,9 +87,8 @@ async function getImagesMinimal(slug: string): Promise<ImageMinimal[] | null> {
 export default async function AlbumPage(props: Props) {
 	const params = await props.params;
 	const imagesIdObject = await getImagesMinimal(params.album);
-	if (!imagesIdObject) return notFound();
 
-	const imageIds = imagesIdObject.map(({ _id, width, height }) => ({
+	const imageIds = imagesIdObject?.map(({ _id, width, height }) => ({
 		_id,
 		width: width,
 		height: height,
