@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
 	const products = body.products.map((product: any) => ({
 		name: product.name,
 		cnt: product.quantity_in_cart,
-		price: product.price,
+		price: product.selectedPrice,
 		code_product: product.code_product,
 		product_img_src: product.imgs[0].img,
 	}));
@@ -26,9 +26,10 @@ export async function POST(req: NextRequest) {
 		payment_method_list: ['card'],
 		dlv_pay_merchant: false,
 		callback_url: `${process.env.DOMAIN}/api/checkout/callback`,
-		return_url: `${process.env.CLIENT_URL}/order-status`,
+		return_url: `${process.env.NEXT_PUBLIC_SITE_URL}/order-status`,
 		hold: false,
 		fl_recall: false,
+		destination: 'Оплата за фототовари',
 	};
 
 	try {

@@ -8,6 +8,10 @@ export interface IImageAlbum extends Document {
 	cover_img: string;
 	category: string;
 	slug: string;
+	description?: {
+		ua?: string;
+		en?: string;
+	}
 }
 
 const imageAlbumSchema = new Schema<IImageAlbum>({
@@ -18,6 +22,10 @@ const imageAlbumSchema = new Schema<IImageAlbum>({
 	cover_img: { type: String, required: true },
 	category: { type: String, required: true },
 	slug: { type: String, required: true, unique: true },
+	description: {
+		ua: { type: String },
+		en: { type: String },
+	}
 });
 
 // Кешуємо модель, щоб уникнути помилок при HMR (гарячому перезавантаженні)

@@ -1,0 +1,155 @@
+{
+	"RootLayout": {
+		"title": "Yevhen Medovnyk | YM FineArt Prints",
+		"description": "Photographer Yevhen Medovnyk"
+	},
+	"Header": {
+		"nav": [
+			{
+				"title": "Gallery",
+				"to": "/"
+			},
+			{
+				"title": "Projects",
+				"to": "/projects"
+			},
+			{
+				"title": "Print Shop",
+				"to": "/store"
+			},
+			{
+				"title": "Contacts",
+				"to": "/contacts"
+			},
+			{
+				"title": "About",
+				"to": "/about"
+			}
+		]
+	},
+
+	"Gallery": {
+		"meta": {
+			"title": "Gallery | Yevhen Medovnyk",
+			"description": "Gallery | Photographer Yevhen Medovnyk"
+		},
+
+		"folder": {
+			"edit": "Edit",
+			"delete": "Delete"
+		},
+		"createAlbumButton": "Create album",
+		"deleteAlbumSuccess": "Album deleted successfully",
+		"deleteAlbumError": "Something went wrong"
+	},
+	"Projects": {
+		"meta": {
+			"title": "Projects | Yevhen Medovnyk",
+			"description": "Projects | Photographer Yevhen Medovnyk"
+		}
+	},
+	"Store": {
+		"meta": {
+			"title": "Store | YM FineArt Prints",
+			"description": "Store | YM FineArt Prints | Photographer Yevhen Medovnyk"
+		}
+	},
+	"Contacts": {
+		"meta": {
+			"title": "Contacts | Yevhen Medovnyk",
+			"description": "Contacts | Photographer Yevhen Medovnyk"
+		},
+		"title": "If you have any questions or suggestions, please<br></br>contact me in the way that is most convenient for you:",
+		"form": {
+			"namePlaceholder": "Your name",
+			"emailPlaceholder": "Your email",
+			"messagePlaceholder": "Enter your message",
+			"submit": "Send"
+		},
+		"successMessage": "Message sent successfully",
+		"errorMessage": "Something went wrong"
+	},
+	"About": {
+		"meta": {
+			"title": "About | Yevhen Medovnyk",
+			"description": "About | Photographer Yevhen Medovnyk"
+		},
+		"about": "About me"
+	},
+	"ProductFull": {
+		"addToCart": "Add to cart",
+		"addToCartSuccess": "Product added to cart",
+		"goToCart": "→ Go to cart",
+		"framing": "Framing"
+	},
+	"Cart": {
+		"meta": {
+			"title": "Cart | YM FineArt Prints",
+			"description": "Cart | YM FineArt Prints | Photographer Yevhen Medovnyk"
+		},
+		"totalPrice": "Total price",
+		"checkout": "Checkout",
+		"emptyCart": "Oops, your cart is empty!",
+		"backToStore": "←  Back to store",
+		"errorMessage": "Something went wrong, please try again"
+	},
+	"CreateAlbum": {
+		"title-create": "Create new album",
+		"title-update": "Update album",
+		"form": {
+			"labels": {
+				"albumCover": "Album cover:",
+				"addImage": "Add images to album:",
+				"addDescUa": "Додати опис:",
+				"addDescEn": "Add description:",
+				"category": "Choose category:"
+			},
+			"selectOptions": {
+				"gallery": "Gallery",
+				"projects": "Projects"
+			},
+			"btn": {
+				"create": "Create album",
+				"update": "Update album",
+				"updating": "Updating...",
+				"uploading": "Uploading...",
+				"imageUploading": "Uploading image..."
+			}
+		},
+		"successCreateMessage": "New album created successfully.",
+		"successUpdateMessage": "Album updated successfully.",
+		"errorMessage": "Something went wrong. Please try again.",
+		"errorUploadImage": "Error uploading images."
+	},
+	"Footer": {
+		"copyright": {
+			"author": "Yevhen Medovnyk",
+			"text": "All photographs on this website are protected by copyright,<br></br>and any use without the author's permission is prohibited."
+		},
+		"nav": [
+			{
+				"title": "Store",
+				"to": "/store"
+			},
+			{
+				"title": "Privacy Policy",
+				"to": "/privacy-policy"
+			},
+			{
+				"title": "Delivery and Payment",
+				"to": "/delivery-and-payment"
+			},
+			{
+				"title": "Public Offer",
+				"to": "/public-offer"
+			},
+			{
+				"title": "Contacts",
+				"to": "/contacts"
+			}
+		]
+	},
+	"Currency": {
+		"uah": "uah"
+	}
+}

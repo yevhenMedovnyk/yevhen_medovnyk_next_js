@@ -3,12 +3,13 @@
 import React, { useState } from 'react';
 import s from './AlbumGallery.module.scss';
 import Folder from '@/components/Folder/Folder';
-import Link from 'next/link';
 import { IAlbum } from '@/types/IAlbum';
-import { useAppSelector } from '@/hooks/redux';
 import { showSuccessToast } from '../UI/showSuccessToast';
 import { showErrorToast } from '../UI/showErrorToast';
 import { useFetchClient } from '@/hooks/useFetchClient';
+import { useSession } from 'next-auth/react';
+import { Link } from '@/i18n/navigation';
+import { useTranslations } from 'next-intl';
 
 interface Props {
 	albums: IAlbum[];
@@ -16,8 +17,11 @@ interface Props {
 
 const AlbumGalleryClient: React.FC<Props> = ({ albums }) => {
 	const [galleryAlbums, setGalleryAlbums] = useState<IAlbum[]>(albums);
-	const { isAdmin } = useAppSelector((state) => state.auth.user);
 	const fetchClient = useFetchClient();
+	const { data: session } = useSession();
+	const isAdmin = session?.user?.role === 'admin';
+
+	const t = useTranslations('Gallery');
 
 	const handleDeleteFolder = async (slug: string) => {
 		try {
@@ -29,10 +33,10 @@ const AlbumGalleryClient: React.FC<Props> = ({ albums }) => {
 				true
 			);
 			setGalleryAlbums((prev) => prev.filter((album) => album.slug !== slug));
-			showSuccessToast('Альбом видалено');
+			showSuccessToast(t('deleteAlbumSuccess'));
 		} catch (error) {
-			console.error('Помилка при видаленні альбому:', error);
-			showErrorToast('Помилка при видаленні альбому');
+			console.error('Album delete error:', error);
+			showErrorToast(t('deleteAlbumError'));
 		}
 	};
 
@@ -40,7 +44,7 @@ const AlbumGalleryClient: React.FC<Props> = ({ albums }) => {
 		<>
 			{isAdmin && (
 				<Link href="/create-edit-album" className={s.createAlbumBtn}>
-					Створити альбом
+					{t('createAlbumButton')}
 				</Link>
 			)}
 			<div className={s.container}>

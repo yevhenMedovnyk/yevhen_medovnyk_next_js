@@ -19,6 +19,8 @@ export async function POST(req: NextRequest) {
 		return NextResponse.json({ message: 'Missing X-Sign header' }, { status: 400 });
 	}
 
+	console.log('signatureBase64', signatureBase64);
+
 	const body = await req.text();
 	const signatureBuf = Buffer.from(signatureBase64, 'base64');
 
@@ -44,17 +46,24 @@ export async function POST(req: NextRequest) {
 
 	const isValid = verify.verify(publicKeyBuf, signatureBuf);
 
-	// if (!isValid) return NextResponse.json({ message: 'Invalid signature' }, { status: 401 });
+	//if (!isValid) return NextResponse.json({ message: 'Invalid signature' }, { status: 401 });
+	console.log('Signature is valid');
 
 	const parsedBody = JSON.parse(body);
 	const { orderId, generalStatus } = parsedBody;
 
+	console.log('parsedBody', parsedBody);
+
 	// Обробка замовлення
 	const existingOrder = await Order.findOne({ orderId });
-	if (!existingOrder) {
+	if (!existingOrder && generalStatus === 'success') {
 		await Order.create(parsedBody);
 	} else {
-		console.log(`Замовлення ${orderId} вже існує.`);
+		console.log(
+			`${
+				generalStatus !== 'success' ? 'Замовлення не успішне!' : `Замовлення ${orderId} вже існує!`
+			}`
+		);
 	}
 
 	switch (generalStatus) {

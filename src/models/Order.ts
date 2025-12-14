@@ -5,6 +5,7 @@ interface IProduct {
 	name: string;
 	cnt: number;
 	price: number;
+	product_img_src: string;
 }
 
 interface IClientInfo {
@@ -42,6 +43,7 @@ const productSchema = new Schema<IProduct>({
 	name: { type: String, required: true },
 	cnt: { type: Number, required: true },
 	price: { type: Number, required: true },
+	product_img_src: { type: String, required: true },
 });
 
 const clientInfoSchema = new Schema<IClientInfo>({

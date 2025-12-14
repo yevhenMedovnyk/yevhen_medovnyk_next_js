@@ -1,15 +1,23 @@
 'use client';
 
 import React from 'react';
+import { signIn } from 'next-auth/react';
 import s from './Header.module.scss';
 import Logo from './Logo/Logo';
 import NavLinks from './NavLinks/NavLinks';
 import BurgerOpenBtn from './BurgerOpenBtn/BurgerOpenBtn';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
 import CartIcon from './CartIcon/CartIcon';
-import { UserAuth } from '@/hooks/useAuth';
+import { INavLink } from '@/types/INavLink';
+import LangSwitcher from '../LangSwitcher/LangSwitcher';
+import useLocaleSwitcher from '@/utils/switchLocale';
+import { useLocale } from 'next-intl';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+	navLinks: INavLink[];
+}
+
+const Header: React.FC<HeaderProps> = (navLinks) => {
 	const [isBurgerMenuOpen, setIsBurgerMenuOpen] = React.useState(false);
 
 	const handleBurgerMenuClick = () => {
@@ -20,24 +28,26 @@ const Header: React.FC = () => {
 		setIsBurgerMenuOpen(false);
 	};
 
-	const { signInWithGoogle } = UserAuth();
-	
-
-
 	return (
 		<header className={s.container}>
 			<Logo />
-			<NavLinks />
-			<CartIcon />
-			<BurgerMenu
-				isBurgerMenuOpen={isBurgerMenuOpen}
-				handleBurgerLinkClick={handleBurgerLinkClick}
-			/>
-			<BurgerOpenBtn
-				isBurgerMenuOpen={isBurgerMenuOpen}
-				handleBurgerMenuClick={handleBurgerMenuClick}
-			/>
-			<button onClick={signInWithGoogle}>hjgh</button>
+			<NavLinks {...navLinks} />
+			<div className={s.rightSide}>
+				<BurgerMenu
+					isBurgerMenuOpen={isBurgerMenuOpen}
+					handleBurgerLinkClick={handleBurgerLinkClick}
+					navLinks={navLinks.navLinks}
+				/>
+				<button onClick={() => signIn('google')} className={s.signInBtn}>
+					Sign In
+				</button>
+				<CartIcon />
+
+				<BurgerOpenBtn
+					isBurgerMenuOpen={isBurgerMenuOpen}
+					handleBurgerMenuClick={handleBurgerMenuClick}
+				/>
+			</div>
 		</header>
 	);
 };

@@ -1,6 +1,7 @@
 export interface IUser {
-	displayName: string;
+	name: string;
 	email: string;
-	uid: string;
-	isAdmin: boolean;
+	image?: string;
+	role: 'user' | 'admin';
+	createdAt: Date;
 }

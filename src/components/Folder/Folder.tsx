@@ -1,14 +1,16 @@
 'use client';
 
-import React from 'react';
+import React, { useTransition } from 'react';
 import s from './Folder.module.scss';
 import { BiEdit } from 'react-icons/bi';
 import { MdFolderDelete } from 'react-icons/md';
 
 import { IAlbum } from '../../types/IAlbum';
-import { useAppSelector } from '../../hooks/redux';
-import Link from 'next/link';
+
 import { ClipLoader } from 'react-spinners';
+import { useSession } from 'next-auth/react';
+import { Link } from '@/i18n/navigation';
+import { useLocale, useTranslations } from 'next-intl';
 
 type IFolderProps = {
 	deleteFolder: (slug: string) => void;
@@ -17,7 +19,12 @@ type IFolderProps = {
 
 const Folder: React.FC<IFolderProps> = ({ folder, deleteFolder }) => {
 	const { cover_img, name, category, slug } = folder;
-	const { isAdmin } = useAppSelector((state) => state.auth.user);
+	const { data: session } = useSession();
+	const isAdmin = session?.user?.role === 'admin';
+
+	const t = useTranslations('Gallery.folder');
+	const locale = useLocale();
+	const currentLocale = locale as keyof IAlbum['name'];
 
 	if (!slug)
 		return (
@@ -31,7 +38,7 @@ const Folder: React.FC<IFolderProps> = ({ folder, deleteFolder }) => {
 			{isAdmin && (
 				<div className={s.btns}>
 					<Link href={`/create-edit-album/${slug}`} className={s.editBtn}>
-						<BiEdit /> <span>Редагувати</span>
+						<BiEdit /> <span>{t('edit')}</span>
 					</Link>
 					<button
 						onClick={
@@ -46,7 +53,7 @@ const Folder: React.FC<IFolderProps> = ({ folder, deleteFolder }) => {
 						className={s.deleteBtn}
 					>
 						<MdFolderDelete />
-						<span>Видалити</span>
+						<span>{t('delete')}</span>
 					</button>
 				</div>
 			)}
@@ -55,7 +62,7 @@ const Folder: React.FC<IFolderProps> = ({ folder, deleteFolder }) => {
 					<img src={cover_img} alt="album_cover" />
 				</Link>
 				<Link href={`${category}/${slug}`} className={s.title}>
-					<span className={s.albumName}>{name.ua}</span>
+					<span className={s.albumName}>{name[currentLocale]}</span>
 				</Link>
 			</div>
 		</div>

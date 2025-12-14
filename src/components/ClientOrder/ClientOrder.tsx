@@ -20,6 +20,7 @@ const ClientOrder: React.FC<IOrder> = ({
 	mainClientInfo,
 	products,
 	delivery_branch_address,
+	delivery_method_desc,
 	dateCreate,
 	basket_id: order_number,
 	tracking_number,
@@ -31,7 +32,6 @@ const ClientOrder: React.FC<IOrder> = ({
 	const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setInputTTNValue(event.target.value);
 	};
-
 
 	const handleUpdateTTN = async () => {
 		try {
@@ -50,7 +50,7 @@ const ClientOrder: React.FC<IOrder> = ({
 		} catch (error) {
 			console.error('Помилка оновлення ТТН:', error);
 			showErrorToast('Помилка оновлення ТТН');
-		}finally {
+		} finally {
 			setIsLoading(false);
 		}
 	};
@@ -81,13 +81,16 @@ const ClientOrder: React.FC<IOrder> = ({
 								</div>
 							</div>
 							<Link href={`/store/${product.code_product}`} className={s.orderImg}>
-								<img src={img} alt="album_cover" />
+								<img src={product.product_img_src} alt="album_cover" />
 							</Link>
 						</div>
 					))}
 				</div>
 				<div className={s.orderInfo}>
 					<div className={s.deliveryInfo}>
+						<div>
+							<span>Спосіб доставки:</span> {delivery_method_desc}
+						</div>
 						<div>
 							<span>Адреса доставки:</span> {delivery_branch_address}
 						</div>
@@ -105,9 +108,11 @@ const ClientOrder: React.FC<IOrder> = ({
 					<div>
 						<span>Дата замовлення:</span> {dateCreate}
 					</div>
-					<div>
-						<span>Коментар:</span> {comment}
-					</div>
+					{comment && (
+						<div>
+							<span>Коментар:</span> {comment}
+						</div>
+					)}
 					<div className={s.trackingNumber}>
 						<span>ТТН:</span>{' '}
 						<input
@@ -118,7 +123,7 @@ const ClientOrder: React.FC<IOrder> = ({
 							placeholder="Введіть номер ТТН"
 						/>
 						<Button
-							name="Відправити"
+							name="Відправити ТТН"
 							class_name="order"
 							onClick={handleUpdateTTN}
 							disabled={isLoading}

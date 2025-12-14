@@ -2,7 +2,7 @@ import { toast } from 'sonner';
 
 export const showErrorToast = (message: string, description?: string) => {
 	toast.error(message, {
-		description,
+		description: description,
 		icon: '❌',
 		style: {
 			backgroundColor: 'crimson',

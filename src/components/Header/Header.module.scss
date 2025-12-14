@@ -13,15 +13,33 @@
 	gap: 0 1.5rem;
 	padding: 1.8rem 10rem;
 	background: $color-bg-secondary;
-	box-shadow: 0px 0px 14px 1px rgba(44, 63, 82, 0.42);	
+	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
 
 	@include full_desktop{
-		padding: 1.5rem 3rem;
+		padding: 1.5rem 2rem;
 	}
 	@include small_tablet{
-		padding: 1.3rem 2rem;
+		padding: 1.3rem 1.2rem;
+		gap: .3rem;
 	}
 }
+
+.rightSide{
+	display: flex;
+	align-items: center;
+	gap: 0 1.2rem;
+}
+
+.signInBtn{
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+	color: $color-primary;
+	&:hover{
+		color: $color-secondary;
+	}
+}
+
+
 
 
 

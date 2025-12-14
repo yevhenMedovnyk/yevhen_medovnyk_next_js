@@ -1,17 +1,19 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
 export interface IUser extends Document {
-	displayName: string;
+	name: string;
 	email: string;
-	uid: string;
-	isAdmin: boolean;
+	role: 'user' | 'admin';
+	image?: string;
+	createdAt: Date;
 }
 
 const userSchema = new Schema<IUser>({
-	displayName: { type: String, required: true },
+	name: { type: String, required: true },
 	email: { type: String, required: true },
-	uid: { type: String, required: true },
-	isAdmin: { type: Boolean, required: true },
+	role: { type: String, required: true },
+	image: { type: String },
+	createdAt: { type: Date, default: Date.now },
 });
 
 // Кешування моделі для уникнення повторного визначення під час HMR

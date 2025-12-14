@@ -8,7 +8,7 @@ import s from './Store.module.scss';
 import { ClipLoader } from 'react-spinners';
 
 interface Props {
-	productsMinimal: Pick<IProduct, '_id' | 'slug' | 'name' | 'imgs'>[];
+	productsMinimal: Pick<IProduct, '_id' | 'slug' | 'name'>[];
 }
 
 const Store: React.FC<Props> = ({ productsMinimal }) => {
@@ -21,9 +21,6 @@ const Store: React.FC<Props> = ({ productsMinimal }) => {
 		triggerOnce: false,
 	});
 
-	console.log("loadedProducts",loadedProducts);
-	
-
 	const fetchProductDetails = useCallback(async (slug: string): Promise<IProduct | null> => {
 		try {
 			const res = await fetch(`/api/store/${slug}`);
@@ -33,7 +30,6 @@ const Store: React.FC<Props> = ({ productsMinimal }) => {
 			return null;
 		}
 	}, []);
-
 
 	useEffect(() => {
 		if (inView && !isFetching && loadIndex < productsMinimal.length) {
@@ -48,6 +44,7 @@ const Store: React.FC<Props> = ({ productsMinimal }) => {
 			});
 		}
 	}, [inView, isFetching, loadIndex, productsMinimal, fetchProductDetails]);
+
 
 	return (
 		<div className={s.storeContainer}>

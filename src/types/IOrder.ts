@@ -16,6 +16,7 @@ export interface IOrder {
 		price: number;
 		cnt: number;
 		code_product: string;
+		product_img_src: string;
 	}[];
 	tracking_number?: number;
 }

@@ -1,74 +1,40 @@
 import React from 'react';
 import clsx from 'clsx';
-import Swiper from '../Swiper/Swiper';
 import s from './StoreItem.module.scss';
 import { IProduct } from '../../types/IProduct';
-import Link from 'next/link';
-import AddToCartButton from './AddToCartButton/AddToCartButton';
+import { useLocale, useTranslations } from 'next-intl';
+import { Link } from '@/i18n/navigation';
 
 interface IStoreItemProps {
 	product: IProduct;
-	full_page?: boolean;
 }
 
-const StoreItem: React.FC<IStoreItemProps> = ({ product, full_page = false }) => {
+const StoreItem = ({ product }: IStoreItemProps) => {
+	const locale = useLocale();
+	const currentLocale = locale as keyof IProduct['name'];
+	const t = useTranslations('Currency');
+
 	const renderImageSection = () => {
-		return full_page ? (
-			<div className={s.imgContainer}>
-				<Swiper
-					slidesPerView={1}
-					spaceBetween={0}
-					slidesPerGroup={1}
-					loop={false}
-					images={product.imgs}
-				/>
-			</div>
-		) : (
+		return (
 			<Link href={`/store/${product.slug}`} className={s.imgContainer}>
 				<img
 					className={s.img}
 					src={product.imgs[0]?.img}
-					alt={`Зображення товару: ${product.name}`}
+					alt={`Зображення товару: ${product.name[currentLocale]}`}
 				/>
 			</Link>
 		);
 	};
 
 	return (
-		<div className={clsx(s.StoreItemContainer, full_page && s.fullPage)}>
+		<div className={clsx(s.StoreItemContainer)}>
 			{renderImageSection()}
 			{product && (
-				<div className={clsx(s.textWrapper, full_page && s.fullPage)}>
-					{full_page ? (
-						<h2 className={s.name}>{product?.name}</h2>
-					) : (
-						<Link href={`/store/${product?.slug}`}>
-							<h2 className={s.name}>{product?.name}</h2>
-						</Link>
-					)}
-					{full_page && (
-						<>
-							<p className={s.isFramed}>
-								Оформлення: <span>Без рами</span>
-							</p>
-							<span className={s.price}>{product?.price} грн</span>
-						</>
-					)}
-					<div className={s.printInfo}>
-						{full_page && <p className={s.paperInfo}>{product?.paper_info}</p>}
-						{full_page && <p className={s.size_with_borders}>{product?.size_with_borders}</p>}
-						{full_page && (
-							<>
-								<p className={s.size_without_borders}>{product?.size_without_borders}</p>
-								<p className={s.captured_info}>{product?.captured_info}</p>
-							</>
-						)}
-					</div>
-					{full_page && <p className={s.note}>{product?.note}</p>}
-					{!full_page && (
-						<span className={s.price}>{product?.price && `${product.price} грн`}</span>
-					)}
-					{full_page && product && <AddToCartButton product={product} />}
+				<div className={clsx(s.textWrapper)}>
+					<Link href={`/store/${product?.slug}`}>
+						<h1 className={s.name}>{product?.name[currentLocale]}</h1>
+					</Link>
+					<span className={s.price}>{`${product.sizes[0].price} ${t('uah')}`}</span>
 				</div>
 			)}
 		</div>

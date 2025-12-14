@@ -1,0 +1,34 @@
+@use "../../styles/variables" as *;
+
+.errorPageContainer{
+	text-align: center;
+}
+
+.errorPageIcon{
+	width: 10rem;
+	margin-bottom: .7rem;
+}
+
+.errorPageTitle{
+	font-size: 1.25rem;
+	font-weight: 600;
+	margin-bottom: 1.3rem;
+}
+
+.errorPageLink{
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	width: auto;
+	align-self: center;
+	border-radius: 8px;
+	font-size: 0.9rem;
+	padding: .8rem 1.5rem;
+	background-color: $color-secondary;
+	color: $color-bg;
+	text-align: center;
+	transition: all 0.2s ease-in-out;
+	&:hover{
+		opacity: 0.9;
+	}
+}

@@ -1,6 +1,75 @@
 @use "../styles/variables" as *;
 @use "../styles/reset";
 
+@import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..600;1,200..600&display=swap");
+
+// Міняємо основний шрифт у редакторі Quill
+.ql-editor {
+	font-family: "Mulish", sans-serif;
+	font-size: 1rem;
+}
+//Додаємо кастомний шрифт у Quill
+.ql-font-mulish {
+	font-family: "Mulish", sans-serif;
+}
+
+//Міняємо лейбл у тулбарі Quill
+.ql-snow .ql-picker.ql-font .ql-picker-label[data-value="mulish"]::before,
+.ql-snow .ql-picker.ql-font .ql-picker-item[data-value="mulish"]::before {
+	content: "Mulish";
+	font-family: "Mulish", sans-serif;
+}
+
+//Додаємо кастомні розміри шрифтів у Quill
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="0.75rem"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="0.75rem"]::before {
+	content: "12px";
+}
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="0.8rem"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="0.8rem"]::before {
+	content: "12.8px";
+}
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="0.875rem"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="0.875rem"]::before {
+	content: "14px";
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="1rem"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="1rem"]::before {
+	content: "16px";
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="1.25rem"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="1.25rem"]::before {
+	content: "20px";
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="1.5rem"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="1.5rem"]::before {
+	content: "24px";
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="2rem"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="2rem"]::before {
+	content: "32px";
+}
+
+.ql-snow .ql-picker.ql-size .ql-picker-label[data-value="3rem"]::before,
+.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="3rem"]::before {
+	content: "48px";
+}
+
+//Параметри вирівнювання тексту у Quill
+.ql-align-center {
+	text-align: center;
+}
+
+a.ql-font-mulish {
+	color: $color-accent-secondary !important;
+}
+
+
+
 body {
 	position: relative;
 	font-family: var(--font-mulish);

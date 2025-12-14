@@ -16,31 +16,33 @@ interface ICartItemProps {
 }
 
 const CartItem: React.FC<ICartItemProps> = ({ item, onIncrease, onDecrease, onRemove }) => {
-	const { _id, imgs, name, price, quantity_in_cart, slug } = item;
+	const { imgs, name, selectedPrice: price, selectedSize: size, quantity_in_cart, slug } = item;
 	const itemTotal = price * quantity_in_cart;
 
 	return (
 		<div className={s.container}>
 			<Link href={`/store/${slug}`} className={s.img}>
-				<img src={imgs[0].img} alt={name} />
+				<img src={imgs[0].img} alt={name.ua} />
 			</Link>
-			<div className={s.info}>
-				<div className={s.name}>{name}</div>
-				{/*<div className={s.price}>Ціна: {price} грн</div>*/}
-				<div className={s.quantityContainer}>
-					<FiMinus
-						className={clsx(s.minusBtn, quantity_in_cart === 1 && s.disabled)}
-						onClick={onDecrease}
-					/>
-					<div className={s.quantityInputFake}>{quantity_in_cart}</div>
-					<FiPlus className={s.plusBtn} onClick={onIncrease} />
+			<div className={s.content}>
+				<div className={s.info}>
+					<h1 className={s.name}>{name.en}</h1>
+					<span className={s.size}>{size}</span>
+					<div className={s.quantityContainer}>
+						<FiMinus
+							className={clsx(s.minusBtn, quantity_in_cart === 1 && s.disabled)}
+							onClick={onDecrease}
+						/>
+						<div className={s.quantityInputFake}>{quantity_in_cart}</div>
+						<FiPlus className={s.plusBtn} onClick={onIncrease} />
+					</div>
 				</div>
-			</div>
 
-			<div className={s.itemTotal}>{itemTotal} грн</div>
-			<button className={s.btn} onClick={onRemove}>
-				<AiOutlineCloseCircle />
-			</button>
+				<div className={s.itemTotal}>{itemTotal} грн</div>
+				<button className={s.btn} onClick={onRemove}>
+					<AiOutlineCloseCircle />
+				</button>
+			</div>
 		</div>
 	);
 };
