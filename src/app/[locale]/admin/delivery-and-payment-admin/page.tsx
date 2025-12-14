@@ -6,13 +6,7 @@ import Button from '@/components/UI/Button/Button';
 import { showSuccessToast } from '@/components/UI/showSuccessToast';
 import { showErrorToast } from '@/components/UI/showErrorToast';
 import { useLocale } from 'next-intl';
-
-export interface IDeliveryAndPayment {
-	content: {
-		ua: string;
-		en: string;
-	};
-}
+import { IDeliveryAndPayment } from '@/types/IDeliveryAndPayment';
 
 const DeliveryAndPaymentAdmin = () => {
 	const [content, setContent] = React.useState('');

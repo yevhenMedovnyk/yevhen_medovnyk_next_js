@@ -1,11 +1,5 @@
+import { IDeliveryAndPayment } from '@/types/IDeliveryAndPayment';
 import mongoose, { Model, Schema } from 'mongoose';
-
-interface IDeliveryAndPayment {
-	content: {
-		ua: string;
-		en: string;
-	};
-}
 
 const DeliveryAndPaymentSchema = new Schema<IDeliveryAndPayment>({
 	content: {

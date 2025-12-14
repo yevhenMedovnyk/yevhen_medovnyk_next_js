@@ -1,8 +1,8 @@
 import { revalidateTag } from 'next/cache';
-import { IDeliveryAndPayment } from '@/app/[locale]/admin/delivery-and-payment-admin/page';
 import dbConnect from '@/lib/dbConnect';
 import DeliveryAndPayment from '@/models/DeliveryAndPayment';
 import { NextRequest, NextResponse } from 'next/server';
+import { IDeliveryAndPayment } from '@/types/IDeliveryAndPayment';
 
 export async function GET() {
 	await dbConnect();

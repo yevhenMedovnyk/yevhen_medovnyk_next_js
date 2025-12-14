@@ -6,13 +6,7 @@ import Button from '@/components/UI/Button/Button';
 import { showSuccessToast } from '@/components/UI/showSuccessToast';
 import { showErrorToast } from '@/components/UI/showErrorToast';
 import { useLocale } from 'next-intl';
-
-export interface IPrivacyPolicy {
-	content: {
-		ua: string;
-		en: string;
-	};
-}
+import { IPrivacyPolicy } from '@/types/IPrivacyPolicy';
 
 const PrivacyPolicyAdmin = () => {
 	const [content, setContent] = React.useState('');
@@ -35,6 +29,7 @@ const PrivacyPolicyAdmin = () => {
 		};
 		fetchContent();
 	}, [currentLocale]);
+
 
 	const onSubmit = async (content: string) => {
 		try {

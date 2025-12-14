@@ -2,7 +2,7 @@ import { revalidateTag } from 'next/cache';
 import dbConnect from '@/lib/dbConnect';
 import PrivacyPolicy from '@/models/PrivacyPolicy';
 import { NextRequest, NextResponse } from 'next/server';
-import { IPrivacyPolicy } from '@/app/[locale]/admin/privacy-policy-admin/page';
+import { IPrivacyPolicy } from '@/types/IPrivacyPolicy';
 
 export async function GET() {
 	await dbConnect();

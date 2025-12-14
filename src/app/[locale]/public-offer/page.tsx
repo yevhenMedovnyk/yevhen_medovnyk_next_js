@@ -1,6 +1,8 @@
 import React from 'react';
 import s from './publicOffer.module.scss';
 import parse from 'html-react-parser';
+import { getLocale } from 'next-intl/server';
+import { IPublicOffer } from '@/models/PublicOffer';
 
 async function getPublicOfferInfo() {
 	try {
@@ -18,9 +20,17 @@ async function getPublicOfferInfo() {
 export default async function PublicOffer() {
 	const publicOfferInfo = await getPublicOfferInfo();
 
+	const locale = await getLocale();
+	const currentLocale = locale as keyof IPublicOffer['content'];
+
+	console.log('publicOfferInfo', publicOfferInfo);
+	
+
 	return (
 		<div className={s.container}>
-			{publicOfferInfo?.content ? parse(publicOfferInfo.content) : null}
+			{publicOfferInfo?.content[currentLocale]
+				? parse(publicOfferInfo.content[currentLocale])
+				: null}
 		</div>
 	);
 }

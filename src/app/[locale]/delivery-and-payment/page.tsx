@@ -1,8 +1,8 @@
 import React from 'react';
 import s from './delivery.module.scss';
 import parse from 'html-react-parser';
-import { IDeliveryAndPayment } from '../admin/delivery-and-payment-admin/page';
 import { getLocale } from 'next-intl/server';
+import { IDeliveryAndPayment } from '@/types/IDeliveryAndPayment';
 
 export async function getDeliveryAndPaymentInfo() {
 	try {

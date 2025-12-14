@@ -1,11 +1,12 @@
+import { IPublicOffer } from '@/types/IPublicOffer';
 import mongoose, { Model, Schema } from 'mongoose';
 
-interface IPublicOffer {
-	content: string;
-}
 
 const PublicOfferSchema = new Schema<IPublicOffer>({
-	content: { type: String, required: true },
+	content: {
+		ua: { type: String, default: '' },
+		en: { type: String, default: '' },
+	}
 });
 
 const PublicOffer: Model<IPublicOffer> =
