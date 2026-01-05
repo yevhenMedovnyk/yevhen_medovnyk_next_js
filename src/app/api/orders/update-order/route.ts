@@ -3,11 +3,11 @@ import Order from '@/models/Order';
 import { sendMail } from '@/utils/sendMail';
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { authOptions, ISession } from '@/lib/auth';
+import { authOptions } from '@/lib/auth';
 
 // Додати/редагувати ТТН до замовлення
 export async function PUT(req: NextRequest) {
-	const session = (await getServerSession(authOptions)) as ISession;
+	const session = await getServerSession(authOptions);
 
 	if (session?.user?.role !== 'admin') {
 		return NextResponse.json({ message: 'Only admins can update orders' }, { status: 403 });

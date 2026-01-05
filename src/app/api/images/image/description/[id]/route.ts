@@ -2,11 +2,11 @@ import dbConnect from '@/lib/dbConnect';
 import Image from '@/models/Image';
 import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-import { authOptions, ISession } from '@/lib/auth';
+import { authOptions } from '@/lib/auth';
 
 // Оновити опис зображення
 export async function PATCH(request: NextRequest, context: any) {
-	const session = (await getServerSession(authOptions)) as ISession;
+	const session = await getServerSession(authOptions);
 
 	if (session?.user?.role !== 'admin') {
 		return NextResponse.json({ error: 'Only admins can update images' }, { status: 403 });

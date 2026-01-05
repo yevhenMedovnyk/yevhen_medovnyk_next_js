@@ -6,11 +6,11 @@ import { getPublicIdFromUrl } from '@/utils/getPublicIdFromUrl';
 import cloudinary from '@/lib/cloudinary';
 import { revalidateTag } from 'next/cache';
 import { getServerSession } from 'next-auth/next';
-import { authOptions, ISession } from '@/lib/auth';
+import { authOptions } from '@/lib/auth';
 
 //Видалити альбом
 export async function DELETE(request: NextRequest) {
-	const session = (await getServerSession(authOptions)) as ISession;
+	const session = await getServerSession(authOptions);
 
 	if (session?.user?.role !== 'admin') {
 		return NextResponse.json({ error: 'Only admins can delete albums' }, { status: 403 });

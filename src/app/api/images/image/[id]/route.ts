@@ -6,7 +6,7 @@ import { getPublicIdFromUrl } from '@/utils/getPublicIdFromUrl';
 import mongoose from 'mongoose';
 import { getServerSession } from 'next-auth/next';
 import { revalidateTag } from 'next/cache';
-import { authOptions, ISession } from '@/lib/auth';
+import { authOptions } from '@/lib/auth';
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
 	const { id } = await params;
@@ -31,7 +31,7 @@ export async function DELETE(
 	request: NextRequest,
 	{ params }: { params: Promise<{ id: string }> }
 ) {
-	const session = (await getServerSession(authOptions)) as ISession;
+	const session = await getServerSession(authOptions);
 
 	if (session?.user?.role !== 'admin') {
 		return NextResponse.json({ error: 'Only admins can delete images' }, { status: 403 });

@@ -5,7 +5,7 @@ import slugify from 'slugify';
 import dbConnect from '@/lib/dbConnect';
 import Image_album from '@/models/ImageAlbum';
 import cloudinary from '@/lib/cloudinary';
-import { authOptions, ISession } from '@/lib/auth';
+import { authOptions } from '@/lib/auth';
 
 interface AlbumBody {
 	name: {
@@ -21,7 +21,7 @@ interface AlbumBody {
 }
 
 export async function POST(request: NextRequest) {
-	const session = (await getServerSession(authOptions)) as ISession;
+	const session = await getServerSession(authOptions);
 
 	if (session?.user?.role !== 'admin') {
 		return NextResponse.json({ error: 'Only admins can create albums' }, { status: 403 });

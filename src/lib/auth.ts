@@ -1,32 +1,7 @@
 import dbConnect from '@/lib/dbConnect';
 import User from '@/models/User';
 import GoogleProvider from 'next-auth/providers/google';
-import type { NextAuthOptions } from 'next-auth/next';
-
-export interface IUser {
-	id: string;
-	name: string;
-	email: string;
-	image: string;
-}
-
-export interface IToken {
-	name: string;
-	email: string;
-	picture: string;
-	sub: string;
-	role: 'user' | 'admin';
-}
-
-export interface ISession {
-	user: {
-		name: string;
-		email: string;
-		image: string;
-		role: string;
-	};
-	expires: string;
-}
+import type { NextAuthOptions } from 'next-auth';
 
 export const authOptions: NextAuthOptions = {
 	providers: [
@@ -38,7 +13,7 @@ export const authOptions: NextAuthOptions = {
 	secret: process.env.NEXTAUTH_SECRET,
 
 	callbacks: {
-		async jwt({ token, user }: { token: IToken; user?: IUser }) {
+		async jwt({ token, user }) {
 			await dbConnect();
 
 			if (user?.email) {
@@ -62,7 +37,7 @@ export const authOptions: NextAuthOptions = {
 			return token;
 		},
 
-		async session({ session, token }: { session: ISession; token: IToken }) {
+		async session({ session, token }) {
 			if (session.user) {
 				session.user.role = token.role;
 			}

@@ -7,7 +7,7 @@ import { revalidateTag } from 'next/cache';
 import { getServerSession } from 'next-auth/next';
 import cloudinary from '@/lib/cloudinary';
 import { getPublicIdFromUrl } from '@/utils/getPublicIdFromUrl';
-import { authOptions, ISession } from '@/lib/auth';
+import { authOptions } from '@/lib/auth';
 
 interface UpdateAlbumBody {
 	albumId: string;
@@ -29,7 +29,7 @@ function isBase64(str: string) {
 
 // Оновлення альбому
 export async function PUT(req: NextRequest) {
-	const session = (await getServerSession(authOptions)) as ISession;
+	const session = await getServerSession(authOptions);
 
 	if (session?.user?.role !== 'admin') {
 		return NextResponse.json({ error: 'Only admins can update albums' }, { status: 403 });
