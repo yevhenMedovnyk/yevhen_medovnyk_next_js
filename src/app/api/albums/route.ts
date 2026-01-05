@@ -2,7 +2,6 @@ import dbConnect from '@/lib/dbConnect';
 import ImageAlbum from '@/models/ImageAlbum';
 import { NextRequest, NextResponse } from 'next/server';
 
-
 // Отримати всі альбоми за категорією
 export async function GET(request: NextRequest) {
 	const category = request.nextUrl.searchParams.get('category');

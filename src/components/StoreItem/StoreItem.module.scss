@@ -1,5 +1,5 @@
-@use "../../styles/variables.scss" as *;
-@use "../../styles/mixins.scss" as *;
+@use '../../styles/variables.scss' as *;
+@use '../../styles/mixins.scss' as *;
 
 .StoreItemContainer {
 	display: flex;
@@ -21,8 +21,6 @@
 	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
 	font-family: var(--font-mulish);
 	color: $color-secondary;
-
-	
 
 	@include large_desktop {
 		flex-direction: column;
@@ -128,7 +126,7 @@
 	font-size: 1.1rem;
 	font-weight: 500;
 	color: $color-tertiary;
-	margin-top: .5rem;
+	margin-top: 0.5rem;
 
 	@include tablet {
 		font-size: 1rem;
@@ -188,8 +186,6 @@
 	//height: 100%;
 	background-color: $color-bg-secondary;
 }
-
-
 
 @keyframes fadeIn {
 	from {

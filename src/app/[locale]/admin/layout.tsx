@@ -3,10 +3,10 @@ import s from './layout.module.scss';
 import AdminNavLinks from '@/components/AdminNavLinks/AdminNavLinks';
 import { getServerSession } from 'next-auth/next';
 import { redirect } from 'next/navigation';
-import { authOptions } from '../../api/auth/[...nextauth]/route';
+import { authOptions, ISession } from '@/lib/auth';
 
 const AdminLayout = async ({ children }: { children: React.ReactNode }) => {
-	const session = await getServerSession(authOptions);
+	const session = (await getServerSession(authOptions)) as ISession;
 
 	if (session?.user?.role !== 'admin') {
 		redirect('/');

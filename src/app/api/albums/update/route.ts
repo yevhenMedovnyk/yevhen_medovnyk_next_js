@@ -4,10 +4,10 @@ import Image_album from '@/models/ImageAlbum';
 import Image from '@/models/Image';
 import slugify from 'slugify';
 import { revalidateTag } from 'next/cache';
-import { authOptions } from '../../auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth/next';
 import cloudinary from '@/lib/cloudinary';
 import { getPublicIdFromUrl } from '@/utils/getPublicIdFromUrl';
+import { authOptions, ISession } from '@/lib/auth';
 
 interface UpdateAlbumBody {
 	albumId: string;
@@ -29,7 +29,7 @@ function isBase64(str: string) {
 
 // Оновлення альбому
 export async function PUT(req: NextRequest) {
-	const session = await getServerSession(authOptions);
+	const session = (await getServerSession(authOptions)) as ISession;
 
 	if (session?.user?.role !== 'admin') {
 		return NextResponse.json({ error: 'Only admins can update albums' }, { status: 403 });

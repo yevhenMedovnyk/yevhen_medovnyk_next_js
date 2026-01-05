@@ -19,32 +19,33 @@ async function getProduct(slug: string): Promise<IProduct | null> {
 	}
 }
 
-interface Props {
-	params: { product: string };
-}
-
-export async function generateMetadata(props: Props): Promise<Metadata> {
-	const params = await props.params;
-
-	const product = await getProduct(params.product);
-	if (!product) return { title: 'Товар не знайдено' };
+export async function generateMetadata({
+	params,
+}: {
+	params: Promise<{ product: string }>;
+}): Promise<Metadata> {
+	const { product } = await params;
+	const productData = await getProduct(product);
+	if (!productData) return { title: 'Товар не знайдено' };
 
 	const locale = await getLocale();
 
 	return {
-		title: product.name[locale as keyof typeof product.name] + ' | YM FineArt Prints' ,
-		description: product.captured_info[locale as keyof typeof product.captured_info] ?? 'YM FineArt Prints',
+		title: productData.name[locale as keyof typeof productData.name] + ' | YM FineArt Prints',
+		description:
+			productData.captured_info[locale as keyof typeof productData.captured_info] ??
+			'YM FineArt Prints',
 	};
 }
 
-export default async function StoreItemPage(props: Props) {
-	const params = await props.params;
-	const product = await getProduct(params.product);
-	if (!product) return notFound();
+export default async function StoreItemPage({ params }: { params: Promise<{ product: string }> }) {
+	const { product } = await params;
+	const productData = await getProduct(product);
+	if (!productData) return notFound();
 
 	return (
 		<div className={s.StoreItemPageContainer}>
-			<ProductFull product={product} />
+			<ProductFull product={productData} />
 		</div>
 	);
 }

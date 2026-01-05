@@ -1,16 +1,15 @@
-@use "../../../styles/variables" as *;
-@use "../../../styles/mixins" as *;
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
 
 .container {
 	margin-bottom: 2rem;
 }
 
-
 .price {
 	display: block;
 	font-size: 1.1rem;
 	font-weight: 600;
-	margin-top: .2rem;
+	margin-top: 0.2rem;
 	margin-bottom: 1rem;
 
 	@include tablet {
@@ -19,7 +18,7 @@
 	}
 }
 
-.sizes{
+.sizes {
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
@@ -33,9 +32,9 @@
 	transition: all 0.2s ease-in-out;
 }
 
-.dot{
+.dot {
 	cursor: pointer;
 	display: flex;
 	align-items: center;
-	justify-content: start;
+	justify-content: flex-start;
 }

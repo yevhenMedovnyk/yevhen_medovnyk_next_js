@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useTransition } from 'react';
+import React from 'react';
 import s from './Folder.module.scss';
 import { BiEdit } from 'react-icons/bi';
 import { MdFolderDelete } from 'react-icons/md';

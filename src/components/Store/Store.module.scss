@@ -1,7 +1,7 @@
-@use "../../styles/variables" as *;
-@use "../../styles/mixins" as *;
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
 
-.storeContainer{
+.storeContainer {
 	width: 95%;
 	//display: flex;
 	//flex-wrap: wrap;
@@ -14,9 +14,7 @@
 	grid-template-columns: repeat(auto-fill, minmax(28rem, 1fr));
 	place-content: center;
 
-	@include tablet{
+	@include tablet {
 		grid-template-columns: repeat(auto-fill, minmax(23rem, 1fr));
 	}
-	
 }
-

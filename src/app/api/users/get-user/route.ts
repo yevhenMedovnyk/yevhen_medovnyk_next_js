@@ -1,7 +1,6 @@
-import dbConnect from "@/lib/dbConnect";
-import User from "@/models/User";
-import { NextRequest, NextResponse } from "next/server";
-
+import dbConnect from '@/lib/dbConnect';
+import User from '@/models/User';
+import { NextRequest, NextResponse } from 'next/server';
 
 // Отримати користувача
 export async function GET(req: NextRequest) {
@@ -26,4 +25,3 @@ export async function GET(req: NextRequest) {
 		return NextResponse.json({ message: 'Server error: ' + error.message }, { status: 500 });
 	}
 }
-

@@ -6,13 +6,16 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const compat = new FlatCompat({
-  baseDirectory: __dirname,
+	baseDirectory: __dirname,
 });
 
 export default [
-  ...compat.extends(
-    'next/core-web-vitals',
-    'next/typescript',
-    'plugin:prettier/recommended'
-  ),
+	...compat.extends('next/core-web-vitals', 'next/typescript', 'plugin:prettier/recommended'),
+	{
+		rules: {
+			'@typescript-eslint/no-explicit-any': 'off',
+			'react-hooks/exhaustive-deps': 'off',
+			'@next/next/no-img-element': 'off',
+		},
+	},
 ];

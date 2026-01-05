@@ -4,13 +4,12 @@ import Image from '@/models/Image';
 import cloudinary from '@/lib/cloudinary';
 import { getPublicIdFromUrl } from '@/utils/getPublicIdFromUrl';
 import mongoose from 'mongoose';
-import { authOptions } from '../../../auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth/next';
 import { revalidateTag } from 'next/cache';
+import { authOptions, ISession } from '@/lib/auth';
 
-export async function GET(request: NextRequest, context: { params: { id: string } }) {
-	const params = await context.params;
-	const id = params?.id;
+export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+	const { id } = await params;
 
 	if (!mongoose.Types.ObjectId.isValid(id)) {
 		return NextResponse.json({ message: 'Invalid ID' }, { status: 400 });
@@ -28,15 +27,17 @@ export async function GET(request: NextRequest, context: { params: { id: string 
 	}
 }
 
-export async function DELETE(request: Request, context: { params: { id: string } }) {
-	const session = await getServerSession(authOptions);
+export async function DELETE(
+	request: NextRequest,
+	{ params }: { params: Promise<{ id: string }> }
+) {
+	const session = (await getServerSession(authOptions)) as ISession;
 
 	if (session?.user?.role !== 'admin') {
 		return NextResponse.json({ error: 'Only admins can delete images' }, { status: 403 });
 	}
 
-	const params = await context.params;
-	const id = params?.id;
+	const { id } = await params;
 
 	try {
 		await dbConnect();
@@ -55,12 +56,10 @@ export async function DELETE(request: Request, context: { params: { id: string }
 
 		revalidateTag('Images');
 
-
 		return NextResponse.json(
 			{ message: 'Image deleted from MongoDB and Cloudinary' },
 			{ status: 200 }
 		);
-
 	} catch (error: any) {
 		return NextResponse.json({ message: 'Server error: ' + error.message }, { status: 500 });
 	}

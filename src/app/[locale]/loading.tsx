@@ -18,5 +18,3 @@ export default function Loading() {
 		<div className="spinnerWrapper">{showLoader && <ClipLoader color="#b0bab8" size={50} />}</div>
 	);
 }
-
-

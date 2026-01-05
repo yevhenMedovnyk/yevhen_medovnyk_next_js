@@ -22,7 +22,6 @@ try {
 	console.error('❌ Failed to parse CLOUDINARY env variable as JSON:', error);
 }
 
-
 cloudinary.config({
 	cloud_name: cloudinaryVars.cloudinary_name,
 	api_key: cloudinaryVars.cloudinary_api_key,

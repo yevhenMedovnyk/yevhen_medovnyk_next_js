@@ -39,12 +39,7 @@ const AddToCartButton: React.FC<AddToCartButtonProps> = ({ product }) => {
 	};
 
 	return (
-		<Button
-			type="button"
-			name={t('addToCart')}
-			onClick={handleAddToCart}
-			class_name="storeItem"
-		/>
+		<Button type="button" name={t('addToCart')} onClick={handleAddToCart} class_name="storeItem" />
 	);
 };
 

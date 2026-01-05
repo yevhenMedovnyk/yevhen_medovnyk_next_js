@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
 		}
 
 		await deliveryInfo.save();
-		
+
 		revalidateTag('DeliveryAndPayment');
 
 		return NextResponse.json(deliveryInfo);

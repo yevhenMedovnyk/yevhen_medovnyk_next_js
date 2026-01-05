@@ -1,20 +1,18 @@
-import dbConnect from "@/lib/dbConnect";
-import Image from "@/models/Image";
-import { NextResponse } from "next/server";
-import { authOptions } from '../../../../auth/[...nextauth]/route';
+import dbConnect from '@/lib/dbConnect';
+import Image from '@/models/Image';
+import { NextRequest, NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth/next';
-
-
+import { authOptions, ISession } from '@/lib/auth';
 
 // Оновити опис зображення
-export async function PATCH(request: Request, context: { params: { id: string } }) {
-	const session = await getServerSession(authOptions);
+export async function PATCH(request: NextRequest, context: any) {
+	const session = (await getServerSession(authOptions)) as ISession;
 
 	if (session?.user?.role !== 'admin') {
 		return NextResponse.json({ error: 'Only admins can update images' }, { status: 403 });
 	}
-	
-	const { id } = context.params;
+
+	const { id } = await context.params;
 	const { description } = await request.json();
 
 	try {

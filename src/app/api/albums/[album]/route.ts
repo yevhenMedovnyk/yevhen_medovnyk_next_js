@@ -2,11 +2,10 @@ import dbConnect from '@/lib/dbConnect';
 import ImageAlbum from '@/models/ImageAlbum';
 import { NextRequest, NextResponse } from 'next/server';
 
-
 //Отримати конкретний альбом за назвою
 export async function GET(request: NextRequest, context: any) {
 	const params = await context.params;
-	const slug = params.album;	
+	const slug = params.album;
 
 	try {
 		await dbConnect();
@@ -16,5 +15,3 @@ export async function GET(request: NextRequest, context: any) {
 		return NextResponse.json({ message: 'Server error: ' + error.message }, { status: 500 });
 	}
 }
-
-

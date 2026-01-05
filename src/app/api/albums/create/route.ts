@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { authOptions } from '../../auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth/next';
 import { revalidateTag } from 'next/cache';
 import slugify from 'slugify';
 import dbConnect from '@/lib/dbConnect';
 import Image_album from '@/models/ImageAlbum';
 import cloudinary from '@/lib/cloudinary';
+import { authOptions, ISession } from '@/lib/auth';
 
 interface AlbumBody {
 	name: {
@@ -21,7 +21,7 @@ interface AlbumBody {
 }
 
 export async function POST(request: NextRequest) {
-	const session = await getServerSession(authOptions);
+	const session = (await getServerSession(authOptions)) as ISession;
 
 	if (session?.user?.role !== 'admin') {
 		return NextResponse.json({ error: 'Only admins can create albums' }, { status: 403 });
@@ -34,7 +34,6 @@ export async function POST(request: NextRequest) {
 		const nameEn = body?.name?.en;
 		const base64String = body?.cover_img;
 
-
 		if (!nameEn) {
 			return NextResponse.json({ message: 'Album name is required' }, { status: 400 });
 		}
@@ -43,7 +42,7 @@ export async function POST(request: NextRequest) {
 		}
 
 		// Формуємо унікальний slug
-		let baseSlug = slugify(nameEn, { lower: true, strict: true });
+		const baseSlug = slugify(nameEn, { lower: true, strict: true });
 		let slug = baseSlug;
 		let counter = 1;
 

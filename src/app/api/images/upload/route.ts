@@ -2,16 +2,16 @@ import { NextRequest, NextResponse } from 'next/server';
 import cloudinary from '@/lib/cloudinary';
 import dbConnect from '@/lib/dbConnect';
 import Image from '@/models/Image';
-import { authOptions } from '../../auth/[...nextauth]/route';
 import { getServerSession } from 'next-auth/next';
+import { authOptions, ISession } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
-	const session = await getServerSession(authOptions);
+	const session = (await getServerSession(authOptions)) as ISession;
 
 	if (session?.user?.role !== 'admin') {
 		return NextResponse.json({ error: 'Only admins can upload images' }, { status: 403 });
 	}
-	
+
 	try {
 		await dbConnect();
 

@@ -2,7 +2,7 @@ import React from 'react';
 import s from './publicOffer.module.scss';
 import parse from 'html-react-parser';
 import { getLocale } from 'next-intl/server';
-import { IPublicOffer } from '@/models/PublicOffer';
+import { IPublicOffer } from '@/types/IPublicOffer';
 
 async function getPublicOfferInfo() {
 	try {
@@ -24,7 +24,6 @@ export default async function PublicOffer() {
 	const currentLocale = locale as keyof IPublicOffer['content'];
 
 	console.log('publicOfferInfo', publicOfferInfo);
-	
 
 	return (
 		<div className={s.container}>

@@ -45,7 +45,6 @@ const Store: React.FC<Props> = ({ productsMinimal }) => {
 		}
 	}, [inView, isFetching, loadIndex, productsMinimal, fetchProductDetails]);
 
-
 	return (
 		<div className={s.storeContainer}>
 			{loadedProducts.map((product) => (

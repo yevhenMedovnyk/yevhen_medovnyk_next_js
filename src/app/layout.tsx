@@ -17,11 +17,12 @@ const indie_Flower = Indie_Flower({
 });
 
 interface Props {
-	params: { locale: string };
+	params: Promise<{ locale: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-	const messages = await getMessages({ locale: params.locale });
+	const { locale } = await params;
+	const messages = await getMessages({ locale });
 
 	return {
 		title: messages.RootLayout.title ?? 'Yevhen Medovnyk | YM FineArt Prints',
@@ -36,11 +37,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
 	return (
 		<html lang={locale}>
-			<body
-				className={`${mulish.variable} ${indie_Flower.variable}`}
-			>
-				{children}
-			</body>
+			<body className={`${mulish.variable} ${indie_Flower.variable}`}>{children}</body>
 		</html>
 	);
 }

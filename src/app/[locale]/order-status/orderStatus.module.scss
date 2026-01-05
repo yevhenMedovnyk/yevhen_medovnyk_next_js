@@ -1,5 +1,5 @@
-@use "../../../styles/variables" as *;
-@use "../../../styles/mixins" as *;
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
 
 .container {
 	display: flex;
@@ -18,7 +18,7 @@
 	margin-bottom: 1rem;
 }
 
-.errorStatusContainer{
+.errorStatusContainer {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -26,31 +26,31 @@
 	text-align: center;
 }
 
-.icon{
+.icon {
 	width: 10rem;
-	margin-bottom: .7rem;
+	margin-bottom: 0.7rem;
 }
 
-.errorStatusText{
+.errorStatusText {
 	font-size: 1.25rem;
 	font-weight: 600;
 	margin-bottom: 1.3rem;
 }
 
-.backLink{
+.backLink {
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
 	width: auto;
 	align-self: center;
 	border-radius: 8px;
-	font-size: .9rem;
-	padding: .8rem 1.5rem;
+	font-size: 0.9rem;
+	padding: 0.8rem 1.5rem;
 	background-color: $color-secondary;
 	color: $color-bg;
 	text-align: center;
 	transition: all 0.2s ease-in-out;
-	&:hover{
+	&:hover {
 		opacity: 0.9;
 	}
 }

@@ -6,7 +6,6 @@ import { IProduct } from '../../types/IProduct';
 import AddToCartButton from './AddToCartButton/AddToCartButton';
 import SizeSelector from './SizeSelector/SizeSelector';
 import { getTranslations, getLocale } from 'next-intl/server';
-import SetMainTitle from '../MainTitle/SetMainTitle';
 
 interface IProductFullProps {
 	product: IProduct;

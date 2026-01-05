@@ -30,7 +30,6 @@ export async function POST(req: NextRequest) {
 		};
 
 		console.log(locale, content);
-		
 
 		if (!content || !locale) {
 			return NextResponse.json({ message: 'Content and locale are required' }, { status: 400 });

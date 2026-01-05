@@ -1,7 +1,6 @@
-@use "../../styles/variables" as *;
+@use '../../styles/variables' as *;
 
-
-.folder{
+.folder {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -22,7 +21,7 @@
 	text-align: center;
 }
 
-.btns{
+.btns {
 	display: flex;
 	gap: 1rem;
 	width: 100%;
@@ -31,13 +30,14 @@
 	padding-left: 1rem;
 }
 
-.editBtn, .deleteBtn{
+.editBtn,
+.deleteBtn {
 	display: flex;
 	gap: 0.3rem;
 	align-items: center;
 	font-size: 1rem;
 	transition: all 0.1s ease-in-out;
-	&:hover{
+	&:hover {
 		color: $color-secondary;
 	}
 }
@@ -61,8 +61,8 @@
 	font-weight: 500;
 }
 
-.title{
-	:hover{
+.title {
+	:hover {
 		color: $color-secondary;
 	}
 }

@@ -30,7 +30,7 @@ const DeliveryAndPaymentAdmin = () => {
 		fetchContent();
 	}, [currentLocale]);
 
-	const onSubmit = async (content: string,) => {
+	const onSubmit = async (content: string) => {
 		try {
 			setIsLoading(true);
 			await fetch('/api/admin/delivery-and-payment', {

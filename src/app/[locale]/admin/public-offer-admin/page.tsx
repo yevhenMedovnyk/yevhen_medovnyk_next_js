@@ -28,7 +28,7 @@ const PublicOfferAdmin = () => {
 			}
 		};
 		fetchContent();
-	}, []);
+	}, [currentLocale]);
 
 	const onSubmit = async (content: string) => {
 		try {

@@ -2,7 +2,6 @@ import React from 'react';
 import Link from 'next/link';
 import s from './notFound.module.scss';
 
-
 const ErrorPage = () => {
 	return (
 		<div className={s.errorPageContainer}>

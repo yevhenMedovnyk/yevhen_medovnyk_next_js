@@ -3,7 +3,6 @@ import styles from './about.module.scss';
 import { Metadata } from 'next';
 import { getLocale, getMessages } from 'next-intl/server';
 
-
 export async function generateMetadata(): Promise<Metadata> {
 	const locale = await getLocale();
 	const messages = await getMessages({ locale: locale });

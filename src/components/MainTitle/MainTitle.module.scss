@@ -1,5 +1,5 @@
-@use "../../styles/variables" as *;
-@use "../../styles/mixins" as *;
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
 
 .container {
 	display: flex;
@@ -9,7 +9,7 @@
 	font-weight: 700;
 	color: $color-bg;
 	height: 6rem;
-	background: url("/bg.webp") no-repeat center center;
+	background: url('/bg.webp') no-repeat center center;
 	background-size: cover;
 	margin-top: 5.72rem;
 

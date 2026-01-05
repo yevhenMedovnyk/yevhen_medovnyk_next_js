@@ -1,8 +1,8 @@
 import dbConnect from '@/lib/dbConnect';
 import StoreItem from '@/models/StoreItem';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
 	try {
 		await dbConnect();
 		const products = await StoreItem.find();
