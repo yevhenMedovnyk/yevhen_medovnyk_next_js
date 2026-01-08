@@ -2,39 +2,27 @@ import React from 'react';
 import s from './album.module.scss';
 import Gallery from '@/components/Gallery/Gallery';
 import { notFound } from 'next/navigation';
-import { Metadata } from 'next';
+//import { Metadata } from 'next';
 import { IAlbum } from '@/types/IAlbum';
 import { getLocale } from 'next-intl/server';
 import { getAlbumBySlug } from '@/lib/albums';
 import { getImagesMinimal } from '@/lib/images';
 
-//interface ImageMinimal {
-//	_id: string;
-//	width: number;
-//	height: number;
-//}
+interface PageProps {
+	params: {
+		category: string;
+		album: string;
+	};
+}
 
-interface Props {
+interface MetadataProps {
 	params: Promise<{
 		category: string;
 		album: string;
 	}>;
 }
 
-//async function getAlbum(slug: string): Promise<IAlbum | null> {
-//	try {
-//		const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/albums/${slug}`, {
-//			next: { revalidate: 3600, tags: ['Albums'] },
-//		});
-//		if (!res.ok) return null;
-//		return res.json();
-//	} catch (e) {
-//		console.error(e);
-//		return null;
-//	}
-//}
-
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: MetadataProps) {
 	const { category, album } = await params;
 
 	const albumData = await getAlbumBySlug(album);
@@ -72,20 +60,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 //	}
 //}
 
-//async function getImagesMinimal(slug: string): Promise<ImageMinimal[] | null> {
-//	try {
-//		const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/images/minimal/${slug}`, {
-//			next: { revalidate: 3600, tags: ['Images'] },
-//		});
-//		if (!res.ok) return null;
-//		return res.json();
-//	} catch (e) {
-//		console.error(e);
-//		return null;
-//	}
-//}
-
-export default async function AlbumPage({ params }: Props) {
+export default async function AlbumPage({ params }: PageProps) {
 	const { album } = await params;
 
 	const imagesIdObject = await getImagesMinimal(album);
