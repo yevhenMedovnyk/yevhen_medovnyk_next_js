@@ -8,11 +8,11 @@ import { getLocale } from 'next-intl/server';
 import { getAlbumBySlug } from '@/lib/albums';
 import { getImagesMinimal } from '@/lib/images';
 
-interface ImageMinimal {
-	_id: string;
-	width: number;
-	height: number;
-}
+//interface ImageMinimal {
+//	_id: string;
+//	width: number;
+//	height: number;
+//}
 
 interface Props {
 	params: Promise<{

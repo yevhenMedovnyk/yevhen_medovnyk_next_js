@@ -1,8 +1,6 @@
 import Image from '@/models/Image';
 import dbConnect from './dbConnect';
 
-
-
 export const getImagesMinimal = async (slug: string) => {
 	try {
 		await dbConnect();
