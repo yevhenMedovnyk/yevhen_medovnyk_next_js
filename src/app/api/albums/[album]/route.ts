@@ -8,6 +8,7 @@ export async function GET(request: NextRequest, context: any) {
 
 	try {
 		const album = await getAlbumBySlug(slug);
+
 		return NextResponse.json(album);
 	} catch (error: any) {
 		return NextResponse.json({ message: 'Server error: ' + error.message }, { status: 500 });
