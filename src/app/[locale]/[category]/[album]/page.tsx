@@ -6,6 +6,7 @@ import { Metadata } from 'next';
 import { IAlbum } from '@/types/IAlbum';
 import { getLocale } from 'next-intl/server';
 import { getAlbumBySlug } from '@/lib/albums';
+import { getImagesMinimal } from '@/lib/images';
 
 interface ImageMinimal {
 	_id: string;
@@ -71,21 +72,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 //	}
 //}
 
-async function getImagesMinimal(slug: string): Promise<ImageMinimal[] | null> {
-	try {
-		const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/images/minimal/${slug}`, {
-			next: { revalidate: 3600, tags: ['Images'] },
-		});
-		if (!res.ok) return null;
-		return res.json();
-	} catch (e) {
-		console.error(e);
-		return null;
-	}
-}
+//async function getImagesMinimal(slug: string): Promise<ImageMinimal[] | null> {
+//	try {
+//		const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/images/minimal/${slug}`, {
+//			next: { revalidate: 3600, tags: ['Images'] },
+//		});
+//		if (!res.ok) return null;
+//		return res.json();
+//	} catch (e) {
+//		console.error(e);
+//		return null;
+//	}
+//}
 
 export default async function AlbumPage({ params }: Props) {
 	const { album } = await params;
+
 	const imagesIdObject = await getImagesMinimal(album);
 
 	const imageIds = imagesIdObject?.map(({ _id, width, height }) => ({

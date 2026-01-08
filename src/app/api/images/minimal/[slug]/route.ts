@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import dbConnect from '@/lib/dbConnect';
-import Image from '@/models/Image';
+import { getImagesMinimal } from '@/lib/images';
 
 export async function GET(request: NextRequest, context: any) {
 	const params = await context.params;
@@ -11,9 +10,7 @@ export async function GET(request: NextRequest, context: any) {
 	}
 
 	try {
-		await dbConnect();
-
-		const images = await Image.find({ album_slug: slug }).select('_id width height');
+		const images = await getImagesMinimal(slug);
 
 		return NextResponse.json(images);
 	} catch (error: any) {

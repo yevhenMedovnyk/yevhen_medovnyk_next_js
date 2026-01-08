@@ -1,6 +1,4 @@
 import { getAlbumBySlug } from '@/lib/albums';
-import dbConnect from '@/lib/dbConnect';
-import ImageAlbum from '@/models/ImageAlbum';
 import { NextRequest, NextResponse } from 'next/server';
 
 //Отримати конкретний альбом за назвою
@@ -9,7 +7,6 @@ export async function GET(request: NextRequest, context: any) {
 	const slug = params.album;
 
 	try {
-		await dbConnect();
 		const album = await getAlbumBySlug(slug);
 		return NextResponse.json(album);
 	} catch (error: any) {
