@@ -13,10 +13,13 @@ interface ImageMinimal {
 }
 
 interface Props {
-	params: { category: string; album: string };
+	params: Promise<{
+		category: string;
+		album: string;
+	}>;
 }
 
-export async function getAlbum(slug: string): Promise<IAlbum | null> {
+async function getAlbum(slug: string): Promise<IAlbum | null> {
 	try {
 		const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/albums/${slug}`, {
 			next: { revalidate: 3600, tags: ['Albums'] },
@@ -29,20 +32,23 @@ export async function getAlbum(slug: string): Promise<IAlbum | null> {
 	}
 }
 
-export async function generateMetadata(props: Props): Promise<Metadata> {
-	const params = await props.params;
-	const album = await getAlbum(params.album);
-	if (!album) return { title: 'Album not found' };
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+	const { category, album } = await params;
+
+	const albumData = await getAlbum(album);
+
+	if (!albumData) notFound();
+	if (albumData.category !== category) notFound();
 
 	const locale = await getLocale();
 	const nameLocale = locale as keyof IAlbum['name'];
 	const descLocale = locale as keyof IAlbum['description'];
 
 	return {
-		title: album.name[nameLocale] + ' | Yevhen Medovnyk',
-		description: album.description
-			? album.description[descLocale]
-			: `${album.name[nameLocale]} | Photographer Yevhen Medovnyk'`,
+		title: albumData.name[nameLocale] + ' | Yevhen Medovnyk',
+		description: albumData.description
+			? albumData.description[descLocale]
+			: `${albumData.name[nameLocale]} | Photographer Yevhen Medovnyk'`,
 	};
 }
 
@@ -77,12 +83,11 @@ async function getImagesMinimal(slug: string): Promise<ImageMinimal[] | null> {
 	}
 }
 
-export default async function AlbumPage(props: Props) {
-	const params = await props.params;
-	const imagesIdObject = await getImagesMinimal(params.album);
-	if (!imagesIdObject) return notFound();
+export default async function AlbumPage({ params }: Props) {
+	const { album } = await params;
+	const imagesIdObject = await getImagesMinimal(album);
 
-	const imageIds = imagesIdObject.map(({ _id, width, height }) => ({
+	const imageIds = imagesIdObject?.map(({ _id, width, height }) => ({
 		_id,
 		width: width,
 		height: height,

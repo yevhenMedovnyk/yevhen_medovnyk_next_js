@@ -1,4 +1,4 @@
-@use "../../../../styles/variables" as *;
+@use '../../../../styles/variables' as *;
 
 .container {
 	display: flex;
@@ -40,9 +40,9 @@
 	border: 1px solid $color-secondary;
 }
 
-.input::placeholder{
+.input::placeholder {
 	font-family: inherit;
-	font-size: .88rem;
+	font-size: 0.88rem;
 	font-weight: normal;
 }
 
@@ -97,7 +97,7 @@
 	width: auto;
 	align-self: center;
 	border-radius: 8px;
-	font-size: .9rem;
+	font-size: 0.9rem;
 	padding: 0.7em 2.6em;
 	background-color: $color-secondary;
 	color: $color-bg;
@@ -120,4 +120,3 @@
 	margin-top: 0.5em;
 	padding-left: 0.5em;
 }
-

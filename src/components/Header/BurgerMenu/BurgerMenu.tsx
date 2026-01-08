@@ -19,10 +19,6 @@ const BurgerMenu: React.FC<IBurgerMenuProps> = ({
 	handleBurgerLinkClick,
 	navLinks,
 }) => {
-	
-
-	
-
 	useEffect(() => {
 		if (isBurgerMenuOpen) {
 			document.body.style.overflow = 'hidden';

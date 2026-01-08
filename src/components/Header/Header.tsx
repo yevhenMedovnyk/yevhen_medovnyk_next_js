@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { signIn } from 'next-auth/react';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import s from './Header.module.scss';
 import Logo from './Logo/Logo';
 import NavLinks from './NavLinks/NavLinks';
@@ -9,8 +9,6 @@ import BurgerOpenBtn from './BurgerOpenBtn/BurgerOpenBtn';
 import BurgerMenu from './BurgerMenu/BurgerMenu';
 import CartIcon from './CartIcon/CartIcon';
 import { INavLink } from '@/types/INavLink';
-import LangSwitcher from '../LangSwitcher/LangSwitcher';
-import useLocaleSwitcher from '@/utils/switchLocale';
 import { useLocale } from 'next-intl';
 
 interface HeaderProps {
@@ -28,6 +26,11 @@ const Header: React.FC<HeaderProps> = (navLinks) => {
 		setIsBurgerMenuOpen(false);
 	};
 
+	const { data: session } = useSession();
+	const isLoggedIn = session?.user;
+
+	const locale = useLocale();
+
 	return (
 		<header className={s.container}>
 			<Logo />
@@ -38,11 +41,16 @@ const Header: React.FC<HeaderProps> = (navLinks) => {
 					handleBurgerLinkClick={handleBurgerLinkClick}
 					navLinks={navLinks.navLinks}
 				/>
-				<button onClick={() => signIn('google')} className={s.signInBtn}>
-					Sign In
-				</button>
+				{isLoggedIn ? (
+					<button onClick={() => signOut()} className={s.signInBtn}>
+						{locale === 'en' ? 'Sign Out' : 'Вихід'}
+					</button>
+				) : (
+					<button onClick={() => signIn('google')} className={s.signInBtn}>
+						{locale === 'en' ? 'Sign In' : 'Увійти'}
+					</button>
+				)}
 				<CartIcon />
-
 				<BurgerOpenBtn
 					isBurgerMenuOpen={isBurgerMenuOpen}
 					handleBurgerMenuClick={handleBurgerMenuClick}

@@ -1,6 +1,6 @@
 'use client';
 
-import React, {useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import s from './LazyImage.module.scss';
 import { useInView } from 'react-intersection-observer';
 import { ClipLoader } from 'react-spinners';
@@ -8,6 +8,8 @@ import { TiDelete } from 'react-icons/ti';
 import clsx from 'clsx';
 import Button from '../UI/Button/Button';
 import { useFetchClient } from '@/hooks/useFetchClient';
+import { useLocale } from 'next-intl';
+import { Lazy } from 'yup';
 
 interface LazyImageProps {
 	imageId?: string;
@@ -29,6 +31,9 @@ const LazyImage: React.FC<LazyImageProps> = React.memo(
 			threshold: 0,
 			triggerOnce: true,
 		});
+
+		const locale = useLocale();
+		const currentLocale = locale as keyof LazyImageProps['description'];
 
 		const fetchClient = useFetchClient();
 
@@ -133,7 +138,7 @@ const LazyImage: React.FC<LazyImageProps> = React.memo(
 				)}
 
 				{image?.description?.ua && !editMode && (
-					<span className={s.description}>{image.description.ua}</span>
+					<span className={s.description}>{image.description[currentLocale]}</span>
 				)}
 			</div>
 		);

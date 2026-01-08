@@ -1,6 +1,6 @@
 'use client';
 
-import React, { use, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 import { contactFormSchema } from '@/schemas/contactForm.schema';
 import SocialNetLinksList from '@/components/SocialNetLinks/SocialNetLinks';

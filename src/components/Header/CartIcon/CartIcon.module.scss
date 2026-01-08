@@ -1,10 +1,10 @@
-@use "../../../styles/variables" as *;
-@use "../../../styles/mixins" as *;
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
 
-.cartIconContainer{
+.cartIconContainer {
 	position: relative;
-	
-	@include large_desktop{
+
+	@include large_desktop {
 		margin-left: auto;
 	}
 
@@ -24,9 +24,7 @@
 	}
 }
 
-
-
-.cartIcon{
+.cartIcon {
 	width: 1.5rem;
 	height: 1.5rem;
 	color: $color-primary;

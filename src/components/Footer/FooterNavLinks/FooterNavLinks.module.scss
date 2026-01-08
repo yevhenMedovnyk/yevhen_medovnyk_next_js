@@ -1,4 +1,4 @@
-@use "../../../styles/variables" as *;
+@use '../../../styles/variables' as *;
 
 .container {
 	display: flex;
@@ -11,7 +11,7 @@
 	min-width: 80vw;
 	text-align: center;
 
-	li{
+	li {
 		list-style: none;
 	}
 }

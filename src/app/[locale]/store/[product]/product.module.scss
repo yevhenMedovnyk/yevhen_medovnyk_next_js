@@ -1,17 +1,17 @@
-@use "../../../../styles/variables" as *;
+@use '../../../../styles/variables' as *;
 
-.StoreItemPageContainer{
+.StoreItemPageContainer {
 	width: 95%;
 }
 
-.spinnerWrapper{
+.spinnerWrapper {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	min-height: 18rem;
 }
 
-.toastLink{
+.toastLink {
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
@@ -19,7 +19,7 @@
 	text-align: center;
 	transition: all 0.2s ease-in-out;
 	user-select: none;
-	&:hover{
+	&:hover {
 		opacity: 0.9;
 	}
 }

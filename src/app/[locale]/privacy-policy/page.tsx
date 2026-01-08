@@ -2,9 +2,9 @@ import React from 'react';
 import s from './privacy.module.scss';
 import parse from 'html-react-parser';
 import { getLocale } from 'next-intl/server';
-import { IPrivacyPolicy } from '../admin/privacy-policy-admin/page';
+import { IPrivacyPolicy } from '@/types/IPrivacyPolicy';
 
-export async function getPrivacyPolicyInfo() {
+async function getPrivacyPolicyInfo() {
 	try {
 		const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/admin/privacy-policy`, {
 			next: { revalidate: 3600, tags: ['PrivacyPolicy'] },

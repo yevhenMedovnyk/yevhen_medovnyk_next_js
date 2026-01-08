@@ -1,7 +1,7 @@
-@use "../../../styles/variables" as *;
+@use '../../../styles/variables' as *;
 @use '../../../styles/mixins.scss' as *;
 
-.container{
+.container {
 	z-index: 100;
 	display: flex;
 	flex: 0 0 auto;
@@ -11,16 +11,16 @@
 	font-size: 1.5rem;
 	color: $color-primary;
 
-	&:hover{
+	&:hover {
 		color: $color-secondary;
 	}
 
-	@include small_tablet{
+	@include small_tablet {
 		min-width: 9rem;
 	}
 }
 
-.container.burgerMenu{
+.container.burgerMenu {
 	display: block;
 	color: $color-bg;
 	text-align: center;

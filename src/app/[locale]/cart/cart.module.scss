@@ -1,15 +1,15 @@
-@use "../../../styles/variables" as *;
-@use "../../../styles/mixins" as *;
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
 
-.cart{
+.cart {
 	display: flex;
 	flex-direction: column;
-	gap: .9rem;
+	gap: 0.9rem;
 	width: 100%;
 	max-width: 33rem;
 }
 
-.total{
+.total {
 	display: flex;
 	justify-content: space-between;
 	min-height: 3rem;
@@ -30,22 +30,22 @@
 	-ms-user-select: none;
 }
 
-.emptyCart{
+.emptyCart {
 	text-align: center;
 }
 
-.emptyCartIcon{
+.emptyCartIcon {
 	width: 10rem;
-	margin-bottom: .7rem;
+	margin-bottom: 0.7rem;
 }
 
-.emptyCartTitle{
+.emptyCartTitle {
 	font-size: 1.25rem;
 	font-weight: 600;
 	margin-bottom: 1.3rem;
 }
 
-.emptyCartLink{
+.emptyCartLink {
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
@@ -53,12 +53,12 @@
 	align-self: center;
 	border-radius: 8px;
 	font-size: 0.8rem;
-	padding: .8rem 1.5rem;
+	padding: 0.8rem 1.5rem;
 	background-color: $color-secondary;
 	color: $color-bg;
 	text-align: center;
 	transition: all 0.2s ease-in-out;
-	&:hover{
+	&:hover {
 		opacity: 0.9;
 	}
 }

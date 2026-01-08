@@ -9,8 +9,8 @@ import Link from 'next/link';
 import { useFetchClient } from '@/hooks/useFetchClient';
 import { showErrorToast } from '../UI/showErrorToast';
 
-const img =
-	'https://res.cloudinary.com/yevhenmedovnyk/image/upload/v1751304457/Frame_cow_bf_uiulsu.webp';
+//const img =
+//	'https://res.cloudinary.com/yevhenmedovnyk/image/upload/v1751304457/Frame_cow_bf_uiulsu.webp';
 
 const ClientOrder: React.FC<IOrder> = ({
 	_id: order_id,

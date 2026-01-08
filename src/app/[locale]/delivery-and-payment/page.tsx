@@ -4,7 +4,7 @@ import parse from 'html-react-parser';
 import { getLocale } from 'next-intl/server';
 import { IDeliveryAndPayment } from '@/types/IDeliveryAndPayment';
 
-export async function getDeliveryAndPaymentInfo() {
+async function getDeliveryAndPaymentInfo() {
 	try {
 		const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/admin/delivery-and-payment`, {
 			next: { revalidate: 3600, tags: ['DeliveryAndPayment'] },

@@ -22,14 +22,19 @@ const MainTitle: React.FC = () => {
 
 	useEffect(() => {
 		const isHome = pathname === `/${locale}`;
+
 		if (isHome) {
 			const homeTitle = TitleList.find(({ to }) => to === '/');
-			homeTitle && setTitle(homeTitle?.title);
+
+			if (homeTitle) {
+				setTitle(homeTitle.title);
+			}
 		} else {
 			const currentTitle = TitleList.find(({ to }) => `/${locale}${to}` === pathname);
-			currentTitle ? setTitle(currentTitle?.title) : setTitle('');
+
+			setTitle(currentTitle ? currentTitle.title : '');
 		}
-	}, [pathname, locale]);
+	}, [pathname, locale, TitleList]);
 
 	return <h1 className={clsx(s.container, !title && s.transparent)}>{title}</h1>;
 };

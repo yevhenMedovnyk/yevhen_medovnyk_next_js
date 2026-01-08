@@ -1,4 +1,4 @@
-@use "../../styles/mixins" as *;
+@use '../../styles/mixins' as *;
 
 .layoutContainer {
 	position: relative;
@@ -7,11 +7,10 @@
 	min-height: 100vh;
 }
 
-
 .main {
 	display: flex;
 	flex-direction: column;
-	justify-content: start;
+	justify-content: flex-start;
 	align-items: center;
 	max-width: 80rem;
 	width: 100%;
@@ -20,7 +19,7 @@
 	margin: 0 auto;
 	overflow: hidden;
 
-	@include tablet{
-			padding: 3rem .5rem 3rem;
+	@include tablet {
+		padding: 3rem 0.5rem 3rem;
 	}
 }

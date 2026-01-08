@@ -13,7 +13,7 @@ interface ProductSizeState {
 export const useProductSize = create<ProductSizeState>((set) => ({
 	items: [],
 	setProductSize: (item) =>
-		set((state) => {
+		set(() => {
 			return { items: [item] };
 		}),
 }));

@@ -1,6 +1,6 @@
-@use "../../../styles/variables" as *;
+@use '../../../styles/variables' as *;
 
-.container{
+.container {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -8,13 +8,13 @@
 	padding: 0.3rem;
 }
 
-.title{
+.title {
 	text-align: center;
 	font-size: 1rem;
-	margin: 2.3rem 0 0.5rem 0;	
+	margin: 2.3rem 0 0.5rem 0;
 }
 
-.form{
+.form {
 	display: flex;
 	flex-direction: column;
 	gap: 1.3rem;
@@ -23,25 +23,25 @@
 	margin-bottom: 4rem;
 }
 
-.input{
+.input {
 	width: 100%;
 	padding: 0.6rem;
 	border: 1px solid $color-border-secondary;
 	border-radius: 5px;
 }
 
-.input:focus{
+.input:focus {
 	outline: none;
 	border: 1px solid $color-secondary;
 }
 
-.input::placeholder{
+.input::placeholder {
 	font-family: inherit;
-	font-size: .88rem;
+	font-size: 0.88rem;
 	font-weight: normal;
 }
 
-.textarea{
+.textarea {
 	display: block;
 	width: 100%;
 	padding: 0.6rem;
@@ -50,19 +50,19 @@
 	height: 8rem;
 	resize: none;
 	white-space: pre-wrap;
-  overflow-y: auto; 
+	overflow-y: auto;
 }
 
-.textarea:focus{
+.textarea:focus {
 	outline: none;
 	border: 1px solid $color-secondary;
 }
 
-.textarea::placeholder{
-	font-size: .88rem;
+.textarea::placeholder {
+	font-size: 0.88rem;
 }
 
-.button{
+.button {
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
@@ -75,12 +75,12 @@
 	color: $color-bg;
 	text-align: center;
 	transition: all 0.2s ease-in-out;
-	&:hover{
+	&:hover {
 		opacity: 0.9;
 	}
 }
 
-.error{
+.error {
 	color: red;
 	font-size: 0.8em;
 	margin-top: 0.5em;

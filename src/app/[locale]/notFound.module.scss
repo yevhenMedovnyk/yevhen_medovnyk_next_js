@@ -1,21 +1,21 @@
-@use "../../styles/variables" as *;
+@use '../../styles/variables' as *;
 
-.errorPageContainer{
+.errorPageContainer {
 	text-align: center;
 }
 
-.errorPageIcon{
+.errorPageIcon {
 	width: 10rem;
-	margin-bottom: .7rem;
+	margin-bottom: 0.7rem;
 }
 
-.errorPageTitle{
+.errorPageTitle {
 	font-size: 1.25rem;
 	font-weight: 600;
 	margin-bottom: 1.3rem;
 }
 
-.errorPageLink{
+.errorPageLink {
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
@@ -23,12 +23,12 @@
 	align-self: center;
 	border-radius: 8px;
 	font-size: 0.9rem;
-	padding: .8rem 1.5rem;
+	padding: 0.8rem 1.5rem;
 	background-color: $color-secondary;
 	color: $color-bg;
 	text-align: center;
 	transition: all 0.2s ease-in-out;
-	&:hover{
+	&:hover {
 		opacity: 0.9;
 	}
 }

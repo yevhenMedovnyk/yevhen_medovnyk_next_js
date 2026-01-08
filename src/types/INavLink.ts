@@ -1,4 +1,4 @@
-export interface INavLink{
+export interface INavLink {
 	title: string;
 	to: string;
 }

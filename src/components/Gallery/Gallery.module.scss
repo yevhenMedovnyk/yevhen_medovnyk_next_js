@@ -1,4 +1,4 @@
-@use "../../styles/mixins" as *;
+@use '../../styles/mixins' as *;
 
 .container {
 	margin: 2rem auto 3.3rem;
@@ -10,7 +10,7 @@
 	-webkit-column-width: 50%;
 	-moz-column-width: 50%;
 
-	@include large_desktop{
+	@include large_desktop {
 		column-count: 1;
 		-webkit-column-count: 1;
 		-moz-column-count: 1;
@@ -19,18 +19,18 @@
 		-moz-column-width: 100%;
 		padding: 0 1rem;
 	}
-	@include tablet{
+	@include tablet {
 		padding: 0;
 	}
 
 	//display: grid;
-	//grid-template-columns: 1fr 1fr; 
+	//grid-template-columns: 1fr 1fr;
 	//grid-gap: .7rem;
 	//padding: 1rem;
 	//box-sizing: border-box;
 }
 
-.container.createEditAlbum{
+.container.createEditAlbum {
 	//	margin: 1rem auto 3rem;
 	//padding: 0 2rem;
 	//column-count: 4;
@@ -42,7 +42,7 @@
 
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
-	grid-gap: .7rem;
+	grid-gap: 0.7rem;
 	padding: 1rem;
 	box-sizing: border-box;
 }

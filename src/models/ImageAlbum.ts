@@ -11,7 +11,7 @@ export interface IImageAlbum extends Document {
 	description?: {
 		ua?: string;
 		en?: string;
-	}
+	};
 }
 
 const imageAlbumSchema = new Schema<IImageAlbum>({
@@ -25,7 +25,7 @@ const imageAlbumSchema = new Schema<IImageAlbum>({
 	description: {
 		ua: { type: String },
 		en: { type: String },
-	}
+	},
 });
 
 // Кешуємо модель, щоб уникнути помилок при HMR (гарячому перезавантаженні)

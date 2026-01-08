@@ -1,7 +1,5 @@
-@use "../../../styles/variables" as *;
-@use "../../../styles/mixins" as *;
-
-
+@use '../../../styles/variables' as *;
+@use '../../../styles/mixins' as *;
 
 .container {
 	display: flex;
@@ -9,10 +7,10 @@
 	justify-content: center;
 	gap: 0 3rem;
 
-	ul{
+	ul {
 		list-style: none;
 	}
-	li{
+	li {
 		list-style: none;
 	}
 }
@@ -37,7 +35,7 @@
 	}
 	&:before {
 		position: absolute;
-		content: "";
+		content: '';
 		top: 1.4rem;
 		left: 0;
 		right: 0;
@@ -47,7 +45,6 @@
 		transition: 0.2s;
 		transform: scale(0);
 	}
-
 
 	@include large_desktop {
 		display: none;
@@ -67,7 +64,7 @@
 
 	&:before {
 		position: absolute;
-		content: "";
+		content: '';
 		top: 1.4rem;
 		left: 0;
 		right: 0;

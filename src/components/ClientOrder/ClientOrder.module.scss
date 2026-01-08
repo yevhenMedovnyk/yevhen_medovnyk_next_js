@@ -1,5 +1,5 @@
-@use "../../styles/variables" as *;
-@use "../../styles/mixins" as *;
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
 
 .orderWrapper {
 	width: 100%;
@@ -57,7 +57,7 @@
 .productContainer {
 	display: flex;
 	flex-direction: row-reverse;
-	justify-content: start;
+	justify-content: flex-start;
 	gap: 1rem;
 }
 

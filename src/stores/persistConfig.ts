@@ -18,5 +18,4 @@ export const zustandStorage: StateStorage = {
 	},
 };
 
-
 export const createPersistStorage = <T>() => createJSONStorage<T>(() => localStorage);

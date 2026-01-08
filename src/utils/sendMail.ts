@@ -5,17 +5,17 @@ import { fileURLToPath } from 'url';
 import hbs from 'nodemailer-express-handlebars';
 import { type Options as MailOptions } from 'nodemailer/lib/mailer';
 
-// 🔹 Розширюємо тип для підтримки `template` та `context`
+//Розширюємо тип для підтримки `template` та `context`
 interface HbsMailOptions extends MailOptions {
 	template: string;
 	context: Record<string, unknown>;
 }
 
-// 🔹 Шлях до шаблонів (для Next.js ESM)
+//Шлях до шаблонів (для Next.js ESM)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// 🔹 Налаштування транспорту
+//Налаштування транспорту
 const transporter = nodemailer.createTransport({
 	service: 'gmail',
 	auth: {
@@ -24,7 +24,7 @@ const transporter = nodemailer.createTransport({
 	},
 });
 
-// 🔹 Handlebars налаштування
+//Handlebars налаштування
 transporter.use(
 	'compile',
 	hbs({

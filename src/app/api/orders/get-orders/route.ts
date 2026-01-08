@@ -1,11 +1,9 @@
 import dbConnect from '@/lib/dbConnect';
 import Order from '@/models/Order';
-import { NextRequest, NextResponse } from 'next/server';
-
-
+import { NextResponse } from 'next/server';
 
 // Отримати всі замовлення з БД
-export async function GET(req: NextRequest) {
+export async function GET() {
 	try {
 		await dbConnect();
 		const orders = await Order.find();

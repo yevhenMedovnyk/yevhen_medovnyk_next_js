@@ -7,7 +7,7 @@ export interface IProductSize {
 }
 
 export interface IProduct {
-	_id:  string;
+	_id: string;
 	code_product: number;
 	name: {
 		ua: string;

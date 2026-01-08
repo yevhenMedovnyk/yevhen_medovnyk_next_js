@@ -8,7 +8,6 @@
 	padding: 1.4rem;
 	min-width: 80vw;
 	border-top: $color-border solid 1px;
-	
 }
 .link {
 	transition: 0.2s ease-in-out;
@@ -17,12 +16,12 @@
 	}
 }
 
-.link img{
+.link img {
 	width: 2.5rem;
 	cursor: pointer;
 	transition: all 0.1s ease-in-out;
 	margin-right: 0.7rem;
-	&:hover{
+	&:hover {
 		opacity: 0.85;
 	}
 }

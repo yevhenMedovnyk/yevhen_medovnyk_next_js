@@ -18,6 +18,7 @@ export function getPublicIdFromUrl(url = '') {
 		// видаляємо розширення .webp/.jpg/.png тощо
 		return publicIdWithExt.replace(/\.[^/.]+$/, '');
 	} catch (e) {
+		console.error(e);
 		return null;
 	}
 }

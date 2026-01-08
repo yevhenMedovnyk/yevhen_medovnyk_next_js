@@ -1,7 +1,7 @@
-@use "../../styles/variables" as *;
+@use '../../styles/variables' as *;
 @use '../../styles/mixins.scss' as *;
 
-.container{
+.container {
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -15,32 +15,26 @@
 	background: $color-bg-secondary;
 	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
 
-	@include full_desktop{
+	@include full_desktop {
 		padding: 1.5rem 2rem;
 	}
-	@include small_tablet{
+	@include small_tablet {
 		padding: 1.3rem 1.2rem;
-		gap: .3rem;
+		gap: 0.3rem;
 	}
 }
 
-.rightSide{
+.rightSide {
 	display: flex;
 	align-items: center;
 	gap: 0 1.2rem;
 }
 
-.signInBtn{
+.signInBtn {
 	cursor: pointer;
 	transition: all 0.2s ease-in-out;
 	color: $color-primary;
-	&:hover{
+	&:hover {
 		color: $color-secondary;
 	}
 }
-
-
-
-
-
-

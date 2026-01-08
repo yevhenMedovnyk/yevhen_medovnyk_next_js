@@ -128,4 +128,6 @@ const QuillEditor = memo(({ value, onChange }: QuillEditorProps) => {
 	);
 });
 
+QuillEditor.displayName = 'QuillEditor';
+
 export default QuillEditor;

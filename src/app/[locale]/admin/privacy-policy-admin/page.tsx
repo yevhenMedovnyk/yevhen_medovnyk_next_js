@@ -30,7 +30,6 @@ const PrivacyPolicyAdmin = () => {
 		fetchContent();
 	}, [currentLocale]);
 
-
 	const onSubmit = async (content: string) => {
 		try {
 			setIsLoading(true);
