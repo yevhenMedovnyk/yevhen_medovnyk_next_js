@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import { revalidateTag } from 'next/cache';
 import dbConnect from '@/lib/dbConnect';
 import DeliveryAndPayment from '@/models/DeliveryAndPayment';
