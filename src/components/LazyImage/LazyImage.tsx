@@ -9,7 +9,6 @@ import clsx from 'clsx';
 import Button from '../UI/Button/Button';
 import { useFetchClient } from '@/hooks/useFetchClient';
 import { useLocale } from 'next-intl';
-import { Lazy } from 'yup';
 
 interface LazyImageProps {
 	imageId?: string;
