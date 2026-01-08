@@ -52,23 +52,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	};
 }
 
-export async function generateStaticParams(): Promise<{ category: string; album: string }[]> {
-	try {
-		const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/albums`, {
-			next: { revalidate: 3600, tags: ['Albums'] },
-		});
+//export async function generateStaticParams(): Promise<{ category: string; album: string }[]> {
+//	try {
+//		const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/albums`, {
+//			next: { revalidate: 3600, tags: ['Albums'] },
+//		});
 
-		const albums = (await res.json()) as IAlbum[];
+//		const albums = (await res.json()) as IAlbum[];
 
-		return albums.map((album) => ({
-			category: album.category,
-			album: album.slug,
-		}));
-	} catch (e) {
-		console.error('Failed to generate static params:', e);
-		return [];
-	}
-}
+//		return albums.map((album) => ({
+//			category: album.category,
+//			album: album.slug,
+//		}));
+//	} catch (e) {
+//		console.error('Failed to generate static params:', e);
+//		return [];
+//	}
+//}
 
 async function getImagesMinimal(slug: string): Promise<ImageMinimal[] | null> {
 	try {
