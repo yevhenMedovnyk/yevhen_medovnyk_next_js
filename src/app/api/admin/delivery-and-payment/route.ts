@@ -5,20 +5,10 @@ import dbConnect from '@/lib/dbConnect';
 import DeliveryAndPayment from '@/models/DeliveryAndPayment';
 import { NextRequest, NextResponse } from 'next/server';
 import { IDeliveryAndPayment } from '@/types/IDeliveryAndPayment';
+import { getDeliveryAndPaymentFromDB } from '@/lib/deliveryAndPayment';
 
 export async function GET() {
-	await dbConnect();
-
-	try {
-		const deliveryInfo = await DeliveryAndPayment.findOne({});
-		if (!deliveryInfo) {
-			return NextResponse.json({ message: 'No delivery and payment info found' }, { status: 404 });
-		}
-
-		return NextResponse.json(deliveryInfo);
-	} catch (error: any) {
-		return NextResponse.json({ message: error.message }, { status: 400 });
-	}
+	await getDeliveryAndPaymentFromDB();
 }
 
 export async function POST(req: NextRequest) {
