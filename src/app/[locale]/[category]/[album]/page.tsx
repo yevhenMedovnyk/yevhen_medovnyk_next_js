@@ -91,7 +91,7 @@ export default async function AlbumPage({ params }: Props) {
 	const imagesIdObject = await getImagesMinimal(album);
 
 	const imageIds = imagesIdObject?.map(({ _id, width, height }) => ({
-		_id,
+		_id: _id.toString(),
 		width: width,
 		height: height,
 	}));
