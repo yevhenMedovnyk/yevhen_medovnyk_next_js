@@ -5,7 +5,6 @@ import { getLocale } from 'next-intl/server';
 import { IDeliveryAndPayment } from '@/types/IDeliveryAndPayment';
 import { getDeliveryAndPaymentFromDB } from '@/lib/deliveryAndPayment';
 
-
 const DeliveryAndPayment = async () => {
 	const deliveryAndPaymentInfo = await getDeliveryAndPaymentFromDB();
 	const locale = await getLocale();
