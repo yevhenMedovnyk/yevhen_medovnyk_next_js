@@ -9,20 +9,13 @@ import { getAlbumBySlug } from '@/lib/albums';
 import { getImagesMinimal } from '@/lib/images';
 
 interface PageProps {
-	params: {
-		category: string;
-		album: string;
-	};
-}
-
-interface MetadataProps {
 	params: Promise<{
 		category: string;
 		album: string;
 	}>;
 }
 
-export async function generateMetadata({ params }: MetadataProps) {
+export async function generateMetadata({ params }: PageProps) {
 	const { category, album } = await params;
 
 	const albumData = await getAlbumBySlug(album);
