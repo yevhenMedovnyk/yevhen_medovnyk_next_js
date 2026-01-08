@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { Metadata } from 'next';
 import { IAlbum } from '@/types/IAlbum';
 import { getLocale } from 'next-intl/server';
+import { getAlbumBySlug } from '@/lib/albums';
 
 interface ImageMinimal {
 	_id: string;
@@ -19,23 +20,23 @@ interface Props {
 	}>;
 }
 
-async function getAlbum(slug: string): Promise<IAlbum | null> {
-	try {
-		const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/albums/${slug}`, {
-			next: { revalidate: 3600, tags: ['Albums'] },
-		});
-		if (!res.ok) return null;
-		return res.json();
-	} catch (e) {
-		console.error(e);
-		return null;
-	}
-}
+//async function getAlbum(slug: string): Promise<IAlbum | null> {
+//	try {
+//		const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/albums/${slug}`, {
+//			next: { revalidate: 3600, tags: ['Albums'] },
+//		});
+//		if (!res.ok) return null;
+//		return res.json();
+//	} catch (e) {
+//		console.error(e);
+//		return null;
+//	}
+//}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
 	const { category, album } = await params;
 
-	const albumData = await getAlbum(album);
+	const albumData = await getAlbumBySlug(album);
 
 	if (!albumData) notFound();
 	if (albumData.category !== category) notFound();
