@@ -1,5 +1,5 @@
 export interface IAlbum {
-	_id?: number;
+	_id?: string;
 	cover_img: string;
 	name: {
 		ua: string;

@@ -13,3 +13,23 @@ export const getAlbumBySlug = unstable_cache(
 		tags: ['Albums'],
 	}
 );
+
+export const getAlbums = unstable_cache(
+	async (category: string) => {
+		await dbConnect();
+		const albums = await ImageAlbum.find({ category }).lean();
+		const filteredAlbums = albums.map((album) => {
+			return {
+				...album,
+				_id: album._id.toString(),
+			};
+		});
+
+		return filteredAlbums;
+	},
+	['albums'],
+	{
+		revalidate: 3600,
+		tags: ['Albums'],
+	}
+);
