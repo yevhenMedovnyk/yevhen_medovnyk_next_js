@@ -1,6 +1,6 @@
 export interface IImage {
 	_id?: string;
-	album_slug: string;
+	album_slug?: string;
 	name: string;
 	img: string;
 	width?: number;
