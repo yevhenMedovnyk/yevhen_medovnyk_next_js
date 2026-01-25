@@ -6,10 +6,10 @@ import { IDeliveryAndPayment } from '@/types/IDeliveryAndPayment';
 import { getDeliveryAndPaymentFromDB } from '@/lib/deliveryAndPayment';
 
 const DeliveryAndPayment = async () => {
-	const deliveryAndPaymentInfo = await getDeliveryAndPaymentFromDB();
 	const locale = await getLocale();
-
 	const currentLocale = locale as keyof IDeliveryAndPayment['content'];
+
+	const deliveryAndPaymentInfo = await getDeliveryAndPaymentFromDB(currentLocale);
 
 	return (
 		<div className={s.container}>

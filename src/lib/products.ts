@@ -20,17 +20,18 @@ export const getProductsMinimal = unstable_cache(
 	{ revalidate: 3600, tags: ['Store'] }
 );
 
-export const getProduct = unstable_cache(
-	async (slug: string) => {
-		try {
-			await dbConnect();
-			const product = await StoreItem.findOne({ slug }).lean<IProduct>();
-			return product;
-		} catch (error: any) {
-			console.error(error);
-			return null;
-		}
-	},
-	['product'],
-	{ revalidate: 3600, tags: ['Store', 'Product'] }
-);
+export const getProduct = (slug: string) =>
+	unstable_cache(
+		async () => {
+			try {
+				await dbConnect();
+				const product = await StoreItem.findOne({ slug }).lean<IProduct>();
+				return product;
+			} catch (error: any) {
+				console.error(error);
+				return null;
+			}
+		},
+		['product', slug],
+		{ revalidate: 3600, tags: ['Store', 'Product'] }
+	)();

@@ -5,7 +5,6 @@ import ImageAlbum from '@/models/ImageAlbum';
 export const getAlbumBySlug = (slug: string) =>
 	unstable_cache(
 		async () => {
-			console.log('DB HIT: album', slug);
 			await dbConnect();
 			return ImageAlbum.findOne({ slug }).lean();
 		},
@@ -16,7 +15,6 @@ export const getAlbumBySlug = (slug: string) =>
 export const getAlbums = (category: string) =>
 	unstable_cache(
 		async () => {
-			console.log('DB HIT: getAlbums', category);
 			await dbConnect();
 			const albums = await ImageAlbum.find({ category }).lean();
 			const filteredAlbums = albums.map((album) => {
