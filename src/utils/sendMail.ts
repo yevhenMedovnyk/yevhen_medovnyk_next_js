@@ -1,19 +1,22 @@
 import nodemailer from 'nodemailer';
 import sanitizeHtml from 'sanitize-html';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import hbs from 'nodemailer-express-handlebars';
+import Handlebars from 'handlebars';
+import addTrackingNumberMessage from '@/views/addTrackingNumberMessage.hbs';
+import contactFormMessage from '@/views/contactFormMessage.hbs';
+import newOrderMessage from '@/views/newOrderMessage.hbs';
+import orderSuccessMessage from '@/views/orderSuccessMessage.hbs';
+import styles from '@/views/partials/styles.hbs';
 import { type Options as MailOptions } from 'nodemailer/lib/mailer';
 
-//Розширюємо тип для підтримки `template` та `context`
-interface HbsMailOptions extends MailOptions {
-	template: string;
-	context: Record<string, unknown>;
-}
+const templates = {
+	addTrackingNumberMessage,
+	contactFormMessage,
+	newOrderMessage,
+	orderSuccessMessage,
+} as const;
 
-//Шлях до шаблонів (для Next.js ESM)
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+Handlebars.registerPartial('styles', styles);
+Handlebars.registerHelper('multiply', (a: number, b: number) => a * b);
 
 //Налаштування транспорту
 const transporter = nodemailer.createTransport({
@@ -23,27 +26,6 @@ const transporter = nodemailer.createTransport({
 		pass: process.env.GMAIL_PASSWORD,
 	},
 });
-
-//Handlebars налаштування
-transporter.use(
-	'compile',
-	hbs({
-		viewEngine: {
-			extname: '.hbs',
-			partialsDir: path.join(__dirname, '../views/partials'),
-			defaultLayout: false,
-			runtimeOptions: {
-				allowProtoPropertiesByDefault: true,
-				allowProtoMethodsByDefault: true,
-			},
-			helpers: {
-				multiply: (a: number, b: number) => a * b,
-			},
-		},
-		viewPath: path.join(__dirname, '../views'),
-		extName: '.hbs',
-	})
-);
 
 interface SendMailOptions {
 	email: string;
@@ -65,20 +47,29 @@ export const sendMail = async ({
 	emailTo,
 }: SendMailOptions): Promise<{ success: boolean; messageId?: string; error?: string }> => {
 	try {
+		const template = templates[templateName as keyof typeof templates];
+		if (!template) {
+			throw new Error(`Unknown email template: ${templateName}`);
+		}
+
 		const cleanEmail = sanitizeHtml(email, { allowedTags: [], allowedAttributes: {} });
 		const cleanName = sanitizeHtml(name, { allowedTags: [], allowedAttributes: {} });
 		const cleanMessage = sanitizeHtml(message, { allowedTags: [], allowedAttributes: {} });
 
-		const mailOptions: HbsMailOptions = {
+		const templateContext =
+			templateName === 'contactFormMessage'
+				? { name: cleanName, email: cleanEmail, message: cleanMessage }
+				: context;
+
+		const mailOptions: MailOptions = {
 			from: process.env.GMAIL_USER!,
 			replyTo: emailTo ? process.env.GMAIL_USER : cleanEmail,
 			to: emailTo || process.env.GMAIL_USER!,
 			subject,
-			template: templateName,
-			context:
-				templateName === 'contactFormMessage'
-					? { name: cleanName, email: cleanEmail, message: cleanMessage }
-					: context,
+			html: Handlebars.compile(template)(templateContext, {
+				allowProtoPropertiesByDefault: true,
+				allowProtoMethodsByDefault: true,
+			}),
 		};
 
 		const info = await transporter.sendMail(mailOptions);
